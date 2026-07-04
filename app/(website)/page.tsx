@@ -72,12 +72,17 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
   // Default to an empty object to allow previews on non-existent documents
   const {
     overview = [],
-    showcaseDescription = 'Selected work from the current Sanity-managed project registry.',
-    showcaseLabel = 'Verified showcase',
-    showcaseProjectLabel = 'Showcase project',
+    showcaseDescription,
+    showcaseLabel,
+    showcaseProjectLabel,
     showcaseProjects = [],
     title = '',
   } = data ?? {}
+
+  const showcaseLabelText = showcaseLabel?.trim() || 'Verified showcase'
+  const showcaseDescriptionText =
+    showcaseDescription?.trim() || 'Selected work from the current Sanity-managed project registry.'
+  const showcaseProjectLabelText = showcaseProjectLabel?.trim() || 'Showcase project'
 
   const dataAttribute =
     data?._id && data?._type
@@ -105,13 +110,13 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
           className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-[color:var(--accent)]"
           data-sanity={dataAttribute?.('showcaseLabel')}
         >
-          {showcaseLabel}
+          {showcaseLabelText}
         </div>
         <div
           className="text-sm leading-relaxed text-[color:var(--muted)] md:text-right"
           data-sanity={dataAttribute?.('showcaseDescription')}
         >
-          {showcaseDescription}
+          {showcaseDescriptionText}
         </div>
       </div>
 
@@ -137,7 +142,7 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
                         className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
                         data-sanity={dataAttribute?.('showcaseProjectLabel')}
                       >
-                        {String(index + 1).padStart(2, '0')} / {showcaseProjectLabel}
+                        {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
                       </div>
                       <div className="text-2xl font-semibold leading-tight md:text-3xl">
                         {project.title}
