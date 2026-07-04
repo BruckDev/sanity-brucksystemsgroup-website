@@ -181,7 +181,7 @@ async function CachedHome({
           {showcaseLabelText}
         </div>
         <div
-          className="text-sm leading-relaxed text-[color:var(--muted)] md:text-right"
+          className="whitespace-pre-line text-sm leading-relaxed text-[color:var(--muted)] md:text-right"
           data-sanity={dataAttribute?.('showcaseDescription')}
         >
           {showcaseDescriptionText}
