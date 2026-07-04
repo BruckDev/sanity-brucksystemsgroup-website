@@ -4,6 +4,7 @@
 
 :root {
   --bg: #f8fbff;
+  --surface: #ffffff;
   --bg-elevated: rgba(255, 255, 255, 0.88);
   --bg-strong: #eef6ff;
   --fg: #0f172a;
@@ -12,6 +13,7 @@
   --border-strong: rgba(31, 42, 68, 0.18);
   --accent: #246bfe;
   --accent-strong: #103cbd;
+  --accent-contrast: #ffffff;
   --success: #13b981;
   --warning: #f59f0b;
 }
@@ -30,6 +32,32 @@ body {
 
 ::selection {
   background: rgba(36, 107, 254, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #07111f;
+    --surface: #101b2d;
+    --bg-elevated: rgba(12, 24, 42, 0.88);
+    --bg-strong: #17243a;
+    --fg: #eff6ff;
+    --muted: #a7b6cc;
+    --border: rgba(220, 232, 255, 0.12);
+    --border-strong: rgba(220, 232, 255, 0.22);
+    --accent: #6ea8ff;
+    --accent-strong: #9cc5ff;
+    --accent-contrast: #07111f;
+    --success: #34d399;
+    --warning: #fbbf24;
+  }
+
+  html {
+    background: linear-gradient(180deg, #07111f 0%, #0b1628 48%, var(--bg) 100%);
+  }
+
+  ::selection {
+    background: rgba(110, 168, 255, 0.22);
+  }
 }
 
 a {

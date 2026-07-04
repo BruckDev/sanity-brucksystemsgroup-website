@@ -34,7 +34,7 @@ export function TimelineSection({
 
   return (
     <div
-      className="flex flex-col gap-4 pt-16 text-black md:flex-row"
+      className="flex flex-col gap-4 pt-16 text-[color:var(--fg)] md:flex-row"
       data-sanity={dataAttribute?.()}
     >
       <OptimisticSortOrder id={id} path={path}>

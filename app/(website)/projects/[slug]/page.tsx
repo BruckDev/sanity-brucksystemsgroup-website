@@ -136,7 +136,7 @@ async function CachedProjectSlugPage({
         description={overview}
       />
 
-      <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-[color:var(--surface)] shadow-sm">
         {/* Image  */}
         <ImageBox
           data-sanity={dataAttribute?.('coverImage')}
