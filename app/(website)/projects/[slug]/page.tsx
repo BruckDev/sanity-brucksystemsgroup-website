@@ -72,6 +72,16 @@ async function CachedProjectSlugPage({
       site,
       "slug": slug.current,
       tags,
+      "ui": *[_type == "settings"][0]{
+        uiText{
+          projectClientLabel,
+          projectDurationLabel,
+          projectSiteLabel,
+          projectTagsLabel,
+          sectionEyebrow,
+          untitledFallback,
+        }
+      }.uiText,
       title,
     }
   `)
@@ -93,7 +103,7 @@ async function CachedProjectSlugPage({
         })
       : null
 
-  const {client, coverImage, description, duration, overview, site, tags, title} = data ?? {}
+  const {client, coverImage, description, duration, overview, site, tags, title, ui} = data ?? {}
 
   const startYear = duration?.start ? new Date(duration.start).getFullYear() : undefined
   const endYear = duration?.end ? new Date(duration?.end).getFullYear() : 'Now'
@@ -105,7 +115,8 @@ async function CachedProjectSlugPage({
         id={data?._id || null}
         type={data?._type || null}
         path={['overview']}
-        title={title || 'Untitled'}
+        eyebrow={ui?.sectionEyebrow}
+        title={title || ui?.untitledFallback || 'Untitled'}
         description={overview}
       />
 
@@ -124,7 +135,7 @@ async function CachedProjectSlugPage({
           {!!(startYear && endYear) && (
             <div className="p-4 lg:p-5">
               <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                Duration
+                {ui?.projectDurationLabel || 'Duration'}
               </div>
               <div className="mt-3 text-lg md:text-xl">
                 <span data-sanity={dataAttribute?.('duration.start')}>{startYear}</span>
@@ -138,7 +149,7 @@ async function CachedProjectSlugPage({
           {client && (
             <div className="p-4 lg:p-5">
               <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                Client
+                {ui?.projectClientLabel || 'Client'}
               </div>
               <div className="mt-3 text-lg md:text-xl">{client}</div>
             </div>
@@ -148,7 +159,7 @@ async function CachedProjectSlugPage({
           {site && (
             <div className="p-4 lg:p-5">
               <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                Site
+                {ui?.projectSiteLabel || 'Site'}
               </div>
               {site && (
                 <Link
@@ -165,7 +176,7 @@ async function CachedProjectSlugPage({
           {/* Tags */}
           <div className="p-4 lg:p-5">
             <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-              Tags
+              {ui?.projectTagsLabel || 'Tags'}
             </div>
             <div className="mt-3 flex flex-row flex-wrap gap-2">
               {tags?.map((tag, key) => (

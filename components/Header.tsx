@@ -5,12 +5,13 @@ interface HeaderProps {
   id: string | null
   type: string | null
   path: PathSegment[]
+  eyebrow?: string | null
   centered?: boolean
   description?: null | React.ComponentProps<typeof CustomPortableText>['value']
   title?: string | null
 }
 export function Header(props: HeaderProps) {
-  const {id, type, path, title, description, centered = false} = props
+  const {id, type, path, title, description, centered = false, eyebrow} = props
   if (!description && !title) {
     return null
   }
@@ -20,9 +21,11 @@ export function Header(props: HeaderProps) {
         centered ? 'mx-auto max-w-5xl text-center' : 'max-w-4xl'
       }`}
     >
-      <div className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]">
-        System Overview
-      </div>
+      {eyebrow && (
+        <div className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]">
+          {eyebrow}
+        </div>
+      )}
       {title && (
         <div className="max-w-5xl text-4xl font-semibold leading-[0.94] md:text-6xl lg:text-[4.75rem]">
           {title}

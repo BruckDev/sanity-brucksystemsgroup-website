@@ -70,6 +70,28 @@ export default defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'showcaseLabel',
+      title: 'Showcase label',
+      description: 'Short eyebrow label shown above the homepage project showcase.',
+      type: 'string',
+      initialValue: 'Verified showcase',
+    }),
+    defineField({
+      name: 'showcaseDescription',
+      title: 'Showcase description',
+      description: 'Supporting copy shown beside the homepage project showcase label.',
+      type: 'text',
+      rows: 2,
+      initialValue: 'Selected work from the current Sanity-managed project registry.',
+    }),
+    defineField({
+      name: 'showcaseProjectLabel',
+      title: 'Showcase project item label',
+      description: 'Label appended to each numbered project item in the homepage showcase.',
+      type: 'string',
+      initialValue: 'Showcase project',
+    }),
   ],
   preview: {
     select: {

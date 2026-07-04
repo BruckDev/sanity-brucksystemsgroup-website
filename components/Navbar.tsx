@@ -12,6 +12,8 @@ export function Navbar(props: NavbarProps) {
   const {data} = props
   const items = data?.menuItems ?? []
   const [homeItem, ...navItems] = items
+  const brandEyebrow = data?.uiText?.brandEyebrow || 'Content Architecture'
+  const fallbackSiteTitle = data?.uiText?.fallbackSiteTitle || 'Bruck Systems Group'
   const dataAttribute =
     data?._id && data?._type
       ? createDataAttribute({
@@ -28,7 +30,7 @@ export function Navbar(props: NavbarProps) {
       <div className="mx-auto flex w-full max-w-[112rem] flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex flex-col gap-2">
           <div className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--muted)]">
-            Content Architecture
+            {brandEyebrow}
           </div>
           {homeItem && resolveHref(homeItem?._type, homeItem?.slug) ? (
             <Link
@@ -43,7 +45,7 @@ export function Navbar(props: NavbarProps) {
             </Link>
           ) : (
             <Link className="max-w-xl text-2xl font-semibold leading-none text-[color:var(--fg)] md:text-[2rem]" href="/">
-              Bruck Systems Group
+              {fallbackSiteTitle}
             </Link>
           )}
         </div>

@@ -266,6 +266,16 @@ export type Settings = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  uiText?: {
+    brandEyebrow?: string
+    fallbackSiteTitle?: string
+    sectionEyebrow?: string
+    untitledFallback?: string
+    projectDurationLabel?: string
+    projectClientLabel?: string
+    projectSiteLabel?: string
+    projectTagsLabel?: string
+  }
 }
 
 export type Home = {
@@ -298,6 +308,9 @@ export type Home = {
       _key: string
     } & ProjectReference
   >
+  showcaseLabel?: string
+  showcaseDescription?: string
+  showcaseProjectLabel?: string
 }
 
 export type SanityImagePaletteSwatch = {
@@ -431,7 +444,7 @@ export type SlugPageMetadataQueryResult = {
 
 // Source: app/(website)/[slug]/page.tsx
 // Variable: slugPageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {      _id,      _type,      body,      overview,      title,      "slug": slug.current,    }
+// Query: *[_type == "page" && slug.current == $slug][0] {      _id,      _type,      body,      overview,      "ui": *[_type == "settings"][0]{        uiText{          sectionEyebrow,          untitledFallback,        }      }.uiText,      title,      "slug": slug.current,    }
 export type SlugPageQueryResult = {
   _id: string
   _type: 'page'
@@ -482,6 +495,10 @@ export type SlugPageQueryResult = {
     _type: 'block'
     _key: string
   }> | null
+  ui: {
+    sectionEyebrow: string | null
+    untitledFallback: string | null
+  } | null
   title: string | null
   slug: string | null
 } | null
@@ -507,7 +524,7 @@ export type LayoutMetadataQueryResult = {
 
 // Source: app/(website)/page.tsx
 // Variable: homePageQuery
-// Query: *[_type == "home"][0]{      _id,      _type,      overview,      showcaseProjects[]{        _key,        ...@->{          _id,          _type,          coverImage,          overview,          "slug": slug.current,          tags,          title,        }      },      title,    }
+// Query: *[_type == "home"][0]{      _id,      _type,      overview,      showcaseDescription,      showcaseLabel,      showcaseProjectLabel,      showcaseProjects[]{        _key,        ...@->{          _id,          _type,          coverImage,          overview,          "slug": slug.current,          tags,          title,        }      },      title,    }
 export type HomePageQueryResult = {
   _id: string
   _type: 'home'
@@ -529,6 +546,9 @@ export type HomePageQueryResult = {
     _type: 'block'
     _key: string
   }> | null
+  showcaseDescription: string | null
+  showcaseLabel: string | null
+  showcaseProjectLabel: string | null
   showcaseProjects: Array<{
     _key: string
     _id: string
@@ -578,7 +598,7 @@ export type ProjectSlugPageMetadataQueryResult = {
 
 // Source: app/(website)/projects/[slug]/page.tsx
 // Variable: projectSlugPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0] {      _id,      _type,      client,      coverImage,      description,      duration,      overview,      site,      "slug": slug.current,      tags,      title,    }
+// Query: *[_type == "project" && slug.current == $slug][0] {      _id,      _type,      client,      coverImage,      description,      duration,      overview,      site,      "slug": slug.current,      tags,      "ui": *[_type == "settings"][0]{        uiText{          projectClientLabel,          projectDurationLabel,          projectSiteLabel,          projectTagsLabel,          sectionEyebrow,          untitledFallback,        }      }.uiText,      title,    }
 export type ProjectSlugPageQueryResult = {
   _id: string
   _type: 'project'
@@ -641,12 +661,20 @@ export type ProjectSlugPageQueryResult = {
   site: string | null
   slug: string | null
   tags: Array<string> | null
+  ui: {
+    projectClientLabel: string | null
+    projectDurationLabel: string | null
+    projectSiteLabel: string | null
+    projectTagsLabel: string | null
+    sectionEyebrow: string | null
+    untitledFallback: string | null
+  } | null
   title: string | null
 } | null
 
 // Source: sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{    _id,    _type,    footer,    menuItems[]{      _key,      ...@->{        _type,        "slug": slug.current,        title      }    },    ogImage,  }
+// Query: *[_type == "settings"][0]{    _id,    _type,    footer,    menuItems[]{      _key,      ...@->{        _type,        "slug": slug.current,        title      }    },    ogImage,    uiText{      brandEyebrow,      fallbackSiteTitle,      projectClientLabel,      projectDurationLabel,      projectSiteLabel,      projectTagsLabel,      sectionEyebrow,      untitledFallback,    },  }
 export type SettingsQueryResult = {
   _id: string
   _type: 'settings'
@@ -695,6 +723,16 @@ export type SettingsQueryResult = {
     crop?: SanityImageCrop
     _type: 'image'
   } | null
+  uiText: {
+    brandEyebrow: string | null
+    fallbackSiteTitle: string | null
+    projectClientLabel: string | null
+    projectDurationLabel: string | null
+    projectSiteLabel: string | null
+    projectTagsLabel: string | null
+    sectionEyebrow: string | null
+    untitledFallback: string | null
+  } | null
 } | null
 
 // Source: sanity/lib/queries.ts
@@ -707,12 +745,12 @@ export type SlugsByTypeQueryResult = Array<{
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n    *[_type == "page" && slug.current == $slug][0] {\n      title,\n      "overview": pt::text(overview),\n    }\n  ': SlugPageMetadataQueryResult
-    '\n    *[_type == "page" && slug.current == $slug][0] {\n      _id,\n      _type,\n      body,\n      overview,\n      title,\n      "slug": slug.current,\n    }\n  ': SlugPageQueryResult
+    '\n    *[_type == "page" && slug.current == $slug][0] {\n      _id,\n      _type,\n      body,\n      overview,\n      "ui": *[_type == "settings"][0]{\n        uiText{\n          sectionEyebrow,\n          untitledFallback,\n        }\n      }.uiText,\n      title,\n      "slug": slug.current,\n    }\n  ': SlugPageQueryResult
     '{\n    "settings": *[_type == "settings"][0]{ogImage},\n    "home": *[_type == "home"][0]{\n      title,\n      "overview": pt::text(overview),\n    }\n  }': LayoutMetadataQueryResult
-    '\n    *[_type == "home"][0]{\n      _id,\n      _type,\n      overview,\n      showcaseProjects[]{\n        _key,\n        ...@->{\n          _id,\n          _type,\n          coverImage,\n          overview,\n          "slug": slug.current,\n          tags,\n          title,\n        }\n      },\n      title,\n    }\n  ': HomePageQueryResult
+    '\n    *[_type == "home"][0]{\n      _id,\n      _type,\n      overview,\n      showcaseDescription,\n      showcaseLabel,\n      showcaseProjectLabel,\n      showcaseProjects[]{\n        _key,\n        ...@->{\n          _id,\n          _type,\n          coverImage,\n          overview,\n          "slug": slug.current,\n          tags,\n          title,\n        }\n      },\n      title,\n    }\n  ': HomePageQueryResult
     '\n    *[_type == "project" && slug.current == $slug][0] {\n      coverImage,\n      title,\n      "overview": pt::text(overview),\n    }\n  ': ProjectSlugPageMetadataQueryResult
-    '\n    *[_type == "project" && slug.current == $slug][0] {\n      _id,\n      _type,\n      client,\n      coverImage,\n      description,\n      duration,\n      overview,\n      site,\n      "slug": slug.current,\n      tags,\n      title,\n    }\n  ': ProjectSlugPageQueryResult
-    '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    footer,\n    menuItems[]{\n      _key,\n      ...@->{\n        _type,\n        "slug": slug.current,\n        title\n      }\n    },\n    ogImage,\n  }\n': SettingsQueryResult
+    '\n    *[_type == "project" && slug.current == $slug][0] {\n      _id,\n      _type,\n      client,\n      coverImage,\n      description,\n      duration,\n      overview,\n      site,\n      "slug": slug.current,\n      tags,\n      "ui": *[_type == "settings"][0]{\n        uiText{\n          projectClientLabel,\n          projectDurationLabel,\n          projectSiteLabel,\n          projectTagsLabel,\n          sectionEyebrow,\n          untitledFallback,\n        }\n      }.uiText,\n      title,\n    }\n  ': ProjectSlugPageQueryResult
+    '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    footer,\n    menuItems[]{\n      _key,\n      ...@->{\n        _type,\n        "slug": slug.current,\n        title\n      }\n    },\n    ogImage,\n    uiText{\n      brandEyebrow,\n      fallbackSiteTitle,\n      projectClientLabel,\n      projectDurationLabel,\n      projectSiteLabel,\n      projectTagsLabel,\n      sectionEyebrow,\n      untitledFallback,\n    },\n  }\n': SettingsQueryResult
     '\n  *[_type == $type && defined(slug.current)]{"slug": slug.current}\n': SlugsByTypeQueryResult
   }
 }

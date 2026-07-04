@@ -15,6 +15,16 @@ export const settingsQuery = defineQuery(`
       }
     },
     ogImage,
+    uiText{
+      brandEyebrow,
+      fallbackSiteTitle,
+      projectClientLabel,
+      projectDurationLabel,
+      projectSiteLabel,
+      projectTagsLabel,
+      sectionEyebrow,
+      untitledFallback,
+    },
   }
 `)
 

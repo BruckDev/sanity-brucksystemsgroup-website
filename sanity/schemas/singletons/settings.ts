@@ -68,6 +68,61 @@ export default defineType({
         hotspot: true,
       },
     }),
+    defineField({
+      name: 'uiText',
+      title: 'Interface text',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'brandEyebrow',
+          title: 'Brand eyebrow',
+          type: 'string',
+          initialValue: 'Content Architecture',
+        }),
+        defineField({
+          name: 'fallbackSiteTitle',
+          title: 'Fallback site title',
+          type: 'string',
+          initialValue: 'Bruck Systems Group',
+        }),
+        defineField({
+          name: 'sectionEyebrow',
+          title: 'Section eyebrow',
+          type: 'string',
+          initialValue: 'System Overview',
+        }),
+        defineField({
+          name: 'untitledFallback',
+          title: 'Untitled fallback',
+          type: 'string',
+          initialValue: 'Untitled',
+        }),
+        defineField({
+          name: 'projectDurationLabel',
+          title: 'Project duration label',
+          type: 'string',
+          initialValue: 'Duration',
+        }),
+        defineField({
+          name: 'projectClientLabel',
+          title: 'Project client label',
+          type: 'string',
+          initialValue: 'Client',
+        }),
+        defineField({
+          name: 'projectSiteLabel',
+          title: 'Project site label',
+          type: 'string',
+          initialValue: 'Site',
+        }),
+        defineField({
+          name: 'projectTagsLabel',
+          title: 'Project tags label',
+          type: 'string',
+          initialValue: 'Tags',
+        }),
+      ],
+    }),
   ],
   preview: {
     prepare() {

@@ -59,6 +59,12 @@ async function CachedSlugPage({
       _type,
       body,
       overview,
+      "ui": *[_type == "settings"][0]{
+        uiText{
+          sectionEyebrow,
+          untitledFallback,
+        }
+      }.uiText,
       title,
       "slug": slug.current,
     }
@@ -67,7 +73,7 @@ async function CachedSlugPage({
 
   if (!data?._id) notFound()
 
-  const {body, overview, title} = data ?? {}
+  const {body, overview, title, ui} = data ?? {}
 
   return (
     <>
@@ -76,7 +82,8 @@ async function CachedSlugPage({
         id={data?._id || null}
         type={data?._type || null}
         path={['overview']}
-        title={title || 'Untitled'}
+        eyebrow={ui?.sectionEyebrow}
+        title={title || ui?.untitledFallback || 'Untitled'}
         description={overview}
       />
 
