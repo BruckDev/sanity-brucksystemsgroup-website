@@ -60,7 +60,7 @@ async function CachedHome({
 
   if (!data) {
     return (
-      <div className="rounded-lg border border-[var(--border)] bg-white p-8 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--muted)] shadow-sm">
+      <div className="rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-8 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--muted)] shadow-sm">
         You don&rsquo;t have a homepage yet,{' '}
         <Link
           href={`${studioUrl}/structure/home`}
@@ -107,7 +107,7 @@ async function CachedHome({
       }
       return (
         <article
-          className="group grid gap-6 rounded-lg border border-[var(--border)] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-xl md:p-6 xl:grid-cols-[14rem_minmax(0,1fr)_17rem]"
+          className="group grid gap-6 rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-4 shadow-sm transition hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-xl md:p-6 xl:grid-cols-[14rem_minmax(0,1fr)_17rem]"
           key={project._key}
           data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
         >
@@ -159,7 +159,7 @@ async function CachedHome({
                   value={project.overview}
                 />
                 <Link
-                  className="inline-flex rounded-full bg-[color:var(--accent)] px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-[color:var(--accent-strong)]"
+                  className="inline-flex rounded-full bg-[color:var(--accent)] px-4 py-2 text-sm font-bold text-[color:var(--accent-contrast)] shadow-sm hover:bg-[color:var(--accent-strong)]"
                   href={href}
                 >
                   View project
@@ -183,7 +183,7 @@ async function CachedHome({
           description={overview}
         />
       )}
-      <div className="mx-auto grid max-w-5xl gap-4 rounded-lg border border-[var(--border)] bg-white p-5 shadow-sm md:grid-cols-[minmax(0,1fr)_18rem] md:items-center md:p-6">
+      <div className="mx-auto grid max-w-5xl gap-4 rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-5 shadow-sm md:grid-cols-[minmax(0,1fr)_18rem] md:items-center md:p-6">
         <div
           className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
           data-sanity={dataAttribute?.('showcaseLabel')}

@@ -72,7 +72,7 @@ export function Navbar(props: NavbarProps) {
               return (
                 <Link
                   key={menuItem._key}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[color:var(--muted)] shadow-sm hover:border-[var(--accent)] hover:text-[color:var(--accent)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[color:var(--surface)] px-4 py-2 text-sm font-semibold text-[color:var(--muted)] shadow-sm hover:border-[var(--accent)] hover:text-[color:var(--accent)]"
                   data-sanity={dataAttribute?.([
                     'menuItems',
                     {_key: menuItem._key as unknown as string},

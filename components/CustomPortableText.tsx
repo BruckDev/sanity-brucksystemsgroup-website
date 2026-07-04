@@ -9,9 +9,11 @@ import {
 } from 'next-sanity'
 import Link from 'next/link'
 import type {ReactElement} from 'react'
-import {Children, cloneElement, isValidElement} from 'react'
+import {Children, cloneElement, Fragment, isValidElement} from 'react'
 
 const urlPattern = /(https?:\/\/[^\s<]+)/g
+const urlCandidatePattern = /^https?:\/\/[^\s<]+$/
+const trailingPunctuationPattern = /[),.;!?]+$/
 
 function linkifyTextNode(text: string, keyPrefix: string): React.ReactNode {
   const parts = text.split(urlPattern)
@@ -23,17 +25,24 @@ function linkifyTextNode(text: string, keyPrefix: string): React.ReactNode {
   return parts.map((part, index) => {
     if (!part) return null
 
-    if (urlPattern.test(part)) {
+    if (urlCandidatePattern.test(part)) {
+      const trailingPunctuation = part.match(trailingPunctuationPattern)?.[0] ?? ''
+      const href = trailingPunctuation
+        ? part.slice(0, -trailingPunctuation.length)
+        : part
+
       return (
-        <Link
-          key={`${keyPrefix}-url-${index}`}
-          className="underline decoration-[color:var(--accent)] underline-offset-4 transition hover:text-[color:var(--accent)]"
-          href={part}
-          rel="noreferrer noopener"
-          target="_blank"
-        >
-          {part}
-        </Link>
+        <Fragment key={`${keyPrefix}-url-${index}`}>
+          <a
+            className="underline decoration-[color:var(--accent)] underline-offset-4 transition hover:text-[color:var(--accent)]"
+            href={href}
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            {href}
+          </a>
+          {trailingPunctuation}
+        </Fragment>
       )
     }
 
