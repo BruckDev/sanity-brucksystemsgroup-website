@@ -109,7 +109,7 @@ async function CachedProjectSlugPage({
         description={overview}
       />
 
-      <div className="rounded-md border">
+      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)]">
         {/* Image  */}
         <ImageBox
           data-sanity={dataAttribute?.('coverImage')}
@@ -119,12 +119,14 @@ async function CachedProjectSlugPage({
           classesWrapper="relative aspect-[16/9]"
         />
 
-        <div className="divide-inherit grid grid-cols-1 divide-y lg:grid-cols-4 lg:divide-x lg:divide-y-0">
+        <div className="grid grid-cols-1 divide-y divide-[var(--border)] lg:grid-cols-4 lg:divide-x lg:divide-y-0">
           {/* Duration */}
           {!!(startYear && endYear) && (
-            <div className="p-3 lg:p-4">
-              <div className="text-xs md:text-sm">Duration</div>
-              <div className="text-md md:text-lg">
+            <div className="p-4 lg:p-5">
+              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                Duration
+              </div>
+              <div className="mt-3 text-lg md:text-xl">
                 <span data-sanity={dataAttribute?.('duration.start')}>{startYear}</span>
                 {' - '}
                 <span data-sanity={dataAttribute?.('duration.end')}>{endYear}</span>
@@ -134,18 +136,26 @@ async function CachedProjectSlugPage({
 
           {/* Client */}
           {client && (
-            <div className="p-3 lg:p-4">
-              <div className="text-xs md:text-sm">Client</div>
-              <div className="text-md md:text-lg">{client}</div>
+            <div className="p-4 lg:p-5">
+              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                Client
+              </div>
+              <div className="mt-3 text-lg md:text-xl">{client}</div>
             </div>
           )}
 
           {/* Site */}
           {site && (
-            <div className="p-3 lg:p-4">
-              <div className="text-xs md:text-sm">Site</div>
+            <div className="p-4 lg:p-5">
+              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                Site
+              </div>
               {site && (
-                <Link target="_blank" className="text-md break-words md:text-lg" href={site}>
+                <Link
+                  target="_blank"
+                  className="mt-3 inline-block break-words text-lg underline decoration-[color:var(--accent)] underline-offset-4 hover:text-[color:var(--accent)] md:text-xl"
+                  href={site}
+                >
                   {site}
                 </Link>
               )}
@@ -153,12 +163,17 @@ async function CachedProjectSlugPage({
           )}
 
           {/* Tags */}
-          <div className="p-3 lg:p-4">
-            <div className="text-xs md:text-sm">Tags</div>
-            <div className="text-md flex flex-row flex-wrap md:text-lg">
+          <div className="p-4 lg:p-5">
+            <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+              Tags
+            </div>
+            <div className="mt-3 flex flex-row flex-wrap gap-2">
               {tags?.map((tag, key) => (
-                <div key={key} className="mr-1 break-words">
-                  #{tag}
+                <div
+                  key={key}
+                  className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
+                >
+                  {tag}
                 </div>
               ))}
             </div>
@@ -172,7 +187,7 @@ async function CachedProjectSlugPage({
           id={data?._id || null}
           type={data?._type || null}
           path={['description']}
-          paragraphClasses="font-serif max-w-3xl text-xl text-gray-600"
+          paragraphClasses="font-serif max-w-3xl text-xl leading-relaxed text-[color:var(--muted)]"
           value={description}
         />
       )}

@@ -49,7 +49,7 @@ export default async function PersonalLayout({children}: LayoutProps<'/'>) {
   const {isEnabled: isDraftMode} = await draftMode()
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-white text-black">
+      <div className="flex min-h-screen flex-col bg-transparent text-[color:var(--fg)]">
         {isDraftMode ? (
           <Suspense fallback={<NavbarFallback />}>
             <DynamicNavbar />
@@ -57,7 +57,9 @@ export default async function PersonalLayout({children}: LayoutProps<'/'>) {
         ) : (
           <CachedNavbar perspective="published" stega={false} />
         )}
-        <div className="mt-20 flex-grow px-4 md:px-16 lg:px-32">{children}</div>
+        <div className="flex-grow px-4 py-8 md:px-10 md:py-10 lg:px-14 lg:py-12">
+          <div className="mx-auto w-full max-w-[112rem]">{children}</div>
+        </div>
         {isDraftMode ? (
           <Suspense>
             <DynamicFooter />
@@ -118,11 +120,14 @@ function NavbarFallback() {
   return (
     <header
       aria-busy
-      className="sticky top-0 z-10 flex flex-wrap items-center gap-x-5 bg-white/80 px-4 py-4 backdrop-blur md:px-16 md:py-5 lg:px-32"
+      className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color:var(--bg-elevated)] px-4 py-4 backdrop-blur-xl md:px-10 lg:px-14"
     >
-      <span className="text-lg md:text-xl" aria-hidden>
-        <span className="inline-block h-[1em] w-24 animate-pulse rounded bg-gray-200 align-middle md:w-32" />
-      </span>
+      <div className="mx-auto flex w-full max-w-[112rem] flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <div className="h-3 w-28 animate-pulse bg-[color:var(--border)]" />
+          <div className="h-8 w-72 animate-pulse bg-[color:var(--border)]" />
+        </div>
+      </div>
     </header>
   )
 }
@@ -139,12 +144,12 @@ async function CachedFooter({perspective, stega}: DynamicFetchOptions) {
     return null
   }
   return (
-    <footer className="bottom-0 w-full bg-white py-12 text-center md:py-20">
+    <footer className="mt-16 border-t border-[var(--border-strong)] py-10 md:mt-24 md:py-16">
       <CustomPortableText
         id={data._id}
         type={data._type}
         path={['footer']}
-        paragraphClasses="text-md md:text-xl"
+        paragraphClasses="max-w-4xl font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--muted)] md:text-sm"
         value={data.footer}
       />
     </footer>

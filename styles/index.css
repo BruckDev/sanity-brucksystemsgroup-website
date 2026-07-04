@@ -2,10 +2,15 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  letter-spacing: -0.01em;
 }
 
 p:not(:last-child) {
-  margin-bottom: 0.875rem;
+  margin-bottom: 1rem;
 }
 
 ol,
@@ -15,4 +20,13 @@ ul {
 
 ol {
   list-style-type: disc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.035em;
 }

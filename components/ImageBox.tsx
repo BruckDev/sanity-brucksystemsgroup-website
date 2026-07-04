@@ -25,12 +25,12 @@ export default function ImageBox({
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-[3px] bg-gray-50 ${classesWrapper}`}
+      className={`w-full overflow-hidden border border-[var(--border)] bg-[color:var(--bg-strong)] ${classesWrapper}`}
       data-sanity={props['data-sanity']}
     >
       {imageUrl && (
         <Image
-          className="absolute h-full w-full"
+          className="absolute h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.015]"
           alt={alt}
           width={width}
           height={height}

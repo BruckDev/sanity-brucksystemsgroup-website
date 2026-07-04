@@ -15,12 +15,21 @@ export function Header(props: HeaderProps) {
     return null
   }
   return (
-    <div className={`${centered ? 'text-center' : 'w-5/6 lg:w-3/5'}`}>
-      {/* Title */}
-      {title && <div className="text-3xl font-extrabold tracking-tight md:text-5xl">{title}</div>}
-      {/* Description */}
+    <div
+      className={`border-t border-[var(--border-strong)] pt-6 ${
+        centered ? 'mx-auto max-w-5xl text-center' : 'max-w-4xl'
+      }`}
+    >
+      <div className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]">
+        System Overview
+      </div>
+      {title && (
+        <div className="max-w-5xl text-4xl font-semibold leading-[0.94] md:text-6xl lg:text-[4.75rem]">
+          {title}
+        </div>
+      )}
       {Array.isArray(description) && (
-        <div className="mt-4 text-pretty font-serif text-xl text-gray-600 md:text-2xl">
+        <div className="mt-6 text-balance font-serif text-xl leading-relaxed text-[color:var(--muted)] md:text-[1.65rem]">
           <CustomPortableText id={id} type={type} path={path} value={description} />
         </div>
       )}

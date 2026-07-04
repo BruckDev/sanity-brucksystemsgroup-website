@@ -34,7 +34,7 @@ export function CustomPortableText({
 
         return (
           <Link
-            className="underline transition hover:opacity-50"
+            className="underline decoration-[color:var(--accent)] underline-offset-4 transition hover:text-[color:var(--accent)]"
             href={value.href}
             rel="noreferrer noopener"
           >
@@ -49,7 +49,9 @@ export function CustomPortableText({
           <div className="my-6 space-y-2">
             <ImageBox image={value} alt={value.alt} classesWrapper="relative aspect-[16/9]" />
             {value?.caption && (
-              <div className="font-sans text-sm text-gray-600">{value.caption}</div>
+              <div className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
+                {value.caption}
+              </div>
             )}
           </div>
         )

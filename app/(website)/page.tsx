@@ -53,9 +53,12 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
 
   if (!data) {
     return (
-      <div className="text-center">
+      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)] p-8 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
         You don&rsquo;t have a homepage yet,{' '}
-        <Link href={`${studioUrl}/structure/home`} className="underline">
+        <Link
+          href={`${studioUrl}/structure/home`}
+          className="text-[color:var(--accent)] underline decoration-[color:var(--accent)] underline-offset-4"
+        >
           create one now
         </Link>
         !
@@ -76,8 +79,7 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
       : null
 
   return (
-    <div className="space-y-20">
-      {/* Header */}
+    <div className="space-y-10 md:space-y-14">
       {title && (
         <Header
           id={data?._id || null}
@@ -88,58 +90,72 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
           description={overview}
         />
       )}
-      {/* Showcase projects */}
-      <div className="mx-auto max-w-[100rem] rounded-md border">
+      <div className="grid gap-4 border-y border-[var(--border-strong)] py-4 md:grid-cols-[minmax(0,1fr)_16rem] md:items-end">
+        <div className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-[color:var(--accent)]">
+          Verified showcase
+        </div>
+        <div className="text-sm leading-relaxed text-[color:var(--muted)] md:text-right">
+          Selected work from the current Sanity-managed project registry.
+        </div>
+      </div>
+
+      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)]">
         <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
           {showcaseProjects &&
             showcaseProjects.length > 0 &&
-            showcaseProjects.map((project) => {
+            showcaseProjects.map((project, index) => {
               const href = resolveHref(project?._type, project?.slug)
               if (!href) {
                 return null
               }
               return (
                 <Link
-                  className="flex flex-col gap-x-5 p-2 transition odd:border-b odd:border-t hover:bg-gray-50/50 xl:flex-row odd:xl:flex-row-reverse"
+                  className="group grid gap-4 border-b border-[var(--border)] p-3 transition hover:bg-[color:var(--bg-strong)] md:p-5 xl:grid-cols-[15rem_minmax(0,1fr)_17rem]"
                   key={project._key}
                   href={href}
                   data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
                 >
-                  <div className="w-full xl:w-9/12">
+                  <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
+                    <div className="space-y-3">
+                      <div className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                        {String(index + 1).padStart(2, '0')} / Showcase project
+                      </div>
+                      <div className="text-2xl font-semibold leading-tight md:text-3xl">
+                        {project.title}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags?.map((tag, key) => (
+                        <div
+                          className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
+                          key={key}
+                        >
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="order-first xl:order-none">
                     <ImageBox
                       image={project.coverImage}
                       alt={`Cover image from ${project.title}`}
                       classesWrapper="relative aspect-[16/9]"
                     />
                   </div>
-                  <div className="flex xl:w-1/4">
-                    <div className="relative mt-2 flex w-full flex-col justify-between p-3 xl:mt-0">
-                      <div>
-                        {/* Title */}
-                        <div className="mb-2 text-xl font-extrabold tracking-tight md:text-2xl">
-                          {project.title}
-                        </div>
-                        {/* Overview  */}
-                        {Array.isArray(project.overview) && (
-                          <div className="font-serif text-gray-500">
-                            <CustomPortableText
-                              id={project._id}
-                              type={project._type}
-                              path={['overview']}
-                              value={project.overview}
-                            />
-                          </div>
-                        )}
+
+                  <div className="flex items-start xl:pl-2">
+                    {Array.isArray(project.overview) && (
+                      <div className="w-full border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
+                        <CustomPortableText
+                          id={project._id}
+                          type={project._type}
+                          path={['overview']}
+                          value={project.overview}
+                        />
                       </div>
-                      {/* Tags */}
-                      <div className="mt-4 flex flex-row gap-x-2">
-                        {project.tags?.map((tag, key) => (
-                          <div className="text-sm font-medium lowercase md:text-lg" key={key}>
-                            #{tag}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </Link>
               )
