@@ -8,6 +8,68 @@ import {
   type SanityQueries,
 } from 'next-sanity'
 import Link from 'next/link'
+import type {ReactElement} from 'react'
+import {Children, cloneElement, isValidElement} from 'react'
+
+const urlPattern = /(https?:\/\/[^\s<]+)/g
+
+function linkifyTextNode(text: string, keyPrefix: string): React.ReactNode {
+  const parts = text.split(urlPattern)
+
+  if (parts.length === 1) {
+    return text
+  }
+
+  return parts.map((part, index) => {
+    if (!part) return null
+
+    if (urlPattern.test(part)) {
+      return (
+        <Link
+          key={`${keyPrefix}-url-${index}`}
+          className="underline decoration-[color:var(--accent)] underline-offset-4 transition hover:text-[color:var(--accent)]"
+          href={part}
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          {part}
+        </Link>
+      )
+    }
+
+    return part
+  })
+}
+
+function linkifyChildren(node: React.ReactNode, keyPrefix = 'node'): React.ReactNode {
+  if (typeof node === 'string') {
+    return linkifyTextNode(node, keyPrefix)
+  }
+
+  if (Array.isArray(node)) {
+    return node.map((child, index) => linkifyChildren(child, `${keyPrefix}-${index}`))
+  }
+
+  if (isValidElement(node)) {
+    if (node.type === Link || node.type === 'a') {
+      return node
+    }
+
+    const element = node as ReactElement<{children?: React.ReactNode}>
+    const children = element.props?.children
+    if (!children) {
+      return element
+    }
+
+    return cloneElement(element, {
+      children: Children.map(children, (child, index) =>
+        linkifyChildren(child, `${keyPrefix}-${index}`),
+      ),
+    })
+  }
+
+  return node
+}
 
 export function CustomPortableText({
   id,
@@ -25,7 +87,7 @@ export function CustomPortableText({
   const components = {
     block: {
       normal: ({children}) => {
-        return <p className={paragraphClasses}>{children}</p>
+        return <p className={paragraphClasses}>{linkifyChildren(children)}</p>
       },
     },
     marks: {
