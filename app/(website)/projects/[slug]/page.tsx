@@ -136,7 +136,7 @@ async function CachedProjectSlugPage({
         description={overview}
       />
 
-      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)]">
+      <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-sm">
         {/* Image  */}
         <ImageBox
           data-sanity={dataAttribute?.('coverImage')}
@@ -151,12 +151,12 @@ async function CachedProjectSlugPage({
           {!!(startYear && endYear) && (
             <div className="p-4 lg:p-5">
               <div
-                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
                 data-sanity={uiDataAttribute?.(['uiText', 'projectDurationLabel'])}
               >
                 {settingsData?.uiText?.projectDurationLabel || 'Duration'}
               </div>
-              <div className="mt-3 text-lg md:text-xl">
+              <div className="mt-3 text-lg font-semibold md:text-xl">
                 <span data-sanity={dataAttribute?.('duration.start')}>{startYear}</span>
                 {' - '}
                 <span data-sanity={dataAttribute?.('duration.end')}>{endYear}</span>
@@ -168,12 +168,12 @@ async function CachedProjectSlugPage({
           {client && (
             <div className="p-4 lg:p-5">
               <div
-                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
                 data-sanity={uiDataAttribute?.(['uiText', 'projectClientLabel'])}
               >
                 {settingsData?.uiText?.projectClientLabel || 'Client'}
               </div>
-              <div className="mt-3 text-lg md:text-xl">{client}</div>
+              <div className="mt-3 text-lg font-semibold md:text-xl">{client}</div>
             </div>
           )}
 
@@ -181,7 +181,7 @@ async function CachedProjectSlugPage({
           {site && (
             <div className="p-4 lg:p-5">
               <div
-                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
                 data-sanity={uiDataAttribute?.(['uiText', 'projectSiteLabel'])}
               >
                 {settingsData?.uiText?.projectSiteLabel || 'Site'}
@@ -189,7 +189,7 @@ async function CachedProjectSlugPage({
               {site && (
                 <Link
                   target="_blank"
-                  className="mt-3 inline-block break-words text-lg underline decoration-[color:var(--accent)] underline-offset-4 hover:text-[color:var(--accent)] md:text-xl"
+                  className="mt-3 inline-block break-words text-lg font-semibold underline decoration-[color:var(--accent)] underline-offset-4 hover:text-[color:var(--accent)] md:text-xl"
                   href={site}
                 >
                   {site}
@@ -201,7 +201,7 @@ async function CachedProjectSlugPage({
           {/* Tags */}
           <div className="p-4 lg:p-5">
             <div
-              className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+              className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
               data-sanity={uiDataAttribute?.(['uiText', 'projectTagsLabel'])}
             >
               {settingsData?.uiText?.projectTagsLabel || 'Tags'}
@@ -210,7 +210,7 @@ async function CachedProjectSlugPage({
               {tags?.map((tag, key) => (
                 <div
                   key={key}
-                  className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
+                  className="rounded-full border border-[var(--border)] bg-[color:var(--bg-strong)] px-3 py-1 text-xs font-semibold text-[color:var(--muted)]"
                 >
                   {tag}
                 </div>
@@ -226,7 +226,7 @@ async function CachedProjectSlugPage({
           id={data?._id || null}
           type={data?._type || null}
           path={['description']}
-          paragraphClasses="font-serif max-w-3xl text-xl leading-relaxed text-[color:var(--muted)]"
+          paragraphClasses="mt-8 max-w-3xl text-lg leading-8 text-[color:var(--muted)]"
           value={description}
         />
       )}

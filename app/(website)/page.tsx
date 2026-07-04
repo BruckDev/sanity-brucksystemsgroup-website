@@ -60,7 +60,7 @@ async function CachedHome({
 
   if (!data) {
     return (
-      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)] p-8 font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
+      <div className="rounded-lg border border-[var(--border)] bg-white p-8 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--muted)] shadow-sm">
         You don&rsquo;t have a homepage yet,{' '}
         <Link
           href={`${studioUrl}/structure/home`}
@@ -107,20 +107,20 @@ async function CachedHome({
       }
       return (
         <article
-          className="group grid gap-4 border-b border-[var(--border)] p-3 transition hover:bg-[color:var(--bg-strong)] md:p-5 xl:grid-cols-[15rem_minmax(0,1fr)_17rem]"
+          className="group grid gap-6 rounded-lg border border-[var(--border)] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-xl md:p-6 xl:grid-cols-[14rem_minmax(0,1fr)_17rem]"
           key={project._key}
           data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
         >
-          <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
+          <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-5 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
             <div className="space-y-3">
               <div
-                className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                className="inline-flex w-fit rounded-full bg-[color:var(--bg-strong)] px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
                 data-sanity={dataAttribute?.('showcaseProjectLabel')}
               >
                 {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
               </div>
               <Link
-                className="block text-2xl font-semibold leading-tight transition hover:text-[color:var(--accent)] md:text-3xl"
+                className="block text-2xl font-bold leading-tight transition hover:text-[color:var(--accent)] md:text-3xl"
                 href={href}
               >
                 {project.title}
@@ -130,7 +130,7 @@ async function CachedHome({
             <div className="flex flex-wrap gap-2">
               {project.tags?.map((tag, key) => (
                 <div
-                  className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
+                  className="rounded-full border border-[var(--border)] bg-[color:var(--bg-strong)] px-3 py-1 text-xs font-semibold text-[color:var(--muted)]"
                   key={key}
                 >
                   {tag}
@@ -151,7 +151,7 @@ async function CachedHome({
 
           <div className="flex items-start xl:pl-2">
             {Array.isArray(project.overview) && (
-              <div className="w-full space-y-4 border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
+              <div className="w-full space-y-4 border-t border-[var(--border)] pt-5 text-base leading-7 text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
                 <CustomPortableText
                   id={project._id}
                   type={project._type}
@@ -159,7 +159,7 @@ async function CachedHome({
                   value={project.overview}
                 />
                 <Link
-                  className="inline-block font-mono text-[0.7rem] uppercase tracking-[0.22em] text-[color:var(--accent)]"
+                  className="inline-flex rounded-full bg-[color:var(--accent)] px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-[color:var(--accent-strong)]"
                   href={href}
                 >
                   View project
@@ -183,22 +183,22 @@ async function CachedHome({
           description={overview}
         />
       )}
-      <div className="grid gap-4 border-y border-[var(--border-strong)] py-4 md:grid-cols-[minmax(0,1fr)_16rem] md:items-end">
+      <div className="mx-auto grid max-w-5xl gap-4 rounded-lg border border-[var(--border)] bg-white p-5 shadow-sm md:grid-cols-[minmax(0,1fr)_18rem] md:items-center md:p-6">
         <div
-          className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-[color:var(--accent)]"
+          className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
           data-sanity={dataAttribute?.('showcaseLabel')}
         >
           {showcaseLabelText}
         </div>
         <div
-          className="whitespace-pre-line text-sm leading-relaxed text-[color:var(--muted)] md:text-right"
+          className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
           data-sanity={dataAttribute?.('showcaseDescription')}
         >
           {showcaseDescriptionText}
         </div>
       </div>
 
-      <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)]">
+      <div className="grid gap-6">
         {isDraftMode ? (
           <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
             {showcaseItems}

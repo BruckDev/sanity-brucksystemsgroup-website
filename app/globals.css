@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --bg: #efe7db;
-  --bg-elevated: rgba(255, 252, 246, 0.72);
-  --bg-strong: #f7f2ea;
-  --fg: #16120f;
-  --muted: #6f655b;
-  --border: rgba(22, 18, 15, 0.14);
-  --border-strong: rgba(22, 18, 15, 0.32);
-  --accent: #b35c2e;
+  --bg: #f8fbff;
+  --bg-elevated: rgba(255, 255, 255, 0.88);
+  --bg-strong: #eef6ff;
+  --fg: #0f172a;
+  --muted: #5f6f89;
+  --border: rgba(31, 42, 68, 0.1);
+  --border-strong: rgba(31, 42, 68, 0.18);
+  --accent: #246bfe;
+  --accent-strong: #103cbd;
+  --success: #13b981;
+  --warning: #f59f0b;
 }
 
 html {
-  background:
-    radial-gradient(circle at top left, rgba(179, 92, 46, 0.11), transparent 32%),
-    radial-gradient(circle at top right, rgba(20, 42, 84, 0.08), transparent 28%),
-    var(--bg);
+  background: linear-gradient(180deg, #eef6ff 0%, #ffffff 42%, var(--bg) 100%);
   color: var(--fg);
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 ::selection {
-  background: rgba(179, 92, 46, 0.2);
+  background: rgba(36, 107, 254, 0.18);
 }
 
 a {

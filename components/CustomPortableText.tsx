@@ -111,7 +111,7 @@ export function CustomPortableText({
           <div className="my-6 space-y-2">
             <ImageBox image={value} alt={value.alt} classesWrapper="relative aspect-[16/9]" />
             {value?.caption && (
-              <div className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
+              <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--muted)]">
                 {value.caption}
               </div>
             )}

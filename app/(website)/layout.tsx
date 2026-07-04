@@ -57,8 +57,8 @@ export default async function PersonalLayout({children}: LayoutProps<'/'>) {
         ) : (
           <CachedNavbar perspective="published" stega={false} />
         )}
-        <div className="flex-grow px-4 py-8 md:px-10 md:py-10 lg:px-14 lg:py-12">
-          <div className="mx-auto w-full max-w-[112rem]">{children}</div>
+        <div className="flex-grow px-4 py-10 md:px-8 md:py-14 lg:px-12 lg:py-16">
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
         </div>
         {isDraftMode ? (
           <Suspense>
@@ -120,12 +120,12 @@ function NavbarFallback() {
   return (
     <header
       aria-busy
-      className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color:var(--bg-elevated)] px-4 py-4 backdrop-blur-xl md:px-10 lg:px-14"
+      className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color:var(--bg-elevated)] px-4 py-4 shadow-sm backdrop-blur-xl md:px-8 lg:px-12"
     >
-      <div className="mx-auto flex w-full max-w-[112rem] flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-2">
-          <div className="h-3 w-28 animate-pulse bg-[color:var(--border)]" />
-          <div className="h-8 w-72 animate-pulse bg-[color:var(--border)]" />
+          <div className="h-3 w-28 animate-pulse rounded-full bg-[color:var(--border)]" />
+          <div className="h-8 w-72 animate-pulse rounded bg-[color:var(--border)]" />
         </div>
       </div>
     </header>
@@ -144,7 +144,7 @@ async function CachedFooter({perspective, stega}: DynamicFetchOptions) {
     return null
   }
   return (
-    <footer className="mt-16 border-t border-[var(--border-strong)] py-10 md:mt-24 md:py-16">
+    <footer className="mt-16 border-t border-[var(--border)] py-10 md:mt-24 md:py-16">
       <CustomPortableText
         id={data._id}
         type={data._type}

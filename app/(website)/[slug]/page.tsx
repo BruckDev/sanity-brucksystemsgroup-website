@@ -110,7 +110,7 @@ async function CachedSlugPage({
           id={data?._id || null}
           type={data?._type || null}
           path={['body']}
-          paragraphClasses="font-serif max-w-3xl text-xl leading-relaxed text-[color:var(--muted)]"
+          paragraphClasses="max-w-3xl text-lg leading-8 text-[color:var(--muted)]"
           value={body}
         />
       )}
