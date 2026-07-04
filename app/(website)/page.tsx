@@ -72,9 +72,9 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
   // Default to an empty object to allow previews on non-existent documents
   const {
     overview = [],
-    showcaseDescription = '',
-    showcaseLabel = '',
-    showcaseProjectLabel = '',
+    showcaseDescription = 'Selected work from the current Sanity-managed project registry.',
+    showcaseLabel = 'Verified showcase',
+    showcaseProjectLabel = 'Showcase project',
     showcaseProjects = [],
     title = '',
   } = data ?? {}

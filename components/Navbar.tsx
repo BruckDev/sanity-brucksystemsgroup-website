@@ -22,6 +22,11 @@ export function Navbar(props: NavbarProps) {
           type: data._type,
         })
       : null
+  const settingsAttribute = createDataAttribute({
+    baseUrl: studioUrl,
+    id: 'settings',
+    type: 'settings',
+  })
   return (
     <header
       className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color:var(--bg-elevated)] px-4 py-4 backdrop-blur-xl md:px-10 lg:px-14"
@@ -31,7 +36,7 @@ export function Navbar(props: NavbarProps) {
         <div className="flex flex-col gap-2">
           <div
             className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--muted)]"
-            data-sanity={dataAttribute?.(['uiText', 'brandEyebrow'])}
+            data-sanity={(dataAttribute || settingsAttribute)(['uiText', 'brandEyebrow'])}
           >
             {brandEyebrow}
           </div>
@@ -49,7 +54,7 @@ export function Navbar(props: NavbarProps) {
           ) : (
             <Link
               className="max-w-xl text-2xl font-semibold leading-none text-[color:var(--fg)] md:text-[2rem]"
-              data-sanity={dataAttribute?.(['uiText', 'fallbackSiteTitle'])}
+              data-sanity={(dataAttribute || settingsAttribute)(['uiText', 'fallbackSiteTitle'])}
               href="/"
             >
               {fallbackSiteTitle}
