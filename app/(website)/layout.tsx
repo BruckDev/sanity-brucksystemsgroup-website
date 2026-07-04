@@ -1,7 +1,6 @@
 import '@/styles/index.css'
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {Navbar} from '@/components/Navbar'
-import IntroTemplate from '@/intro-template'
 import {
   getDynamicFetchOptions,
   sanityFetch,
@@ -66,9 +65,6 @@ export default async function PersonalLayout({children}: LayoutProps<'/'>) {
         ) : (
           <CachedFooter perspective="published" stega={false} />
         )}
-        <Suspense>
-          <IntroTemplate />
-        </Suspense>
       </div>
       <Toaster />
       <SanityLive onError={handleError} includeDrafts={isDraftMode} />
