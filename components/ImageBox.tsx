@@ -25,7 +25,7 @@ export default function ImageBox({
 
   return (
     <div
-      className={`w-full overflow-hidden border border-[var(--border)] bg-[color:var(--bg-strong)] ${classesWrapper}`}
+      className={`w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[color:var(--bg-strong)] shadow-sm ${classesWrapper}`}
       data-sanity={props['data-sanity']}
     >
       {imageUrl && (

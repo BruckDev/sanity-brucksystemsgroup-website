@@ -18,25 +18,25 @@ export function Header(props: HeaderProps) {
   }
   return (
     <div
-      className={`border-t border-[var(--border-strong)] pt-6 ${
-        centered ? 'mx-auto max-w-5xl text-center' : 'max-w-4xl'
+      className={`${
+        centered ? 'mx-auto max-w-5xl pb-4 pt-6 text-center md:pb-8 md:pt-12' : 'max-w-4xl pt-4'
       }`}
     >
       {eyebrow && (
         <div
-          className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]"
+          className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
           data-sanity={eyebrowDataSanity}
         >
           {eyebrow}
         </div>
       )}
       {title && (
-        <div className="max-w-5xl text-4xl font-semibold leading-[0.94] md:text-6xl lg:text-[4.75rem]">
+        <div className="mx-auto max-w-5xl text-4xl font-extrabold leading-tight text-[color:var(--fg)] md:text-6xl lg:text-7xl">
           {title}
         </div>
       )}
       {Array.isArray(description) && (
-        <div className="mt-6 text-balance font-serif text-xl leading-relaxed text-[color:var(--muted)] md:text-[1.65rem]">
+        <div className="mx-auto mt-6 max-w-3xl text-balance text-lg leading-8 text-[color:var(--muted)] md:text-xl">
           <CustomPortableText id={id} type={type} path={path} value={description} />
         </div>
       )}
