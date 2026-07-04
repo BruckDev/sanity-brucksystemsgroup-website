@@ -29,7 +29,10 @@ export function Navbar(props: NavbarProps) {
     >
       <div className="mx-auto flex w-full max-w-[112rem] flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex flex-col gap-2">
-          <div className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--muted)]">
+          <div
+            className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-[color:var(--muted)]"
+            data-sanity={dataAttribute?.(['uiText', 'brandEyebrow'])}
+          >
             {brandEyebrow}
           </div>
           {homeItem && resolveHref(homeItem?._type, homeItem?.slug) ? (
@@ -44,7 +47,11 @@ export function Navbar(props: NavbarProps) {
               {stegaClean(homeItem.title)}
             </Link>
           ) : (
-            <Link className="max-w-xl text-2xl font-semibold leading-none text-[color:var(--fg)] md:text-[2rem]" href="/">
+            <Link
+              className="max-w-xl text-2xl font-semibold leading-none text-[color:var(--fg)] md:text-[2rem]"
+              data-sanity={dataAttribute?.(['uiText', 'fallbackSiteTitle'])}
+              href="/"
+            >
               {fallbackSiteTitle}
             </Link>
           )}

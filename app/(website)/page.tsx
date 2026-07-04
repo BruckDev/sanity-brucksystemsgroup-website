@@ -101,10 +101,16 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
         />
       )}
       <div className="grid gap-4 border-y border-[var(--border-strong)] py-4 md:grid-cols-[minmax(0,1fr)_16rem] md:items-end">
-        <div className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-[color:var(--accent)]">
+        <div
+          className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-[color:var(--accent)]"
+          data-sanity={dataAttribute?.('showcaseLabel')}
+        >
           {showcaseLabel}
         </div>
-        <div className="text-sm leading-relaxed text-[color:var(--muted)] md:text-right">
+        <div
+          className="text-sm leading-relaxed text-[color:var(--muted)] md:text-right"
+          data-sanity={dataAttribute?.('showcaseDescription')}
+        >
           {showcaseDescription}
         </div>
       </div>
@@ -127,7 +133,10 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
                 >
                   <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
                     <div className="space-y-3">
-                      <div className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
+                      <div
+                        className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                        data-sanity={dataAttribute?.('showcaseProjectLabel')}
+                      >
                         {String(index + 1).padStart(2, '0')} / {showcaseProjectLabel}
                       </div>
                       <div className="text-2xl font-semibold leading-tight md:text-3xl">

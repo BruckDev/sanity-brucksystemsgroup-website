@@ -1,15 +1,26 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {Header} from '@/components/Header'
+import {studioUrl} from '@/sanity/lib/api'
 import {
   getDynamicFetchOptions,
   sanityFetch,
   sanityFetchMetadata,
   type DynamicFetchOptions,
 } from '@/sanity/lib/live'
+import {settingsQuery} from '@/sanity/lib/queries'
+import type {SettingsQueryResult} from '@/sanity.types'
 import type {Metadata, ResolvingMetadata} from 'next'
-import {defineQuery} from 'next-sanity'
+import {createDataAttribute, defineQuery} from 'next-sanity'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
+
+type SlugPageData = {
+  _id: string
+  _type: 'page'
+  body: NonNullable<React.ComponentProps<typeof CustomPortableText>['value']>
+  overview: React.ComponentProps<typeof Header>['description']
+  title: string | null
+}
 
 export async function generateMetadata(
   {params}: PageProps<'/[slug]'>,
@@ -59,21 +70,26 @@ async function CachedSlugPage({
       _type,
       body,
       overview,
-      "ui": *[_type == "settings"][0]{
-        uiText{
-          sectionEyebrow,
-          untitledFallback,
-        }
-      }.uiText,
       title,
       "slug": slug.current,
     }
   `)
-  const {data} = await sanityFetch({query: slugPageQuery, params: {slug}, perspective, stega})
+  const pageResult = await sanityFetch({query: slugPageQuery, params: {slug}, perspective, stega})
+  const settingsResult = await sanityFetch({query: settingsQuery, perspective, stega})
+  const data = pageResult.data as SlugPageData | null
+  const settingsData = settingsResult.data as SettingsQueryResult
 
   if (!data?._id) notFound()
 
-  const {body, overview, title, ui} = data ?? {}
+  const {body, overview, title} = data
+  const uiDataAttribute =
+    settingsData?._id && settingsData?._type
+      ? createDataAttribute({
+          baseUrl: studioUrl,
+          id: settingsData._id,
+          type: settingsData._type,
+        })
+      : null
 
   return (
     <>
@@ -82,8 +98,9 @@ async function CachedSlugPage({
         id={data?._id || null}
         type={data?._type || null}
         path={['overview']}
-        eyebrow={ui?.sectionEyebrow}
-        title={title || ui?.untitledFallback || 'Untitled'}
+        eyebrow={settingsData?.uiText?.sectionEyebrow}
+        eyebrowDataSanity={uiDataAttribute?.(['uiText', 'sectionEyebrow'])}
+        title={title || settingsData?.uiText?.untitledFallback || 'Untitled'}
         description={overview}
       />
 

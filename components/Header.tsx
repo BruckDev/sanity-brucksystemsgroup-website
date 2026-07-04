@@ -6,12 +6,13 @@ interface HeaderProps {
   type: string | null
   path: PathSegment[]
   eyebrow?: string | null
+  eyebrowDataSanity?: string
   centered?: boolean
   description?: null | React.ComponentProps<typeof CustomPortableText>['value']
   title?: string | null
 }
 export function Header(props: HeaderProps) {
-  const {id, type, path, title, description, centered = false, eyebrow} = props
+  const {id, type, path, title, description, centered = false, eyebrow, eyebrowDataSanity} = props
   if (!description && !title) {
     return null
   }
@@ -22,7 +23,10 @@ export function Header(props: HeaderProps) {
       }`}
     >
       {eyebrow && (
-        <div className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]">
+        <div
+          className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[color:var(--accent)]"
+          data-sanity={eyebrowDataSanity}
+        >
           {eyebrow}
         </div>
       )}

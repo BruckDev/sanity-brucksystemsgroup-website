@@ -8,12 +8,27 @@ import {
   sanityFetchMetadata,
   type DynamicFetchOptions,
 } from '@/sanity/lib/live'
+import {settingsQuery} from '@/sanity/lib/queries'
+import type {SettingsQueryResult} from '@/sanity.types'
 import {urlForOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, ResolvingMetadata} from 'next'
 import {createDataAttribute, defineQuery} from 'next-sanity'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
+
+type ProjectSlugPageData = {
+  _id: string
+  _type: 'project'
+  client: string | null
+  coverImage: React.ComponentProps<typeof ImageBox>['image']
+  description: NonNullable<React.ComponentProps<typeof CustomPortableText>['value']>
+  duration: {start?: string | null; end?: string | null} | null
+  overview: React.ComponentProps<typeof Header>['description']
+  site: string | null
+  tags: string[] | null
+  title: string | null
+}
 
 export async function generateMetadata(
   {params}: PageProps<'/projects/[slug]'>,
@@ -72,25 +87,18 @@ async function CachedProjectSlugPage({
       site,
       "slug": slug.current,
       tags,
-      "ui": *[_type == "settings"][0]{
-        uiText{
-          projectClientLabel,
-          projectDurationLabel,
-          projectSiteLabel,
-          projectTagsLabel,
-          sectionEyebrow,
-          untitledFallback,
-        }
-      }.uiText,
       title,
     }
   `)
-  const {data} = await sanityFetch({
+  const projectResult = await sanityFetch({
     query: projectSlugPageQuery,
     params: {slug},
     perspective,
     stega,
   })
+  const settingsResult = await sanityFetch({query: settingsQuery, perspective, stega})
+  const data = projectResult.data as ProjectSlugPageData | null
+  const settingsData = settingsResult.data as SettingsQueryResult
 
   if (!data?._id) notFound()
 
@@ -102,8 +110,15 @@ async function CachedProjectSlugPage({
           type: data._type,
         })
       : null
-
-  const {client, coverImage, description, duration, overview, site, tags, title, ui} = data ?? {}
+  const {client, coverImage, description, duration, overview, site, tags, title} = data
+  const uiDataAttribute =
+    settingsData?._id && settingsData?._type
+      ? createDataAttribute({
+          baseUrl: studioUrl,
+          id: settingsData._id,
+          type: settingsData._type,
+        })
+      : null
 
   const startYear = duration?.start ? new Date(duration.start).getFullYear() : undefined
   const endYear = duration?.end ? new Date(duration?.end).getFullYear() : 'Now'
@@ -115,8 +130,9 @@ async function CachedProjectSlugPage({
         id={data?._id || null}
         type={data?._type || null}
         path={['overview']}
-        eyebrow={ui?.sectionEyebrow}
-        title={title || ui?.untitledFallback || 'Untitled'}
+        eyebrow={settingsData?.uiText?.sectionEyebrow}
+        eyebrowDataSanity={uiDataAttribute?.(['uiText', 'sectionEyebrow'])}
+        title={title || settingsData?.uiText?.untitledFallback || 'Untitled'}
         description={overview}
       />
 
@@ -134,8 +150,11 @@ async function CachedProjectSlugPage({
           {/* Duration */}
           {!!(startYear && endYear) && (
             <div className="p-4 lg:p-5">
-              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                {ui?.projectDurationLabel || 'Duration'}
+              <div
+                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                data-sanity={uiDataAttribute?.(['uiText', 'projectDurationLabel'])}
+              >
+                {settingsData?.uiText?.projectDurationLabel || 'Duration'}
               </div>
               <div className="mt-3 text-lg md:text-xl">
                 <span data-sanity={dataAttribute?.('duration.start')}>{startYear}</span>
@@ -148,8 +167,11 @@ async function CachedProjectSlugPage({
           {/* Client */}
           {client && (
             <div className="p-4 lg:p-5">
-              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                {ui?.projectClientLabel || 'Client'}
+              <div
+                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                data-sanity={uiDataAttribute?.(['uiText', 'projectClientLabel'])}
+              >
+                {settingsData?.uiText?.projectClientLabel || 'Client'}
               </div>
               <div className="mt-3 text-lg md:text-xl">{client}</div>
             </div>
@@ -158,8 +180,11 @@ async function CachedProjectSlugPage({
           {/* Site */}
           {site && (
             <div className="p-4 lg:p-5">
-              <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-                {ui?.projectSiteLabel || 'Site'}
+              <div
+                className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                data-sanity={uiDataAttribute?.(['uiText', 'projectSiteLabel'])}
+              >
+                {settingsData?.uiText?.projectSiteLabel || 'Site'}
               </div>
               {site && (
                 <Link
@@ -175,8 +200,11 @@ async function CachedProjectSlugPage({
 
           {/* Tags */}
           <div className="p-4 lg:p-5">
-            <div className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]">
-              {ui?.projectTagsLabel || 'Tags'}
+            <div
+              className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+              data-sanity={uiDataAttribute?.(['uiText', 'projectTagsLabel'])}
+            >
+              {settingsData?.uiText?.projectTagsLabel || 'Tags'}
             </div>
             <div className="mt-3 flex flex-row flex-wrap gap-2">
               {tags?.map((tag, key) => (
