@@ -1,7 +1,14 @@
 import {client} from '@/sanity/lib/client'
-import {token} from '@/sanity/lib/token'
+import {getToken} from '@/sanity/lib/token'
 import {defineEnableDraftMode} from 'next-sanity/draft-mode'
+import {connection} from 'next/server'
 
-export const {GET} = defineEnableDraftMode({
-  client: client.withConfig({token}),
-})
+export async function GET(request: Request) {
+  await connection()
+
+  const handler = defineEnableDraftMode({
+    client: client.withConfig({token: getToken()}),
+  }).GET
+
+  return handler(request)
+}
