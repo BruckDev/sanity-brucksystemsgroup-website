@@ -106,10 +106,9 @@ async function CachedHome({
         return null
       }
       return (
-        <Link
+        <article
           className="group grid gap-4 border-b border-[var(--border)] p-3 transition hover:bg-[color:var(--bg-strong)] md:p-5 xl:grid-cols-[15rem_minmax(0,1fr)_17rem]"
           key={project._key}
-          href={href}
           data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
         >
           <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
@@ -120,9 +119,12 @@ async function CachedHome({
               >
                 {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
               </div>
-              <div className="text-2xl font-semibold leading-tight md:text-3xl">
+              <Link
+                className="block text-2xl font-semibold leading-tight transition hover:text-[color:var(--accent)] md:text-3xl"
+                href={href}
+              >
                 {project.title}
-              </div>
+              </Link>
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -138,26 +140,34 @@ async function CachedHome({
           </div>
 
           <div className="order-first xl:order-none">
-            <ImageBox
-              image={project.coverImage}
-              alt={`Cover image from ${project.title}`}
-              classesWrapper="relative aspect-[16/9]"
-            />
+            <Link className="block" href={href} aria-label={`View ${project.title}`}>
+              <ImageBox
+                image={project.coverImage}
+                alt={`Cover image from ${project.title}`}
+                classesWrapper="relative aspect-[16/9]"
+              />
+            </Link>
           </div>
 
           <div className="flex items-start xl:pl-2">
             {Array.isArray(project.overview) && (
-              <div className="w-full border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
+              <div className="w-full space-y-4 border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
                 <CustomPortableText
                   id={project._id}
                   type={project._type}
                   path={['overview']}
                   value={project.overview}
                 />
+                <Link
+                  className="inline-block font-mono text-[0.7rem] uppercase tracking-[0.22em] text-[color:var(--accent)]"
+                  href={href}
+                >
+                  View project
+                </Link>
               </div>
             )}
           </div>
-        </Link>
+        </article>
       )
     })
 
