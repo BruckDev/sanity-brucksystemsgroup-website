@@ -13,7 +13,7 @@ import {Suspense} from 'react'
 export default async function IndexPage() {
   const {isEnabled: isDraftMode} = await draftMode()
   if (!isDraftMode) {
-    return <CachedHome perspective="published" stega={false} />
+    return <CachedHome perspective="published" stega={false} isDraftMode={false} />
   }
   return (
     <Suspense>
@@ -24,10 +24,14 @@ export default async function IndexPage() {
 
 async function DynamicHome() {
   const {perspective, stega} = await getDynamicFetchOptions()
-  return <CachedHome perspective={perspective} stega={stega} />
+  return <CachedHome perspective={perspective} stega={stega} isDraftMode />
 }
 
-async function CachedHome({perspective, stega}: DynamicFetchOptions) {
+async function CachedHome({
+  perspective,
+  stega,
+  isDraftMode,
+}: DynamicFetchOptions & {isDraftMode: boolean}) {
   'use cache'
   const homePageQuery = defineQuery(`
     *[_type == "home"][0]{
@@ -93,6 +97,70 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
         })
       : null
 
+  const showcaseItems =
+    showcaseProjects &&
+    showcaseProjects.length > 0 &&
+    showcaseProjects.map((project, index) => {
+      const href = resolveHref(project?._type, project?.slug)
+      if (!href) {
+        return null
+      }
+      return (
+        <Link
+          className="group grid gap-4 border-b border-[var(--border)] p-3 transition hover:bg-[color:var(--bg-strong)] md:p-5 xl:grid-cols-[15rem_minmax(0,1fr)_17rem]"
+          key={project._key}
+          href={href}
+          data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
+        >
+          <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
+            <div className="space-y-3">
+              <div
+                className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
+                data-sanity={dataAttribute?.('showcaseProjectLabel')}
+              >
+                {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
+              </div>
+              <div className="text-2xl font-semibold leading-tight md:text-3xl">
+                {project.title}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {project.tags?.map((tag, key) => (
+                <div
+                  className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
+                  key={key}
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="order-first xl:order-none">
+            <ImageBox
+              image={project.coverImage}
+              alt={`Cover image from ${project.title}`}
+              classesWrapper="relative aspect-[16/9]"
+            />
+          </div>
+
+          <div className="flex items-start xl:pl-2">
+            {Array.isArray(project.overview) && (
+              <div className="w-full border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
+                <CustomPortableText
+                  id={project._id}
+                  type={project._type}
+                  path={['overview']}
+                  value={project.overview}
+                />
+              </div>
+            )}
+          </div>
+        </Link>
+      )
+    })
+
   return (
     <div className="space-y-10 md:space-y-14">
       {title && (
@@ -121,70 +189,13 @@ async function CachedHome({perspective, stega}: DynamicFetchOptions) {
       </div>
 
       <div className="border border-[var(--border-strong)] bg-[color:var(--bg-elevated)]">
-        <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
-          {showcaseProjects &&
-            showcaseProjects.length > 0 &&
-            showcaseProjects.map((project, index) => {
-              const href = resolveHref(project?._type, project?.slug)
-              if (!href) {
-                return null
-              }
-              return (
-                <Link
-                  className="group grid gap-4 border-b border-[var(--border)] p-3 transition hover:bg-[color:var(--bg-strong)] md:p-5 xl:grid-cols-[15rem_minmax(0,1fr)_17rem]"
-                  key={project._key}
-                  href={href}
-                  data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
-                >
-                  <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-4 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
-                    <div className="space-y-3">
-                      <div
-                        className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[color:var(--accent)]"
-                        data-sanity={dataAttribute?.('showcaseProjectLabel')}
-                      >
-                        {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
-                      </div>
-                      <div className="text-2xl font-semibold leading-tight md:text-3xl">
-                        {project.title}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags?.map((tag, key) => (
-                        <div
-                          className="border border-[var(--border)] px-2 py-1 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[color:var(--muted)]"
-                          key={key}
-                        >
-                          {tag}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="order-first xl:order-none">
-                    <ImageBox
-                      image={project.coverImage}
-                      alt={`Cover image from ${project.title}`}
-                      classesWrapper="relative aspect-[16/9]"
-                    />
-                  </div>
-
-                  <div className="flex items-start xl:pl-2">
-                    {Array.isArray(project.overview) && (
-                      <div className="w-full border-t border-[var(--border)] pt-4 font-serif text-lg leading-relaxed text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
-                        <CustomPortableText
-                          id={project._id}
-                          type={project._type}
-                          path={['overview']}
-                          value={project.overview}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              )
-            })}
-        </OptimisticSortOrder>
+        {isDraftMode ? (
+          <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
+            {showcaseItems}
+          </OptimisticSortOrder>
+        ) : (
+          showcaseItems
+        )}
       </div>
     </div>
   )
