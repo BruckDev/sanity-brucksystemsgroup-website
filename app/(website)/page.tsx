@@ -172,31 +172,33 @@ async function CachedHome({
     })
 
   return (
-    <div className="space-y-10 md:space-y-14">
+    <div className="space-y-6 md:space-y-8">
       {title && (
-        <Header
-          id={data?._id || null}
-          type={data?._type || null}
-          path={['overview']}
-          centered
-          title={title}
-          description={overview}
-        />
+        <div className="space-y-2 md:space-y-3">
+          <Header
+            id={data?._id || null}
+            type={data?._type || null}
+            path={['overview']}
+            centered
+            title={title}
+            description={overview}
+          />
+          <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-[minmax(0,1fr)_18rem] md:items-end">
+            <div
+              className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
+              data-sanity={dataAttribute?.('showcaseLabel')}
+            >
+              {showcaseLabelText}
+            </div>
+            <div
+              className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
+              data-sanity={dataAttribute?.('showcaseDescription')}
+            >
+              {showcaseDescriptionText}
+            </div>
+          </div>
+        </div>
       )}
-      <div className="mx-auto grid max-w-5xl gap-4 rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-5 shadow-sm md:grid-cols-[minmax(0,1fr)_18rem] md:items-center md:p-6">
-        <div
-          className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
-          data-sanity={dataAttribute?.('showcaseLabel')}
-        >
-          {showcaseLabelText}
-        </div>
-        <div
-          className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
-          data-sanity={dataAttribute?.('showcaseDescription')}
-        >
-          {showcaseDescriptionText}
-        </div>
-      </div>
 
       <div className="grid gap-6">
         {isDraftMode ? (
