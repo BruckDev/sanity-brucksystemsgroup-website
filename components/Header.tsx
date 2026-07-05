@@ -19,7 +19,7 @@ export function Header(props: HeaderProps) {
   return (
     <div
       className={`${
-        centered ? 'mx-auto max-w-5xl pb-4 pt-6 text-center md:pb-8 md:pt-12' : 'max-w-4xl pt-4'
+        centered ? 'mx-auto max-w-5xl pb-2 pt-3 text-center md:pb-4 md:pt-6' : 'max-w-4xl pt-4'
       }`}
     >
       {eyebrow && (
