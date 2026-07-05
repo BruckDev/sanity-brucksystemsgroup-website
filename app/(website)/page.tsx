@@ -172,42 +172,43 @@ async function CachedHome({
     })
 
   return (
-    <div className="space-y-6 md:space-y-8">
+    <div className="space-y-4 md:space-y-5">
       {title && (
-        <div className="space-y-2 md:space-y-3">
-          <Header
-            id={data?._id || null}
-            type={data?._type || null}
-            path={['overview']}
-            centered
-            title={title}
-            description={overview}
-          />
-          <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-[minmax(0,1fr)_18rem] md:items-end">
-            <div
-              className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
-              data-sanity={dataAttribute?.('showcaseLabel')}
-            >
-              {showcaseLabelText}
-            </div>
-            <div
-              className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
-              data-sanity={dataAttribute?.('showcaseDescription')}
-            >
-              {showcaseDescriptionText}
-            </div>
-          </div>
-        </div>
+        <Header
+          id={data?._id || null}
+          type={data?._type || null}
+          path={['overview']}
+          centered
+          title={title}
+          description={overview}
+        />
       )}
 
-      <div className="grid gap-6">
-        {isDraftMode ? (
-          <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
-            {showcaseItems}
-          </OptimisticSortOrder>
-        ) : (
-          showcaseItems
-        )}
+      <div className="space-y-3 md:space-y-4">
+        <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-[minmax(0,1fr)_18rem] md:items-end">
+          <div
+            className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
+            data-sanity={dataAttribute?.('showcaseLabel')}
+          >
+            {showcaseLabelText}
+          </div>
+          <div
+            className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
+            data-sanity={dataAttribute?.('showcaseDescription')}
+          >
+            {showcaseDescriptionText}
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:gap-5">
+          {isDraftMode ? (
+            <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
+              {showcaseItems}
+            </OptimisticSortOrder>
+          ) : (
+            showcaseItems
+          )}
+        </div>
       </div>
     </div>
   )
