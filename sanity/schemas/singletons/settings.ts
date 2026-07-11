@@ -6,58 +6,25 @@ export default defineType({
   title: 'Settings',
   type: 'document',
   icon: CogIcon,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
   fields: [
     defineField({
-      name: 'menuItems',
-      title: 'Menu Item list',
-      description: 'Links displayed on the header of your site.',
-      type: 'array',
-      of: [
-        {
-          title: 'Reference',
-          type: 'reference',
-          to: [
-            {
-              type: 'home',
-            },
-            {
-              type: 'page',
-            },
-            {
-              type: 'project',
-            },
-          ],
-        },
-      ],
+      name: 'siteTitle',
+      title: 'Site title',
+      type: 'string',
+      initialValue: 'Bruck Systems Group',
+      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'footer',
-      description: 'This is a block of text that will be displayed at the bottom of the page.',
-      title: 'Footer Info',
+      name: 'brandEyebrow',
+      title: 'Brand eyebrow',
+      type: 'string',
+      initialValue: 'Consulting and technology',
+    }),
+    defineField({
+      name: 'headerNavigation',
+      title: 'Header navigation',
       type: 'array',
-      of: [
-        defineArrayMember({
-          type: 'block',
-          marks: {
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
-              },
-            ],
-          },
-        }),
-      ],
+      of: [defineArrayMember({type: 'navItem'})],
     }),
     defineField({
       name: 'ogImage',
@@ -69,15 +36,43 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'contactMethods',
+      title: 'Contact methods',
+      type: 'array',
+      of: [defineArrayMember({type: 'contactMethod'})],
+    }),
+    defineField({
+      name: 'linkedin',
+      title: 'LinkedIn URL',
+      type: 'string',
+    }),
+    defineField({
+      name: 'footerColumns',
+      title: 'Footer columns',
+      type: 'array',
+      of: [defineArrayMember({type: 'footerColumn'})],
+    }),
+    defineField({
+      name: 'footerNote',
+      title: 'Footer note',
+      type: 'array',
+      of: [defineArrayMember({type: 'block'})],
+    }),
+    defineField({
+      name: 'seo',
+      title: 'Default SEO',
+      type: 'seo',
+    }),
+    defineField({
       name: 'uiText',
-      title: 'Interface text',
+      title: 'UI text',
       type: 'object',
       fields: [
         defineField({
           name: 'brandEyebrow',
-          title: 'Brand eyebrow',
+          title: 'Legacy brand eyebrow',
           type: 'string',
-          initialValue: 'Content Architecture',
+          initialValue: 'Consulting and technology',
         }),
         defineField({
           name: 'fallbackSiteTitle',
@@ -89,7 +84,7 @@ export default defineType({
           name: 'sectionEyebrow',
           title: 'Section eyebrow',
           type: 'string',
-          initialValue: 'System Overview',
+          initialValue: 'Overview',
         }),
         defineField({
           name: 'untitledFallback',
@@ -128,7 +123,7 @@ export default defineType({
     prepare() {
       return {
         title: 'Settings',
-        subtitle: 'Menu Items, Footer Info, and Open Graph Image',
+        subtitle: 'Navigation, footer, contact details, and SEO',
       }
     },
   },

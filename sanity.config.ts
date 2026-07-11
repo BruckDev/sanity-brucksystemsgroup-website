@@ -5,12 +5,26 @@
  */
 import {apiVersion, dataset, projectId, studioUrl} from '@/sanity/lib/api'
 import * as resolve from '@/sanity/plugins/resolve'
+import caseStudy from '@/sanity/schemas/documents/caseStudy'
+import industry from '@/sanity/schemas/documents/industry'
+import insight from '@/sanity/schemas/documents/insight'
+import leader from '@/sanity/schemas/documents/leader'
 import {pageStructure, singletonPlugin} from '@/sanity/plugins/settings'
 import page from '@/sanity/schemas/documents/page'
 import project from '@/sanity/schemas/documents/project'
+import service from '@/sanity/schemas/documents/service'
+import contactMethod from '@/sanity/schemas/objects/contactMethod'
+import footerColumn from '@/sanity/schemas/objects/footerColumn'
+import link from '@/sanity/schemas/objects/link'
+import navItem from '@/sanity/schemas/objects/navItem'
+import seo from '@/sanity/schemas/objects/seo'
+import stat from '@/sanity/schemas/objects/stat'
 import duration from '@/sanity/schemas/objects/duration'
 import milestone from '@/sanity/schemas/objects/milestone'
 import timeline from '@/sanity/schemas/objects/timeline'
+import about from '@/sanity/schemas/singletons/about'
+import contactPage from '@/sanity/schemas/singletons/contactPage'
+import governmentPage from '@/sanity/schemas/singletons/government'
 import home from '@/sanity/schemas/singletons/home'
 import settings from '@/sanity/schemas/singletons/settings'
 import {visionTool} from '@sanity/vision'
@@ -20,7 +34,7 @@ import {presentationTool} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 const title =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Personal Website with Sanity.io'
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Bruck Systems Group'
 
 export default defineConfig({
   basePath: studioUrl,
@@ -32,12 +46,26 @@ export default defineConfig({
     types: [
       // Singletons
       home,
+      about,
+      governmentPage,
+      contactPage,
       settings,
       // Documents
-      duration,
       page,
       project,
+      service,
+      industry,
+      insight,
+      caseStudy,
+      leader,
       // Objects
+      duration,
+      link,
+      navItem,
+      footerColumn,
+      contactMethod,
+      seo,
+      stat,
       milestone,
       timeline,
     ],
@@ -48,10 +76,10 @@ export default defineConfig({
       previewUrl: {previewMode: {enable: '/api/draft-mode/enable'}},
     }),
     structureTool({
-      structure: pageStructure([home, settings]),
+      structure: pageStructure([home, about, governmentPage, contactPage, settings]),
     }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-    singletonPlugin([home.name, settings.name]),
+    singletonPlugin([home.name, about.name, governmentPage.name, contactPage.name, settings.name]),
     // Add an image asset source for Unsplash
     unsplashImageAsset(),
     // Vision lets you query your content with GROQ in the studio
