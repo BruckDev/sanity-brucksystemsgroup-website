@@ -28,18 +28,27 @@ export async function generateMetadata({params}: PageProps<'/industries/[slug]'>
 
 export default async function IndustryDetailPage({params}: PageProps<'/industries/[slug]'>) {
   const {slug} = await params
+  const industry = await fetchIndustry(slug)
+
+  if (!industry) {
+    notFound()
+  }
+
+  return <IndustryDetail industry={industry} />
+}
+
+async function fetchIndustry(slug: string) {
+  'use cache'
   const {data} = await sanityFetch({
     query: industryBySlugQuery,
     params: {slug},
     perspective: 'published',
     stega: false,
   })
-  const industry: any = data || fallbackIndustries.find((item) => item.slug === slug)
+  return (data as any) || fallbackIndustries.find((item) => item.slug === slug)
+}
 
-  if (!industry) {
-    notFound()
-  }
-
+function IndustryDetail({industry}: {industry: any}) {
   return (
     <div className="space-y-16 md:space-y-20">
       <PageHero

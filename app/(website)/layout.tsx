@@ -8,6 +8,7 @@ import {urlForOpenGraphImage} from '@/sanity/lib/utils'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata, Viewport} from 'next'
 import {defineQuery} from 'next-sanity'
+import {Suspense} from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
   const layoutMetadataQuery = defineQuery(`{
@@ -71,7 +72,9 @@ export default async function WebsiteLayout({children}: LayoutProps<'/'>) {
           linkedin={data?.linkedin}
         />
       </div>
-      <SpeedInsights />
+      <Suspense fallback={null}>
+        <SpeedInsights />
+      </Suspense>
     </>
   )
 }
