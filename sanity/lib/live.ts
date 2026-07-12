@@ -25,6 +25,8 @@ export async function sanityFetch<const QueryString extends string>({
   perspective: LivePerspective
   stega: boolean
 }) {
+  'use cache'
+
   if (projectId === 'placeholder') {
     return {data: null}
   }
