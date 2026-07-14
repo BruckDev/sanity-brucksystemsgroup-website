@@ -42,56 +42,50 @@ export default async function HomePage() {
         />
       </div>
 
-      <section className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
-        <div>
-          <SectionIntro
-            eyebrow="Services overview"
-            title={home.servicesTitle}
-            description={
-              <CustomPortableText
-                id={null}
-                type={null}
-                path={[]}
-                value={home.servicesIntro || []}
-              />
-            }
-          />
-          <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)]">
-            {services.map((service: any) => (
-              <Link
-                key={service.slug || service.title}
-                href={`/services/${service.slug}`}
-                className="group grid gap-5 bg-white p-6 transition hover:bg-[color:var(--bg)] md:grid-cols-[minmax(0,1fr)_15rem] md:items-center xl:grid-cols-[minmax(0,1fr)_18rem]"
-              >
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 max-w-2xl text-base leading-7 text-[color:var(--muted)]">
-                    {service.summary}
-                  </p>
-                </div>
-                <div className="text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)] md:col-start-1">
-                  View service
-                </div>
-                <ServiceImage
-                  slug={service.slug}
-                  image={service.image}
-                  alt={service.image?.alt}
-                  className="relative aspect-[16/10] min-h-[12rem] md:col-start-2 md:row-start-1 md:row-span-2 md:min-h-0"
-                  sizes="(min-width: 1280px) 18rem, (min-width: 768px) 15rem, 100vw"
-                />
-              </Link>
-            ))}
-          </div>
-          <div className="mt-8">
-            <ButtonLink href="/services" label="Explore All Services" style="secondary" />
-          </div>
-        </div>
-        <AbstractPanel
-          title="Operational clarity meets technical delivery."
-          subtitle="Original abstract system graphic"
+      <section>
+        <SectionIntro
+          eyebrow="Services overview"
+          title={home.servicesTitle}
+          description={
+            <CustomPortableText
+              id={null}
+              type={null}
+              path={[]}
+              value={home.servicesIntro || []}
+            />
+          }
         />
+        <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)] md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service: any) => (
+            <Link
+              key={service.slug || service.title}
+              href={`/services/${service.slug}`}
+              className="group flex min-h-full flex-col bg-white p-6 transition hover:bg-[color:var(--bg)]"
+            >
+              <ServiceImage
+                slug={service.slug}
+                image={service.image}
+                alt={service.image?.alt}
+                className="relative aspect-[16/10]"
+                sizes="(min-width: 1280px) 24rem, (min-width: 768px) 50vw, 100vw"
+              />
+              <div className="mt-6">
+                <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+                  {service.title}
+                </h3>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {service.summary}
+                </p>
+              </div>
+              <div className="mt-auto pt-6 text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)]">
+                View service
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-8">
+          <ButtonLink href="/services" label="Explore All Services" style="secondary" />
+        </div>
       </section>
 
       <section className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
