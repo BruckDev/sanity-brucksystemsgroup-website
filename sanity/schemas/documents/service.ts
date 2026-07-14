@@ -1,4 +1,4 @@
-import {DocumentIcon} from '@sanity/icons'
+import {DocumentIcon, ImageIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
@@ -26,6 +26,21 @@ export default defineType({
       type: 'text',
       rows: 3,
       validation: (rule) => rule.required().max(220),
+    }),
+    defineField({
+      name: 'image',
+      title: 'Service image',
+      type: 'image',
+      icon: ImageIcon,
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'Short description for screen readers.',
+        }),
+      ],
     }),
     defineField({
       name: 'clientProblem',

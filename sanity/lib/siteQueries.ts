@@ -101,6 +101,10 @@ export const servicesQuery = defineQuery(`
     title,
     "slug": slug.current,
     summary,
+    image{
+      ...,
+      asset->
+    },
     clientProblem,
     whatWeProvide,
     deliverables,
@@ -117,6 +121,10 @@ export const serviceBySlugQuery = defineQuery(`
     title,
     "slug": slug.current,
     summary,
+    image{
+      ...,
+      asset->
+    },
     clientProblem,
     whatWeProvide,
     deliverables,

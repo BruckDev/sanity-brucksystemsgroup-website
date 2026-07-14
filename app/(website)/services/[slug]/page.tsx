@@ -1,6 +1,7 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
+import {ServiceImage} from '@/components/site/ServiceImage'
 import {sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
 import {fallbackServices, toBlocks} from '@/sanity/lib/siteFallbacks'
 import {serviceBySlugQuery} from '@/sanity/lib/siteQueries'
@@ -50,6 +51,14 @@ export default async function ServiceDetailPage({params}: PageProps<'/services/[
         primaryCta={service.cta}
         secondaryCta={{label: 'Explore All Services', href: '/services', style: 'secondary'}}
         stats={service.featuredStats}
+      />
+
+      <ServiceImage
+        slug={service.slug}
+        image={service.image}
+        alt={service.image?.alt}
+        className="relative aspect-[16/7]"
+        sizes="100vw"
       />
 
       <section className="grid gap-8 lg:grid-cols-2">

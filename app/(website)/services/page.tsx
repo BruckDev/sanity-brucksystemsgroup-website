@@ -1,6 +1,7 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
+import {ServiceImage} from '@/components/site/ServiceImage'
 import {SectionIntro} from '@/components/site/SectionIntro'
 import {sanityFetch} from '@/sanity/lib/live'
 import {fallbackServices, toBlocks} from '@/sanity/lib/siteFallbacks'
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 export default async function ServicesPage() {
   const {data} = await sanityFetch({query: servicesQuery, perspective: 'published', stega: false})
-  const services = data?.length ? data : fallbackServices
+  const services: any[] = Array.isArray(data) && data.length ? data : fallbackServices
 
   return (
     <div className="space-y-16 md:space-y-20">
@@ -56,6 +57,7 @@ export default async function ServicesPage() {
                 ) : null}
               </div>
               <div className="grid gap-6 border-t border-[color:var(--border)] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                <ServiceImage slug={service.slug} image={service.image} alt={service.image?.alt} />
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
                     Example deliverables
