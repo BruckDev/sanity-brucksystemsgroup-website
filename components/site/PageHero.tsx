@@ -30,7 +30,7 @@ export function PageHero({
     <section
       className={`relative overflow-hidden border-b pb-14 pt-6 md:pb-20 md:pt-10 ${
         hasBackgroundImage
-          ? 'grid min-h-[32rem] gap-10 border-white/10 px-6 py-8 md:min-h-[38rem] md:gap-12 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:px-12 lg:py-16'
+          ? 'grid min-h-[32rem] gap-10 rounded-[2rem] border-white/10 px-6 py-8 md:min-h-[38rem] md:gap-12 md:px-8 md:py-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:px-12 lg:py-16'
           : 'grid gap-8 md:gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]'
       }`}
     >

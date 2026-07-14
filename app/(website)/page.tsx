@@ -29,7 +29,7 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-20 pb-8 md:space-y-28">
-      <div className="relative left-1/2 w-screen -translate-x-1/2">
+      <div className="relative left-1/2 w-[calc(100vw-1.5rem)] -translate-x-1/2 md:w-[calc(100vw-3rem)]">
         <PageHero
           eyebrow="Bruck Systems Group"
           title={home.title}
