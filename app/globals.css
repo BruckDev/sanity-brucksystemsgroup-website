@@ -6,7 +6,7 @@
   --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: Consolas, "Courier New", monospace;
-  --bg: #f4f4f1;
+  --bg: #ffffff;
   --surface: #ffffff;
   --bg-elevated: rgba(255, 255, 255, 0.84);
   --bg-strong: #ebebe5;
@@ -25,9 +25,7 @@
 }
 
 html {
-  background:
-    radial-gradient(circle at top left, rgba(134, 188, 37, 0.14), transparent 32%),
-    linear-gradient(180deg, #fbfbf8 0%, #f2f2ef 100%);
+  background: #ffffff;
   color: var(--fg);
   scroll-behavior: smooth;
 }
