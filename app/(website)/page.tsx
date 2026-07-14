@@ -26,6 +26,9 @@ export default async function HomePage() {
     ? data.featuredCaseStudies
     : fallbackCaseStudies
   const industries = data?.featuredIndustries?.length ? data.featuredIndustries : fallbackIndustries
+  const servicesVideoLinks = home.servicesVideoLinks?.length
+    ? home.servicesVideoLinks
+    : fallbackHome.servicesVideoLinks
 
   return (
     <div className="space-y-20 pb-8 md:space-y-28">
@@ -112,6 +115,17 @@ export default async function HomePage() {
               <p className="mx-auto mt-5 max-w-3xl text-sm leading-6 text-white md:mt-7 md:text-lg md:leading-8">
                 {home.servicesVideoText || fallbackHome.servicesVideoText}
               </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                {servicesVideoLinks.map((link: any) => (
+                  <Link
+                    key={`${link.label}-${link.href}`}
+                    href={link.href || '/'}
+                    className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#4cc5eb] bg-white px-6 py-3 text-sm font-semibold text-[#147ea5] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition hover:border-white hover:bg-[#eaf9ff] hover:text-[#075d80] sm:w-[13rem]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>

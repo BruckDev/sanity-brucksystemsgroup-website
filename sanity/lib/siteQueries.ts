@@ -50,6 +50,7 @@ export const homeQuery = defineQuery(`
     servicesIntro,
     servicesVideoTitle,
     servicesVideoText,
+    servicesVideoLinks[]{label, href, style},
     featuredServices[]->{
       _id,
       title,

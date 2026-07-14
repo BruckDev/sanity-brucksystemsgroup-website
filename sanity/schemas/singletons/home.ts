@@ -70,6 +70,13 @@ export default defineType({
         "At Bruck Systems, we don't just recommend solutions, we build them for you. We help organizations solve operational, technology, and business challenges by combining strategic consulting with custom software, AI, and digital transformation.",
     }),
     defineField({
+      name: 'servicesVideoLinks',
+      title: 'Services video links',
+      type: 'array',
+      of: [defineArrayMember({type: 'link'})],
+      validation: (rule) => rule.max(3),
+    }),
+    defineField({
       name: 'insightsTitle',
       title: 'Insights section title',
       type: 'string',

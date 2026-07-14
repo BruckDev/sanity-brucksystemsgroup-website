@@ -394,6 +394,11 @@ export const fallbackHome = {
   servicesVideoTitle: 'Complex challenges deserve smarter solutions.',
   servicesVideoText:
     "At Bruck Systems, we don't just recommend solutions, we build them for you. We help organizations solve operational, technology, and business challenges by combining strategic consulting with custom software, AI, and digital transformation.",
+  servicesVideoLinks: [
+    {label: 'Our approach', href: '/about', style: 'secondary'},
+    {label: 'Client stories', href: '/insights/case-studies', style: 'secondary'},
+    {label: 'Insights', href: '/insights', style: 'secondary'},
+  ],
   insightsTitle: 'Insights and case studies',
   insightsIntro: toBlocks([
     'An editorial area built for perspectives, reports, and future client-approved case studies.',
