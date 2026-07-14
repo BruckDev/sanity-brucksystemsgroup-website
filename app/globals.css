@@ -39,7 +39,7 @@ body {
 }
 
 ::selection {
-  background: rgba(134, 188, 37, 0.22);
+  background: rgba(32, 174, 73, 0.22);
 }
 
 a {
@@ -90,9 +90,7 @@ main {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(135deg, rgba(134, 188, 37, 0.14), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(17, 17, 17, 0.08), transparent 28%);
+  background: radial-gradient(circle at bottom right, rgba(17, 17, 17, 0.08), transparent 28%);
 }
 
 .animate-rise {

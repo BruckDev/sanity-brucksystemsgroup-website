@@ -38,7 +38,7 @@ export default async function HomePage() {
           backgroundImageSrc="/images/home/hero-background.png"
           primaryCta={home.heroPrimaryCta}
           secondaryCta={home.heroSecondaryCta}
-          stats={home.heroHighlights}
+          stats={home.heroHighlights?.length ? home.heroHighlights : fallbackHome.heroHighlights}
         />
       </div>
 
@@ -57,15 +57,12 @@ export default async function HomePage() {
             }
           />
           <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)]">
-            {services.map((service: any, index: number) => (
+            {services.map((service: any) => (
               <Link
                 key={service.slug || service.title}
                 href={`/services/${service.slug}`}
-                className="group grid gap-5 bg-white p-6 transition hover:bg-[color:var(--bg)] md:grid-cols-[4rem_minmax(0,1fr)_15rem] md:items-center xl:grid-cols-[4rem_minmax(0,1fr)_18rem]"
+                className="group grid gap-5 bg-white p-6 transition hover:bg-[color:var(--bg)] md:grid-cols-[minmax(0,1fr)_15rem] md:items-center xl:grid-cols-[minmax(0,1fr)_18rem]"
               >
-                <div className="text-sm font-semibold text-[color:var(--accent)]">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
                 <div>
                   <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                     {service.title}
@@ -74,14 +71,14 @@ export default async function HomePage() {
                     {service.summary}
                   </p>
                 </div>
-                <div className="text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)] md:col-start-2">
+                <div className="text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)] md:col-start-1">
                   View service
                 </div>
                 <ServiceImage
                   slug={service.slug}
                   image={service.image}
                   alt={service.image?.alt}
-                  className="relative aspect-[16/10] min-h-[12rem] md:col-start-3 md:row-start-1 md:row-span-2 md:min-h-0"
+                  className="relative aspect-[16/10] min-h-[12rem] md:col-start-2 md:row-start-1 md:row-span-2 md:min-h-0"
                   sizes="(min-width: 1280px) 18rem, (min-width: 768px) 15rem, 100vw"
                 />
               </Link>

@@ -26,7 +26,7 @@ export function SiteHeader({
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[color:var(--border)] bg-[color:var(--bg-elevated)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-black text-white">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-4 md:px-8 lg:px-12">
         <Link href="/" className="shrink-0" onClick={() => setOpen(false)}>
           <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
@@ -45,12 +45,12 @@ export function SiteHeader({
                 <div key={`${item.label}-${item.href}`} className="group relative">
                   <Link
                     href={item.href || '/'}
-                    className="inline-flex items-center py-2 text-sm font-semibold text-[color:var(--muted)] hover:text-[color:var(--fg)]"
+                    className="inline-flex items-center py-2 text-sm font-semibold text-white/70 hover:text-white"
                   >
                     {item.label}
                   </Link>
                   {item.children?.length ? (
-                    <div className="pointer-events-none absolute left-0 top-full hidden min-w-[20rem] translate-y-4 border border-[color:var(--border)] bg-white p-5 opacity-0 shadow-[0_18px_50px_rgba(0,0,0,0.08)] transition group-hover:pointer-events-auto group-hover:block group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:block group-focus-within:translate-y-2 group-focus-within:opacity-100 xl:min-w-[24rem]">
+                    <div className="pointer-events-none absolute left-0 top-full hidden min-w-[20rem] translate-y-4 border border-white/10 bg-black p-5 opacity-0 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition group-hover:pointer-events-auto group-hover:block group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:block group-focus-within:translate-y-2 group-focus-within:opacity-100 xl:min-w-[24rem]">
                       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
                         {item.label}
                       </div>
@@ -59,7 +59,7 @@ export function SiteHeader({
                           <Link
                             key={`${child.label}-${child.href}`}
                             href={child.href || '/'}
-                            className="border-b border-[color:var(--border)] pb-3 text-sm font-medium text-[color:var(--muted)] last:border-b-0 last:pb-0 hover:text-[color:var(--fg)]"
+                            className="border-b border-white/12 pb-3 text-sm font-medium text-white/72 last:border-b-0 last:pb-0 hover:text-white"
                           >
                             {child.label}
                           </Link>
@@ -71,12 +71,12 @@ export function SiteHeader({
               )
             })}
           </nav>
-          <ButtonLink href="/contact" label="Contact Us" style="primary" className="px-4 py-2.5" />
+          <ButtonLink href="/contact" label="Contact Us" style="primary" className="border-white bg-white px-4 py-2.5 !text-black hover:bg-white/90" />
         </div>
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center border border-[color:var(--border)] bg-white text-[color:var(--fg)] lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center border border-white/25 bg-black text-white lg:hidden"
           aria-expanded={open}
           aria-label="Toggle menu"
           onClick={() => setOpen((value) => !value)}
@@ -96,16 +96,16 @@ export function SiteHeader({
       </div>
 
       {open ? (
-        <div className="border-t border-[color:var(--border)] bg-white px-4 py-5 lg:hidden">
+        <div className="border-t border-white/10 bg-black px-4 py-5 lg:hidden">
           <nav className="mx-auto max-w-7xl space-y-5" aria-label="Mobile navigation">
             {(navigation || []).map((item) => (
               <div
                 key={`${item.label}-${item.href}`}
-                className="border-b border-[color:var(--border)] pb-4 last:border-b-0"
+                className="border-b border-white/10 pb-4 last:border-b-0"
               >
                 <Link
                   href={item.href || '/'}
-                  className="text-base font-semibold text-[color:var(--fg)]"
+                  className="text-base font-semibold text-white"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
@@ -116,7 +116,7 @@ export function SiteHeader({
                       <Link
                         key={`${child.label}-${child.href}`}
                         href={child.href || '/'}
-                        className="text-sm text-[color:var(--muted)]"
+                        className="text-sm text-white/70"
                         onClick={() => setOpen(false)}
                       >
                         {child.label}
