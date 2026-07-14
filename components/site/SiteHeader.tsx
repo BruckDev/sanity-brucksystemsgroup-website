@@ -3,7 +3,7 @@
 import {BrandLogo} from '@/components/site/BrandLogo'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import Link from 'next/link'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
 type LinkItem = {
   label?: string | null
@@ -24,12 +24,28 @@ export function SiteHeader({
   navigation = [],
 }: SiteHeaderProps) {
   const [open, setOpen] = useState(false)
+  const [backgroundOpacity, setBackgroundOpacity] = useState(1)
+
+  useEffect(() => {
+    const updateBackgroundOpacity = () => {
+      const scrollProgress = Math.min(window.scrollY / 280, 1)
+      setBackgroundOpacity(1 - scrollProgress * 0.38)
+    }
+
+    updateBackgroundOpacity()
+    window.addEventListener('scroll', updateBackgroundOpacity, {passive: true})
+
+    return () => window.removeEventListener('scroll', updateBackgroundOpacity)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black text-white">
+    <header
+      className="sticky top-0 z-40 border-b border-white/10 text-white transition-[background-color] duration-200"
+      style={{backgroundColor: `rgb(0 0 0 / ${backgroundOpacity})`}}
+    >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-4 md:px-8 lg:px-12">
         <Link href="/" className="shrink-0" onClick={() => setOpen(false)}>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
+          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
             {brandEyebrow}
           </div>
           <div className="mt-2">
@@ -45,7 +61,7 @@ export function SiteHeader({
                 <div key={`${item.label}-${item.href}`} className="group relative">
                   <Link
                     href={item.href || '/'}
-                    className="inline-flex items-center py-2 text-sm font-semibold text-white/70 hover:text-white"
+                    className="inline-flex items-center py-2 text-base font-semibold text-white hover:text-white/80"
                   >
                     {item.label}
                   </Link>
@@ -59,7 +75,7 @@ export function SiteHeader({
                           <Link
                             key={`${child.label}-${child.href}`}
                             href={child.href || '/'}
-                            className="border-b border-white/12 pb-3 text-sm font-medium text-white/72 last:border-b-0 last:pb-0 hover:text-white"
+                            className="border-b border-white/12 pb-3 text-base font-medium text-white last:border-b-0 last:pb-0 hover:text-white/80"
                           >
                             {child.label}
                           </Link>
@@ -71,7 +87,7 @@ export function SiteHeader({
               )
             })}
           </nav>
-          <ButtonLink href="/contact" label="Contact Us" style="primary" className="border-white bg-white px-4 py-2.5 !text-black hover:bg-white/90" />
+          <ButtonLink href="/contact" label="Contact Us" style="primary" className="border-white bg-white px-4 py-2.5 !text-base !text-black hover:bg-white/90" />
         </div>
 
         <button
@@ -105,7 +121,7 @@ export function SiteHeader({
               >
                 <Link
                   href={item.href || '/'}
-                  className="text-base font-semibold text-white"
+                  className="text-lg font-semibold text-white"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
@@ -116,7 +132,7 @@ export function SiteHeader({
                       <Link
                         key={`${child.label}-${child.href}`}
                         href={child.href || '/'}
-                        className="text-sm text-white/70"
+                        className="text-base text-white"
                         onClick={() => setOpen(false)}
                       >
                         {child.label}
