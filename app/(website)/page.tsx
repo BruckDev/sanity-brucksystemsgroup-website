@@ -32,6 +32,8 @@ export default async function HomePage() {
         eyebrow="Bruck Systems Group"
         title={home.title}
         description={home.overview}
+        backgroundImageAlt="Abstract digital network background with glowing blue lines and hexagonal interface shapes."
+        backgroundImageSrc="/images/home/hero-background.png"
         primaryCta={home.heroPrimaryCta}
         secondaryCta={home.heroSecondaryCta}
         stats={home.heroHighlights}
