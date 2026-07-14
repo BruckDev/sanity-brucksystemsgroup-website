@@ -1,4 +1,5 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
+import {BrandLogo} from '@/components/site/BrandLogo'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import Link from 'next/link'
 
@@ -23,7 +24,8 @@ export function SiteFooter({
     <footer className="border-t border-[color:var(--border)] bg-[color:var(--surface)]">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:px-12">
         <div>
-          <div className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">{siteTitle}</div>
+          <BrandLogo className="h-auto w-[15rem] md:w-[18rem]" size="footer" />
+          <div className="sr-only">{siteTitle}</div>
           <div className="mt-5 space-y-3 text-sm leading-7 text-[color:var(--muted)]">
             {(contactMethods || []).map((item) => (
               <div key={`${item.label}-${item.value}`}>

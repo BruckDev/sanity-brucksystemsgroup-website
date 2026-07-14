@@ -1,5 +1,6 @@
 'use client'
 
+import {BrandLogo} from '@/components/site/BrandLogo'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import Link from 'next/link'
 import {useState} from 'react'
@@ -31,8 +32,9 @@ export function SiteHeader({
           <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
             {brandEyebrow}
           </div>
-          <div className="mt-1 text-xl font-semibold tracking-tight text-[color:var(--fg)] md:text-2xl">
-            {siteTitle}
+          <div className="mt-2">
+            <BrandLogo className="h-auto w-[11rem] md:w-[14rem]" priority />
+            <span className="sr-only">{siteTitle}</span>
           </div>
         </Link>
 
