@@ -3,6 +3,7 @@ import {AbstractPanel} from '@/components/site/AbstractPanel'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
 import {SectionIntro} from '@/components/site/SectionIntro'
+import {ServiceImage} from '@/components/site/ServiceImage'
 import {sanityFetch} from '@/sanity/lib/live'
 import {
   fallbackCaseStudies,
@@ -17,41 +18,50 @@ import Link from 'next/link'
 export default async function HomePage() {
   const {data} = await sanityFetch({query: homeQuery, perspective: 'published', stega: false})
   const home: any = data || fallbackHome
-  const services = data?.featuredServices?.length ? data.featuredServices : fallbackServices.slice(0, 3)
+  const services = data?.featuredServices?.length
+    ? data.featuredServices
+    : fallbackServices.slice(0, 3)
   const insights = data?.featuredInsights?.length ? data.featuredInsights : fallbackInsights
   const caseStudies = data?.featuredCaseStudies?.length
     ? data.featuredCaseStudies
     : fallbackCaseStudies
-  const industries = data?.featuredIndustries?.length
-    ? data.featuredIndustries
-    : fallbackIndustries
+  const industries = data?.featuredIndustries?.length ? data.featuredIndustries : fallbackIndustries
 
   return (
     <div className="space-y-20 pb-8 md:space-y-28">
-      <PageHero
-        eyebrow="Bruck Systems Group"
-        title={home.title}
-        description={home.overview}
-        backgroundImageAlt="Abstract digital network background with glowing blue lines and hexagonal interface shapes."
-        backgroundImageSrc="/images/home/hero-background.png"
-        primaryCta={home.heroPrimaryCta}
-        secondaryCta={home.heroSecondaryCta}
-        stats={home.heroHighlights}
-      />
+      <div className="relative left-1/2 w-screen -translate-x-1/2">
+        <PageHero
+          eyebrow="Bruck Systems Group"
+          title={home.title}
+          description={home.overview}
+          backgroundImageAlt="Abstract digital network background with glowing blue lines and hexagonal interface shapes."
+          backgroundImageSrc="/images/home/hero-background.png"
+          primaryCta={home.heroPrimaryCta}
+          secondaryCta={home.heroSecondaryCta}
+          stats={home.heroHighlights}
+        />
+      </div>
 
       <section className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
         <div>
           <SectionIntro
             eyebrow="Services overview"
             title={home.servicesTitle}
-            description={<CustomPortableText id={null} type={null} path={[]} value={home.servicesIntro || []} />}
+            description={
+              <CustomPortableText
+                id={null}
+                type={null}
+                path={[]}
+                value={home.servicesIntro || []}
+              />
+            }
           />
           <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)]">
             {services.map((service: any, index: number) => (
               <Link
                 key={service.slug || service.title}
                 href={`/services/${service.slug}`}
-                className="group grid gap-5 bg-white p-6 transition hover:bg-[color:var(--bg)] md:grid-cols-[4rem_minmax(0,1fr)_auto] md:items-start"
+                className="group grid gap-5 bg-white p-6 transition hover:bg-[color:var(--bg)] md:grid-cols-[4rem_minmax(0,1fr)_15rem] md:items-center xl:grid-cols-[4rem_minmax(0,1fr)_18rem]"
               >
                 <div className="text-sm font-semibold text-[color:var(--accent)]">
                   {String(index + 1).padStart(2, '0')}
@@ -64,9 +74,16 @@ export default async function HomePage() {
                     {service.summary}
                   </p>
                 </div>
-                <div className="text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)]">
+                <div className="text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)] md:col-start-2">
                   View service
                 </div>
+                <ServiceImage
+                  slug={service.slug}
+                  image={service.image}
+                  alt={service.image?.alt}
+                  className="relative aspect-[16/10] min-h-[12rem] md:col-start-3 md:row-start-1 md:row-span-2 md:min-h-0"
+                  sizes="(min-width: 1280px) 18rem, (min-width: 768px) 15rem, 100vw"
+                />
               </Link>
             ))}
           </div>
@@ -85,7 +102,14 @@ export default async function HomePage() {
           <SectionIntro
             eyebrow="Insights"
             title={home.insightsTitle}
-            description={<CustomPortableText id={null} type={null} path={[]} value={home.insightsIntro || []} />}
+            description={
+              <CustomPortableText
+                id={null}
+                type={null}
+                path={[]}
+                value={home.insightsIntro || []}
+              />
+            }
           />
           <div className="mt-8 grid gap-6">
             {insights.map((insight: any) => (
@@ -100,7 +124,9 @@ export default async function HomePage() {
                 <h3 className="mt-5 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                   <Link href={`/insights/${insight.slug}`}>{insight.title}</Link>
                 </h3>
-                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">{insight.excerpt}</p>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {insight.excerpt}
+                </p>
               </article>
             ))}
           </div>
@@ -114,14 +140,19 @@ export default async function HomePage() {
           />
           <div className="mt-8 grid gap-6">
             {caseStudies.map((study: any) => (
-              <article key={study.slug || study.title} className="border border-[color:var(--border)] bg-white p-6">
+              <article
+                key={study.slug || study.title}
+                className="border border-[color:var(--border)] bg-white p-6"
+              >
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
                   Placeholder structure
                 </div>
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                   <Link href={`/insights/case-studies/${study.slug}`}>{study.title}</Link>
                 </h3>
-                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">{study.excerpt}</p>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {study.excerpt}
+                </p>
               </article>
             ))}
           </div>
@@ -132,15 +163,27 @@ export default async function HomePage() {
         <SectionIntro
           eyebrow="Industries"
           title={home.industriesTitle}
-          description={<CustomPortableText id={null} type={null} path={[]} value={home.industriesIntro || []} />}
+          description={
+            <CustomPortableText
+              id={null}
+              type={null}
+              path={[]}
+              value={home.industriesIntro || []}
+            />
+          }
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {industries.map((industry: any) => (
-            <article key={industry.slug || industry.title} className="border border-[color:var(--border)] bg-white p-6">
+            <article
+              key={industry.slug || industry.title}
+              className="border border-[color:var(--border)] bg-white p-6"
+            >
               <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                 <Link href={`/industries/${industry.slug}`}>{industry.title}</Link>
               </h3>
-              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{industry.summary}</p>
+              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
+                {industry.summary}
+              </p>
             </article>
           ))}
         </div>
@@ -151,7 +194,14 @@ export default async function HomePage() {
           <SectionIntro
             eyebrow="Government"
             title={home.governmentTitle}
-            description={<CustomPortableText id={null} type={null} path={[]} value={home.governmentIntro || []} />}
+            description={
+              <CustomPortableText
+                id={null}
+                type={null}
+                path={[]}
+                value={home.governmentIntro || []}
+              />
+            }
           />
           <div className="mt-8 flex flex-wrap gap-3">
             {(home.governmentCapabilities || []).map((capability: string) => (
@@ -178,7 +228,9 @@ export default async function HomePage() {
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {(home.whyUsCards || []).map((card: any) => (
             <article key={card.title} className="border border-[color:var(--border)] bg-white p-6">
-              <h3 className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">{card.title}</h3>
+              <h3 className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">
+                {card.title}
+              </h3>
               <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{card.text}</p>
             </article>
           ))}

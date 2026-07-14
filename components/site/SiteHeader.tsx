@@ -33,7 +33,7 @@ export function SiteHeader({
             {brandEyebrow}
           </div>
           <div className="mt-2">
-            <BrandLogo className="h-auto w-[11rem] md:w-[14rem]" priority />
+            <BrandLogo className="h-auto w-36 md:w-40" priority />
             <span className="sr-only">{siteTitle}</span>
           </div>
         </Link>
@@ -82,9 +82,15 @@ export function SiteHeader({
           onClick={() => setOpen((value) => !value)}
         >
           <div className="space-y-1.5">
-            <div className={`h-px w-5 bg-current transition ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
-            <div className={`h-px w-5 bg-current transition ${open ? 'opacity-0' : 'opacity-100'}`} />
-            <div className={`h-px w-5 bg-current transition ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
+            <div
+              className={`h-px w-5 bg-current transition ${open ? 'translate-y-[7px] rotate-45' : ''}`}
+            />
+            <div
+              className={`h-px w-5 bg-current transition ${open ? 'opacity-0' : 'opacity-100'}`}
+            />
+            <div
+              className={`h-px w-5 bg-current transition ${open ? '-translate-y-[7px] -rotate-45' : ''}`}
+            />
           </div>
         </button>
       </div>
@@ -93,7 +99,10 @@ export function SiteHeader({
         <div className="border-t border-[color:var(--border)] bg-white px-4 py-5 lg:hidden">
           <nav className="mx-auto max-w-7xl space-y-5" aria-label="Mobile navigation">
             {(navigation || []).map((item) => (
-              <div key={`${item.label}-${item.href}`} className="border-b border-[color:var(--border)] pb-4 last:border-b-0">
+              <div
+                key={`${item.label}-${item.href}`}
+                className="border-b border-[color:var(--border)] pb-4 last:border-b-0"
+              >
                 <Link
                   href={item.href || '/'}
                   className="text-base font-semibold text-[color:var(--fg)]"

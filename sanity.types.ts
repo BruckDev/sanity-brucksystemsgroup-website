@@ -385,6 +385,14 @@ export type Service = {
   title?: string
   slug?: Slug
   summary?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
   clientProblem?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -1398,12 +1406,41 @@ export type HomeQueryResult = {
 
 // Source: sanity/lib/siteQueries.ts
 // Variable: servicesQuery
-// Query: *[_type == "service"] | order(title asc){    _id,    title,    "slug": slug.current,    summary,    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
+// Query: *[_type == "service"] | order(title asc){    _id,    title,    "slug": slug.current,    summary,    image{      ...,      asset->    },    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
 export type ServicesQueryResult = Array<{
   _id: string
   title: string | null
   slug: string | null
   summary: string | null
+  image: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
   clientProblem: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -1456,12 +1493,41 @@ export type ServicesQueryResult = Array<{
 
 // Source: sanity/lib/siteQueries.ts
 // Variable: serviceBySlugQuery
-// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    summary,    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    summary,    image{      ...,      asset->    },    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
 export type ServiceBySlugQueryResult = {
   _id: string
   title: string | null
   slug: string | null
   summary: string | null
+  image: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
   clientProblem: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -1985,8 +2051,8 @@ declare module '@sanity/client' {
     '{\n    "settings": *[_type == "settings"][0]{\n      ogImage,\n      seo,\n      siteTitle\n    },\n    "home": *[_type == "home"][0]{\n      title,\n      seo,\n      "overview": pt::text(overview)\n    }\n  }': LayoutMetadataQueryResult
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    siteTitle,\n    brandEyebrow,\n    headerNavigation[]{\n      label,\n      href,\n      description,\n      children[]{\n        label,\n        href,\n        style\n      }\n    },\n    contactMethods[]{\n      label,\n      value,\n      href\n    },\n    linkedin,\n    footerColumns[]{\n      title,\n      body,\n      links[]{\n        label,\n        href,\n        style\n      }\n    },\n    footerNote,\n    ogImage,\n    seo\n  }\n': SettingsQueryResult
     '\n  *[_type == "home"][0]{\n    _id,\n    _type,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    heroHighlights[]{value, label},\n    servicesTitle,\n    servicesIntro,\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    insightsTitle,\n    insightsIntro,\n    featuredInsights[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      articleType,\n      estimatedReadTime,\n      publishedAt\n    },\n    featuredCaseStudies[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt\n    },\n    industriesTitle,\n    industriesIntro,\n    featuredIndustries[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    governmentTitle,\n    governmentIntro,\n    governmentCapabilities,\n    whyUsTitle,\n    whyUsCards[]{\n      title,\n      text\n    },\n    finalCtaTitle,\n    finalCtaText,\n    finalPrimaryCta{label, href, style},\n    finalSecondaryCta{label, href, style},\n    seo\n  }\n': HomeQueryResult
-    '\n  *[_type == "service"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServicesQueryResult
-    '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServiceBySlugQueryResult
+    '\n  *[_type == "service"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServicesQueryResult
+    '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServiceBySlugQueryResult
     '\n  *[_type == "industry"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    overview,\n    priorities,\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': IndustriesQueryResult
     '\n  *[_type == "industry" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    overview,\n    priorities,\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': IndustryBySlugQueryResult
     '\n  *[_type == "insight"] | order(publishedAt desc){\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    articleType,\n    estimatedReadTime,\n    publishedAt,\n    seo\n  }\n': InsightsQueryResult
