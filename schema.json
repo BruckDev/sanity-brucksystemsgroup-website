@@ -6504,6 +6504,20 @@
         },
         "optional": true
       },
+      "servicesVideoTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "servicesVideoText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "insightsTitle": {
         "type": "objectAttribute",
         "value": {

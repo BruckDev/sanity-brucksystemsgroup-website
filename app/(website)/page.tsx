@@ -103,7 +103,17 @@ export default async function HomePage() {
           >
             <source src="/videos/home/services-background.mov" />
           </video>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,16,35,0.2),rgba(3,16,35,0.03))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,16,35,0.9)_0%,rgba(3,16,35,0.72)_42%,rgba(3,16,35,0.16)_76%,rgba(3,16,35,0.04)_100%)]" />
+          <div className="relative z-10 flex h-full items-end px-6 py-8 md:px-12 md:py-12">
+            <div className="max-w-3xl rounded-2xl bg-[#031429]/78 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-[2px] md:rounded-none md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-none">
+              <h2 className="text-4xl font-semibold leading-[0.98] tracking-tight text-white md:text-6xl xl:text-7xl">
+                {home.servicesVideoTitle || fallbackHome.servicesVideoTitle}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-white/88 md:mt-7 md:text-xl md:leading-8">
+                {home.servicesVideoText || fallbackHome.servicesVideoText}
+              </p>
+            </div>
+          </div>
         </section>
       </div>
 

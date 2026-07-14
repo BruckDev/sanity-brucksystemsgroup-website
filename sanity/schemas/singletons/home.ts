@@ -56,6 +56,20 @@ export default defineType({
       of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})],
     }),
     defineField({
+      name: 'servicesVideoTitle',
+      title: 'Services video title',
+      type: 'string',
+      initialValue: 'Complex challenges deserve smarter solutions.',
+    }),
+    defineField({
+      name: 'servicesVideoText',
+      title: 'Services video supporting text',
+      type: 'text',
+      rows: 4,
+      initialValue:
+        "At Bruck Systems, we don't just recommend solutions, we build them for you. We help organizations solve operational, technology, and business challenges by combining strategic consulting with custom software, AI, and digital transformation.",
+    }),
+    defineField({
       name: 'insightsTitle',
       title: 'Insights section title',
       type: 'string',

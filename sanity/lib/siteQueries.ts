@@ -48,6 +48,8 @@ export const homeQuery = defineQuery(`
     heroHighlights[]{value, label},
     servicesTitle,
     servicesIntro,
+    servicesVideoTitle,
+    servicesVideoText,
     featuredServices[]->{
       _id,
       title,

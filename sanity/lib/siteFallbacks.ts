@@ -391,6 +391,9 @@ export const fallbackHome = {
   servicesIntro: toBlocks([
     'From modernization strategy to software delivery and procurement support, Bruck Systems Group brings a practical, cross-functional approach to complex work.',
   ]),
+  servicesVideoTitle: 'Complex challenges deserve smarter solutions.',
+  servicesVideoText:
+    "At Bruck Systems, we don't just recommend solutions, we build them for you. We help organizations solve operational, technology, and business challenges by combining strategic consulting with custom software, AI, and digital transformation.",
   insightsTitle: 'Insights and case studies',
   insightsIntro: toBlocks([
     'An editorial area built for perspectives, reports, and future client-approved case studies.',
