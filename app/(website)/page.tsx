@@ -88,6 +88,23 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section
+        aria-label="Abstract blue technology animation"
+        className="relative isolate min-h-[18rem] overflow-hidden rounded-[2rem] bg-[color:var(--charcoal)] md:min-h-[24rem]"
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src="/videos/home/services-background.mov" />
+        </video>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,16,35,0.28),rgba(3,16,35,0.04))]" />
+      </section>
+
       <section className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div>
           <SectionIntro
