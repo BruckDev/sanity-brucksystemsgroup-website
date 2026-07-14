@@ -1,6 +1,7 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {AbstractPanel} from '@/components/site/AbstractPanel'
 import {ButtonLink} from '@/components/site/ButtonLink'
+import {CircuitAnimation} from '@/components/site/CircuitAnimation'
 import {PageHero} from '@/components/site/PageHero'
 import {SectionIntro} from '@/components/site/SectionIntro'
 import {ServiceImage} from '@/components/site/ServiceImage'
@@ -50,12 +51,7 @@ export default async function HomePage() {
           eyebrow="Services overview"
           title={home.servicesTitle}
           description={
-            <CustomPortableText
-              id={null}
-              type={null}
-              path={[]}
-              value={home.servicesIntro || []}
-            />
+            <CustomPortableText id={null} type={null} path={[]} value={home.servicesIntro || []} />
           }
         />
         <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)] md:grid-cols-2 lg:grid-cols-3">
@@ -96,16 +92,7 @@ export default async function HomePage() {
           aria-label="Abstract blue technology animation"
           className="relative isolate aspect-video overflow-hidden rounded-[2rem] bg-[#031429]"
         >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 h-full w-full object-contain"
-          >
-            <source src="/videos/home/services-background.mov" />
-          </video>
+          <CircuitAnimation />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,16,35,0.82)_0%,rgba(3,16,35,0.58)_46%,rgba(3,16,35,0.16)_100%)]" />
           <div className="relative z-10 flex h-full items-center justify-center px-6 py-8 text-center md:px-12 md:py-12">
             <div className="max-w-4xl -translate-y-[12%] rounded-2xl bg-[#031429]/78 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-[2px] md:bg-[#031429]/35 md:p-10">

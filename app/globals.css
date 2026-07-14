@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
-  --font-mono: Consolas, "Courier New", monospace;
+  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-mono: Consolas, 'Courier New', monospace;
   --bg: #ffffff;
   --surface: #ffffff;
   --bg-elevated: rgba(255, 255, 255, 0.84);
@@ -123,13 +123,131 @@ main {
   }
 }
 
+.circuit-animation {
+  background: #031429;
+}
+
+.circuit-layer,
+.circuit-ambient-glow,
+.circuit-nodes,
+.circuit-sparks,
+.circuit-bloom {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.circuit-layer--far {
+  animation: circuit-drift-far 28s ease-in-out infinite alternate;
+}
+
+.circuit-layer--mid {
+  animation: circuit-drift-mid 18s ease-in-out infinite alternate;
+}
+
+.circuit-layer--near {
+  animation: circuit-drift-near 13s ease-in-out infinite alternate;
+}
+
+.circuit-trace {
+  stroke-dasharray: 44 220;
+  animation: circuit-travel 7s linear infinite;
+}
+
+.circuit-trace--two {
+  animation-delay: -2.4s;
+}
+
+.circuit-trace--three {
+  animation-delay: -4.8s;
+}
+
+.circuit-ambient-glow {
+  animation: circuit-pulse 7s ease-in-out infinite alternate;
+}
+
+.circuit-nodes {
+  animation: circuit-pulse 3.5s ease-in-out infinite alternate;
+}
+
+.circuit-sparks {
+  animation: circuit-flicker 5s steps(2, end) infinite;
+}
+
+.circuit-bloom {
+  animation: circuit-pulse 4.8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes circuit-drift-far {
+  from {
+    transform: translate3d(-1.5%, -0.8%, 0) scale(1.03);
+  }
+
+  to {
+    transform: translate3d(1.5%, 0.8%, 0) scale(1.03);
+  }
+}
+
+@keyframes circuit-drift-mid {
+  from {
+    transform: translate3d(1.4%, -1%, 0) scale(1.04);
+  }
+
+  to {
+    transform: translate3d(-1.4%, 1%, 0) scale(1.04);
+  }
+}
+
+@keyframes circuit-drift-near {
+  from {
+    transform: translate3d(-0.8%, 1.2%, 0) scale(1.02);
+  }
+
+  to {
+    transform: translate3d(0.8%, -1.2%, 0) scale(1.02);
+  }
+}
+
+@keyframes circuit-travel {
+  to {
+    stroke-dashoffset: -528;
+  }
+}
+
+@keyframes circuit-pulse {
+  from {
+    opacity: 0.45;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes circuit-flicker {
+  0%,
+  75%,
+  100% {
+    opacity: 0.3;
+  }
+
+  82% {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .animate-rise,
-  .animate-fade {
+  .animate-fade,
+  .circuit-layer,
+  .circuit-trace,
+  .circuit-ambient-glow,
+  .circuit-nodes,
+  .circuit-sparks,
+  .circuit-bloom {
     animation: none;
   }
 }
