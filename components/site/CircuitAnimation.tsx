@@ -166,22 +166,34 @@ export function CircuitAnimation() {
         <circle cx="188" cy="726" r="5" />
       </g>
       <g transform="translate(288 362) scale(1.15)">
-        <use className="circuit-gear circuit-gear--one" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--right">
+          <use className="circuit-gear circuit-gear--one" href="#circuit-gear" />
+        </g>
       </g>
       <g transform="translate(696 240) scale(0.96)">
-        <use className="circuit-gear circuit-gear--two" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--right">
+          <use className="circuit-gear circuit-gear--two" href="#circuit-gear" />
+        </g>
       </g>
       <g transform="translate(1048 342) scale(1.1)">
-        <use className="circuit-gear circuit-gear--three" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--left">
+          <use className="circuit-gear circuit-gear--three" href="#circuit-gear" />
+        </g>
       </g>
       <g transform="translate(961 704) scale(0.9)">
-        <use className="circuit-gear circuit-gear--four" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--left">
+          <use className="circuit-gear circuit-gear--four" href="#circuit-gear" />
+        </g>
       </g>
       <g transform="translate(418 620) scale(1.02)">
-        <use className="circuit-gear circuit-gear--five" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--right">
+          <use className="circuit-gear circuit-gear--five" href="#circuit-gear" />
+        </g>
       </g>
       <g transform="translate(1240 520) scale(0.98)">
-        <use className="circuit-gear circuit-gear--six" href="#circuit-gear" />
+        <g className="circuit-gear-track circuit-gear-track--left">
+          <use className="circuit-gear circuit-gear--six" href="#circuit-gear" />
+        </g>
       </g>
       <g className="circuit-bloom" filter="url(#circuit-blur)" opacity="0.75">
         <circle cx="288" cy="362" fill="#44eaff" r="18" />

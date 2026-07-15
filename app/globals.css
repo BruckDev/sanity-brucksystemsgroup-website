@@ -132,6 +132,7 @@ main {
 .circuit-nodes,
 .circuit-sparks,
 .circuit-gear,
+.circuit-gear-track,
 .circuit-bloom {
   transform-box: fill-box;
   transform-origin: center;
@@ -162,30 +163,38 @@ main {
 }
 
 .circuit-gear {
-  animation: circuit-gear-spin 3.2s linear infinite;
+  animation: circuit-gear-spin 8.5s linear infinite;
 }
 
 .circuit-gear--two {
-  animation-duration: 2.5s;
+  animation-duration: 6.5s;
   animation-direction: reverse;
 }
 
 .circuit-gear--three {
-  animation-duration: 3.8s;
+  animation-duration: 9.5s;
 }
 
 .circuit-gear--four {
-  animation-duration: 2.1s;
+  animation-duration: 7.5s;
   animation-direction: reverse;
 }
 
 .circuit-gear--five {
-  animation-duration: 3s;
+  animation-duration: 6s;
 }
 
 .circuit-gear--six {
-  animation-duration: 2.7s;
+  animation-duration: 8s;
   animation-direction: reverse;
+}
+
+.circuit-gear-track {
+  animation: circuit-gear-slide 14s ease-in-out infinite alternate;
+}
+
+.circuit-gear-track--left {
+  animation-name: circuit-gear-slide-left;
 }
 
 .circuit-bloom {
@@ -228,6 +237,18 @@ main {
   }
 }
 
+@keyframes circuit-gear-slide {
+  to {
+    transform: translateX(140px);
+  }
+}
+
+@keyframes circuit-gear-slide-left {
+  to {
+    transform: translateX(-140px);
+  }
+}
+
 @keyframes circuit-pulse {
   from {
     opacity: 0.45;
@@ -262,6 +283,7 @@ main {
   .circuit-nodes,
   .circuit-sparks,
   .circuit-gear,
+  .circuit-gear-track,
   .circuit-bloom {
     animation: none;
   }
