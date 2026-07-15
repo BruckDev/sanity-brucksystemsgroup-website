@@ -162,20 +162,29 @@ main {
 }
 
 .circuit-gear {
-  animation: circuit-gear-spin 7s linear infinite;
+  animation: circuit-gear-spin 3.2s linear infinite;
 }
 
 .circuit-gear--two {
-  animation-duration: 5.5s;
+  animation-duration: 2.5s;
   animation-direction: reverse;
 }
 
 .circuit-gear--three {
-  animation-duration: 8.5s;
+  animation-duration: 3.8s;
 }
 
 .circuit-gear--four {
-  animation-duration: 4.5s;
+  animation-duration: 2.1s;
+  animation-direction: reverse;
+}
+
+.circuit-gear--five {
+  animation-duration: 3s;
+}
+
+.circuit-gear--six {
+  animation-duration: 2.7s;
   animation-direction: reverse;
 }
 

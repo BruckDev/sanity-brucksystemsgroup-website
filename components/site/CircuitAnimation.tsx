@@ -31,13 +31,21 @@ export function CircuitAnimation() {
         </pattern>
         <g id="circuit-gear">
           <g fill="#38dff5" stroke="#a0f7ff" strokeWidth="2">
-            <rect height="14" rx="3" width="9" x="-4.5" y="-35" />
-            <rect height="14" rx="3" transform="rotate(45)" width="9" x="-4.5" y="-35" />
-            <rect height="14" rx="3" transform="rotate(90)" width="9" x="-4.5" y="-35" />
-            <rect height="14" rx="3" transform="rotate(135)" width="9" x="-4.5" y="-35" />
+            <rect height="18" rx="3" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(30)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(60)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(90)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(120)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(150)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(180)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(210)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(240)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(270)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(300)" width="10" x="-5" y="-47" />
+            <rect height="18" rx="3" transform="rotate(330)" width="10" x="-5" y="-47" />
           </g>
-          <circle cx="0" cy="0" fill="#075078" r="25" stroke="#78efff" strokeWidth="3" />
-          <circle cx="0" cy="0" fill="#031429" r="10" stroke="#b2f9ff" strokeWidth="3" />
+          <circle cx="0" cy="0" fill="#075078" r="34" stroke="#78efff" strokeWidth="3" />
+          <circle cx="0" cy="0" fill="#031429" r="13" stroke="#b2f9ff" strokeWidth="3" />
           <circle cx="0" cy="0" fill="#79f4ff" r="3" />
         </g>
       </defs>
@@ -157,17 +165,23 @@ export function CircuitAnimation() {
         <circle cx="1434" cy="250" r="4" />
         <circle cx="188" cy="726" r="5" />
       </g>
-      <g transform="translate(288 362)">
+      <g transform="translate(288 362) scale(1.15)">
         <use className="circuit-gear circuit-gear--one" href="#circuit-gear" />
       </g>
-      <g transform="translate(696 240) scale(0.76)">
+      <g transform="translate(696 240) scale(0.96)">
         <use className="circuit-gear circuit-gear--two" href="#circuit-gear" />
       </g>
-      <g transform="translate(1048 342) scale(0.9)">
+      <g transform="translate(1048 342) scale(1.1)">
         <use className="circuit-gear circuit-gear--three" href="#circuit-gear" />
       </g>
-      <g transform="translate(961 704) scale(0.66)">
+      <g transform="translate(961 704) scale(0.9)">
         <use className="circuit-gear circuit-gear--four" href="#circuit-gear" />
+      </g>
+      <g transform="translate(418 620) scale(1.02)">
+        <use className="circuit-gear circuit-gear--five" href="#circuit-gear" />
+      </g>
+      <g transform="translate(1240 520) scale(0.98)">
+        <use className="circuit-gear circuit-gear--six" href="#circuit-gear" />
       </g>
       <g className="circuit-bloom" filter="url(#circuit-blur)" opacity="0.75">
         <circle cx="288" cy="362" fill="#44eaff" r="18" />
