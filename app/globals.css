@@ -131,6 +131,7 @@ main {
 .circuit-ambient-glow,
 .circuit-nodes,
 .circuit-sparks,
+.circuit-gear,
 .circuit-bloom {
   transform-box: fill-box;
   transform-origin: center;
@@ -148,19 +149,6 @@ main {
   animation: circuit-drift-near 13s ease-in-out infinite alternate;
 }
 
-.circuit-trace {
-  stroke-dasharray: 44 220;
-  animation: circuit-travel 7s linear infinite;
-}
-
-.circuit-trace--two {
-  animation-delay: -2.4s;
-}
-
-.circuit-trace--three {
-  animation-delay: -4.8s;
-}
-
 .circuit-ambient-glow {
   animation: circuit-pulse 7s ease-in-out infinite alternate;
 }
@@ -171,6 +159,24 @@ main {
 
 .circuit-sparks {
   animation: circuit-flicker 5s steps(2, end) infinite;
+}
+
+.circuit-gear {
+  animation: circuit-gear-spin 7s linear infinite;
+}
+
+.circuit-gear--two {
+  animation-duration: 5.5s;
+  animation-direction: reverse;
+}
+
+.circuit-gear--three {
+  animation-duration: 8.5s;
+}
+
+.circuit-gear--four {
+  animation-duration: 4.5s;
+  animation-direction: reverse;
 }
 
 .circuit-bloom {
@@ -207,9 +213,9 @@ main {
   }
 }
 
-@keyframes circuit-travel {
+@keyframes circuit-gear-spin {
   to {
-    stroke-dashoffset: -528;
+    transform: rotate(360deg);
   }
 }
 
@@ -243,10 +249,10 @@ main {
   .animate-rise,
   .animate-fade,
   .circuit-layer,
-  .circuit-trace,
   .circuit-ambient-glow,
   .circuit-nodes,
   .circuit-sparks,
+  .circuit-gear,
   .circuit-bloom {
     animation: none;
   }

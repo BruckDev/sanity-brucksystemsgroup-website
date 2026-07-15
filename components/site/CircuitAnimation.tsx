@@ -29,6 +29,17 @@ export function CircuitAnimation() {
         <pattern id="circuit-grid" height="72" patternUnits="userSpaceOnUse" width="72">
           <path d="M72 0H0V72" fill="none" stroke="#238cff" strokeOpacity="0.12" />
         </pattern>
+        <g id="circuit-gear">
+          <g fill="#38dff5" stroke="#a0f7ff" strokeWidth="2">
+            <rect height="14" rx="3" width="9" x="-4.5" y="-35" />
+            <rect height="14" rx="3" transform="rotate(45)" width="9" x="-4.5" y="-35" />
+            <rect height="14" rx="3" transform="rotate(90)" width="9" x="-4.5" y="-35" />
+            <rect height="14" rx="3" transform="rotate(135)" width="9" x="-4.5" y="-35" />
+          </g>
+          <circle cx="0" cy="0" fill="#075078" r="25" stroke="#78efff" strokeWidth="3" />
+          <circle cx="0" cy="0" fill="#031429" r="10" stroke="#b2f9ff" strokeWidth="3" />
+          <circle cx="0" cy="0" fill="#79f4ff" r="3" />
+        </g>
       </defs>
 
       <rect fill="url(#circuit-surface)" height="900" width="1600" />
@@ -83,21 +94,9 @@ export function CircuitAnimation() {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path
-          className="circuit-trace circuit-trace--one"
-          d="M-78 282h286l80 80h286l122-122h250l102 102h274l94-94h226"
-          strokeWidth="8"
-        />
-        <path
-          className="circuit-trace circuit-trace--two"
-          d="M-42 550h238l111-111h290l84 84h294l112-112h258l99 99h216"
-          strokeWidth="6"
-        />
-        <path
-          className="circuit-trace circuit-trace--three"
-          d="M-20 674h290l86-86h225l116 116h264l96-96h274l116 116h190"
-          strokeWidth="7"
-        />
+        <path d="M-78 282h286l80 80h286l122-122h250l102 102h274l94-94h226" strokeWidth="8" />
+        <path d="M-42 550h238l111-111h290l84 84h294l112-112h258l99 99h216" strokeWidth="6" />
+        <path d="M-20 674h290l86-86h225l116 116h264l96-96h274l116 116h190" strokeWidth="7" />
         <path
           d="M16 60h244l84 84h207l101 101h270l84-84h205l100 100h257"
           strokeOpacity="0.72"
@@ -157,6 +156,18 @@ export function CircuitAnimation() {
         <circle cx="1190" cy="624" r="4" />
         <circle cx="1434" cy="250" r="4" />
         <circle cx="188" cy="726" r="5" />
+      </g>
+      <g transform="translate(288 362)">
+        <use className="circuit-gear circuit-gear--one" href="#circuit-gear" />
+      </g>
+      <g transform="translate(696 240) scale(0.76)">
+        <use className="circuit-gear circuit-gear--two" href="#circuit-gear" />
+      </g>
+      <g transform="translate(1048 342) scale(0.9)">
+        <use className="circuit-gear circuit-gear--three" href="#circuit-gear" />
+      </g>
+      <g transform="translate(961 704) scale(0.66)">
+        <use className="circuit-gear circuit-gear--four" href="#circuit-gear" />
       </g>
       <g className="circuit-bloom" filter="url(#circuit-blur)" opacity="0.75">
         <circle cx="288" cy="362" fill="#44eaff" r="18" />
