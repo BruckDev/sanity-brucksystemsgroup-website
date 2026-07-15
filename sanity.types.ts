@@ -964,6 +964,30 @@ export type Home = {
     _key: string
   }>
   governmentCapabilities?: Array<string>
+  engineeringCapabilitiesTitle?: string
+  engineeringCapabilitiesIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  engineeringCapabilities?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
   whyUsTitle?: string
   whyUsCards?: Array<{
     title?: string
@@ -1233,7 +1257,7 @@ export type SettingsQueryResult = {
 
 // Source: sanity/lib/siteQueries.ts
 // Variable: homeQuery
-// Query: *[_type == "home"][0]{    _id,    _type,    title,    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    heroHighlights[]{value, label},    servicesTitle,    servicesIntro,    servicesVideoTitle,    servicesVideoText,    servicesVideoLinks[]{label, href, style},    featuredServices[]->{      _id,      title,      "slug": slug.current,      summary    },    insightsTitle,    insightsIntro,    featuredInsights[]->{      _id,      title,      "slug": slug.current,      excerpt,      articleType,      estimatedReadTime,      publishedAt    },    featuredCaseStudies[]->{      _id,      title,      "slug": slug.current,      excerpt    },    industriesTitle,    industriesIntro,    featuredIndustries[]->{      _id,      title,      "slug": slug.current,      summary    },    governmentTitle,    governmentIntro,    governmentCapabilities,    whyUsTitle,    whyUsCards[]{      title,      text    },    finalCtaTitle,    finalCtaText,    finalPrimaryCta{label, href, style},    finalSecondaryCta{label, href, style},    seo  }
+// Query: *[_type == "home"][0]{    _id,    _type,    title,    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    heroHighlights[]{value, label},    servicesTitle,    servicesIntro,    servicesVideoTitle,    servicesVideoText,    servicesVideoLinks[]{label, href, style},    featuredServices[]->{      _id,      title,      "slug": slug.current,      summary    },    insightsTitle,    insightsIntro,    featuredInsights[]->{      _id,      title,      "slug": slug.current,      excerpt,      articleType,      estimatedReadTime,      publishedAt    },    featuredCaseStudies[]->{      _id,      title,      "slug": slug.current,      excerpt    },    industriesTitle,    industriesIntro,    featuredIndustries[]->{      _id,      title,      "slug": slug.current,      summary    },    governmentTitle,    governmentIntro,    governmentCapabilities,    engineeringCapabilitiesTitle,    engineeringCapabilitiesIntro,    engineeringCapabilities[]{title, text},    whyUsTitle,    whyUsCards[]{      title,      text    },    finalCtaTitle,    finalCtaText,    finalPrimaryCta{label, href, style},    finalSecondaryCta{label, href, style},    seo  }
 export type HomeQueryResult = {
   _id: string
   _type: 'home'
@@ -1381,6 +1405,29 @@ export type HomeQueryResult = {
     _key: string
   }> | null
   governmentCapabilities: Array<string> | null
+  engineeringCapabilitiesTitle: string | null
+  engineeringCapabilitiesIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  engineeringCapabilities: Array<{
+    title: string | null
+    text: string | null
+  }> | null
   whyUsTitle: string | null
   whyUsCards: Array<{
     title: string | null
@@ -2064,7 +2111,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '{\n    "settings": *[_type == "settings"][0]{\n      ogImage,\n      seo,\n      siteTitle\n    },\n    "home": *[_type == "home"][0]{\n      title,\n      seo,\n      "overview": pt::text(overview)\n    }\n  }': LayoutMetadataQueryResult
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    siteTitle,\n    brandEyebrow,\n    headerNavigation[]{\n      label,\n      href,\n      description,\n      children[]{\n        label,\n        href,\n        style\n      }\n    },\n    contactMethods[]{\n      label,\n      value,\n      href\n    },\n    linkedin,\n    footerColumns[]{\n      title,\n      body,\n      links[]{\n        label,\n        href,\n        style\n      }\n    },\n    footerNote,\n    ogImage,\n    seo\n  }\n': SettingsQueryResult
-    '\n  *[_type == "home"][0]{\n    _id,\n    _type,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    heroHighlights[]{value, label},\n    servicesTitle,\n    servicesIntro,\n    servicesVideoTitle,\n    servicesVideoText,\n    servicesVideoLinks[]{label, href, style},\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    insightsTitle,\n    insightsIntro,\n    featuredInsights[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      articleType,\n      estimatedReadTime,\n      publishedAt\n    },\n    featuredCaseStudies[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt\n    },\n    industriesTitle,\n    industriesIntro,\n    featuredIndustries[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    governmentTitle,\n    governmentIntro,\n    governmentCapabilities,\n    whyUsTitle,\n    whyUsCards[]{\n      title,\n      text\n    },\n    finalCtaTitle,\n    finalCtaText,\n    finalPrimaryCta{label, href, style},\n    finalSecondaryCta{label, href, style},\n    seo\n  }\n': HomeQueryResult
+    '\n  *[_type == "home"][0]{\n    _id,\n    _type,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    heroHighlights[]{value, label},\n    servicesTitle,\n    servicesIntro,\n    servicesVideoTitle,\n    servicesVideoText,\n    servicesVideoLinks[]{label, href, style},\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    insightsTitle,\n    insightsIntro,\n    featuredInsights[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      articleType,\n      estimatedReadTime,\n      publishedAt\n    },\n    featuredCaseStudies[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt\n    },\n    industriesTitle,\n    industriesIntro,\n    featuredIndustries[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    governmentTitle,\n    governmentIntro,\n    governmentCapabilities,\n    engineeringCapabilitiesTitle,\n    engineeringCapabilitiesIntro,\n    engineeringCapabilities[]{title, text},\n    whyUsTitle,\n    whyUsCards[]{\n      title,\n      text\n    },\n    finalCtaTitle,\n    finalCtaText,\n    finalPrimaryCta{label, href, style},\n    finalSecondaryCta{label, href, style},\n    seo\n  }\n': HomeQueryResult
     '\n  *[_type == "service"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServicesQueryResult
     '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServiceBySlugQueryResult
     '\n  *[_type == "industry"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    overview,\n    priorities,\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': IndustriesQueryResult

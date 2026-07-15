@@ -85,6 +85,9 @@ export const homeQuery = defineQuery(`
     governmentTitle,
     governmentIntro,
     governmentCapabilities,
+    engineeringCapabilitiesTitle,
+    engineeringCapabilitiesIntro,
+    engineeringCapabilities[]{title, text},
     whyUsTitle,
     whyUsCards[]{
       title,

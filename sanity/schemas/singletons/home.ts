@@ -138,6 +138,34 @@ export default defineType({
       options: {layout: 'tags'},
     }),
     defineField({
+      name: 'engineeringCapabilitiesTitle',
+      title: 'Engineering capabilities title',
+      type: 'string',
+      initialValue: 'Engineering capabilities for complex, connected systems',
+    }),
+    defineField({
+      name: 'engineeringCapabilitiesIntro',
+      title: 'Engineering capabilities intro',
+      type: 'array',
+      of: [defineArrayMember({type: 'block'})],
+    }),
+    defineField({
+      name: 'engineeringCapabilities',
+      title: 'Engineering capabilities',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({name: 'title', title: 'Title', type: 'string'}),
+            defineField({name: 'text', title: 'Description', type: 'text', rows: 4}),
+          ],
+          preview: {select: {title: 'title', subtitle: 'text'}},
+        }),
+      ],
+      validation: (rule) => rule.max(6),
+    }),
+    defineField({
       name: 'whyUsTitle',
       title: 'Why Bruck Systems Group title',
       type: 'string',

@@ -42,9 +42,15 @@ export const fallbackSettings = {
           label: 'Financial and Professional Services',
           href: '/industries/financial-and-professional-services',
         },
-        {label: 'Small and Mid-Sized Businesses', href: '/industries/small-and-mid-sized-businesses'},
+        {
+          label: 'Small and Mid-Sized Businesses',
+          href: '/industries/small-and-mid-sized-businesses',
+        },
         {label: 'Nonprofits', href: '/industries/nonprofits'},
-        {label: 'Tax and Revenue Administration', href: '/industries/tax-and-revenue-administration'},
+        {
+          label: 'Tax and Revenue Administration',
+          href: '/industries/tax-and-revenue-administration',
+        },
       ],
     },
     {label: 'Insights', href: '/insights'},
@@ -69,7 +75,10 @@ export const fallbackSettings = {
       title: 'Government',
       links: [
         {label: 'Government Capabilities', href: '/government'},
-        {label: 'Procurement Support', href: '/services/government-technology-and-procurement-support'},
+        {
+          label: 'Procurement Support',
+          href: '/services/government-technology-and-procurement-support',
+        },
         {label: 'Contact Our Team', href: '/contact'},
       ],
     },
@@ -98,15 +107,18 @@ export const fallbackServices = [
   {
     title: 'Digital Transformation',
     slug: 'digital-transformation',
-    summary:
-      'Align strategy, operations, and technology around a clear roadmap for modernization.',
+    summary: 'Align strategy, operations, and technology around a clear roadmap for modernization.',
     clientProblem: toBlocks([
       'Organizations often know change is needed but struggle to prioritize initiatives, align stakeholders, and move from planning into delivery.',
     ]),
     whatWeProvide: toBlocks([
       'Bruck Systems Group helps leaders define practical transformation priorities, sequence work around business value, and build the governance needed to sustain momentum.',
     ]),
-    deliverables: ['Transformation roadmaps', 'Operating model recommendations', 'Implementation plans'],
+    deliverables: [
+      'Transformation roadmaps',
+      'Operating model recommendations',
+      'Implementation plans',
+    ],
     outcomes: ['Clearer decision-making', 'Faster execution', 'Reduced delivery risk'],
     featuredStats: [
       {value: 'Roadmap-first', label: 'Planning tied to execution'},
@@ -154,7 +166,11 @@ export const fallbackServices = [
     whatWeProvide: toBlocks([
       'We design data flows, reporting models, and automation opportunities that improve visibility while reducing administrative burden.',
     ]),
-    deliverables: ['Data integration plans', 'Dashboards and reporting', 'Workflow automation maps'],
+    deliverables: [
+      'Data integration plans',
+      'Dashboards and reporting',
+      'Workflow automation maps',
+    ],
     outcomes: ['Improved visibility', 'Fewer manual tasks', 'More timely decisions'],
     featuredStats: [
       {value: 'Decision-ready', label: 'Reporting built for action'},
@@ -178,7 +194,11 @@ export const fallbackServices = [
     whatWeProvide: toBlocks([
       'Bruck Systems Group helps organizations assess operating performance, clarify process bottlenecks, and support decisions with actionable financial and operational insight.',
     ]),
-    deliverables: ['Operational assessments', 'Performance improvement plans', 'Financial process analysis'],
+    deliverables: [
+      'Operational assessments',
+      'Performance improvement plans',
+      'Financial process analysis',
+    ],
     outcomes: ['Improved performance', 'Clearer operating visibility', 'Better resource alignment'],
     featuredStats: [
       {value: 'Operationally grounded', label: 'Recommendations linked to day-to-day work'},
@@ -202,8 +222,16 @@ export const fallbackServices = [
     whatWeProvide: toBlocks([
       'We help agencies and partners shape practical modernization efforts, support RFI and RFP development, and contribute structured delivery support across technology initiatives.',
     ]),
-    deliverables: ['Procurement support materials', 'Modernization planning', 'Workflow and systems analysis'],
-    outcomes: ['Clearer procurement inputs', 'Stronger modernization planning', 'Reduced coordination friction'],
+    deliverables: [
+      'Procurement support materials',
+      'Modernization planning',
+      'Workflow and systems analysis',
+    ],
+    outcomes: [
+      'Clearer procurement inputs',
+      'Stronger modernization planning',
+      'Reduced coordination friction',
+    ],
     featuredStats: [
       {value: 'Mission-aware', label: 'Designed for public-sector realities'},
       {value: 'Procurement-ready', label: 'Support from planning through response'},
@@ -221,21 +249,33 @@ export const fallbackIndustries = [
   {
     title: 'Government and Public Sector',
     slug: 'government-and-public-sector',
-    summary: 'Modernization support for agencies balancing service delivery, compliance, and operational efficiency.',
+    summary:
+      'Modernization support for agencies balancing service delivery, compliance, and operational efficiency.',
     overview: toBlocks([
       'Public organizations need modernization strategies that work within procurement constraints, oversight expectations, and mission-critical operating environments.',
     ]),
-    priorities: ['Service modernization', 'Operational efficiency', 'Data visibility', 'Delivery coordination'],
+    priorities: [
+      'Service modernization',
+      'Operational efficiency',
+      'Data visibility',
+      'Delivery coordination',
+    ],
     cta: {label: 'View government capabilities', href: '/government', style: 'secondary'},
   },
   {
     title: 'Financial and Professional Services',
     slug: 'financial-and-professional-services',
-    summary: 'Support for firms seeking better workflows, reporting, client-facing systems, and scalable operations.',
+    summary:
+      'Support for firms seeking better workflows, reporting, client-facing systems, and scalable operations.',
     overview: toBlocks([
       'Regulated and service-oriented businesses need reliable systems, strong process control, and a technology posture that supports growth without creating unnecessary complexity.',
     ]),
-    priorities: ['Workflow optimization', 'Reporting and analytics', 'Client experience', 'Process modernization'],
+    priorities: [
+      'Workflow optimization',
+      'Reporting and analytics',
+      'Client experience',
+      'Process modernization',
+    ],
     cta: {label: 'Discuss a business initiative', href: '/contact', style: 'secondary'},
     services: [],
     seo: {
@@ -247,27 +287,38 @@ export const fallbackIndustries = [
   {
     title: 'Small and Mid-Sized Businesses',
     slug: 'small-and-mid-sized-businesses',
-    summary: 'Practical transformation and technology support for organizations that need progress without enterprise overhead.',
+    summary:
+      'Practical transformation and technology support for organizations that need progress without enterprise overhead.',
     overview: toBlocks([
       'Growing businesses often need stronger systems and clearer processes, but they also need solutions proportionate to their scale, budget, and pace of change.',
     ]),
-    priorities: ['Scalable systems', 'Process efficiency', 'Targeted automation', 'Execution planning'],
+    priorities: [
+      'Scalable systems',
+      'Process efficiency',
+      'Targeted automation',
+      'Execution planning',
+    ],
     cta: {label: 'Explore services', href: '/services', style: 'secondary'},
     services: [],
     seo: {
       title: 'Small and Mid-Sized Businesses | Bruck Systems Group',
-      description:
-        'Practical consulting and technology support for growing businesses.',
+      description: 'Practical consulting and technology support for growing businesses.',
     },
   },
   {
     title: 'Nonprofits',
     slug: 'nonprofits',
-    summary: 'Mission-aligned support for organizations managing constrained resources, reporting requirements, and service delivery goals.',
+    summary:
+      'Mission-aligned support for organizations managing constrained resources, reporting requirements, and service delivery goals.',
     overview: toBlocks([
       'Nonprofits need technology and operating models that improve impact, streamline internal work, and support transparent decision-making.',
     ]),
-    priorities: ['Program operations', 'Resource stewardship', 'Reporting support', 'Service delivery workflows'],
+    priorities: [
+      'Program operations',
+      'Resource stewardship',
+      'Reporting support',
+      'Service delivery workflows',
+    ],
     cta: {label: 'Talk to our team', href: '/contact', style: 'secondary'},
     services: [],
     seo: {
@@ -278,11 +329,17 @@ export const fallbackIndustries = [
   {
     title: 'Tax and Revenue Administration',
     slug: 'tax-and-revenue-administration',
-    summary: 'Structured support for tax administration modernization, workflow improvement, and data integration.',
+    summary:
+      'Structured support for tax administration modernization, workflow improvement, and data integration.',
     overview: toBlocks([
       'Revenue organizations depend on clear workflows, integrated information, and technology that can support both internal efficiency and public-facing service delivery.',
     ]),
-    priorities: ['Tax administration modernization', 'Document workflows', 'System integration', 'Application support'],
+    priorities: [
+      'Tax administration modernization',
+      'Document workflows',
+      'System integration',
+      'Application support',
+    ],
     cta: {label: 'Review government support', href: '/government', style: 'secondary'},
     services: [],
     seo: {
@@ -308,7 +365,8 @@ export const fallbackInsights = [
     ]),
     seo: {
       title: 'Modernization Roadmaps | Bruck Systems Group',
-      description: 'A practical perspective on building modernization roadmaps that move from strategy into execution.',
+      description:
+        'A practical perspective on building modernization roadmaps that move from strategy into execution.',
     },
     relatedServices: [],
     relatedIndustries: [],
@@ -327,7 +385,8 @@ export const fallbackInsights = [
     ]),
     seo: {
       title: 'Workflow Automation Value | Bruck Systems Group',
-      description: 'How to prioritize workflow automation initiatives for measurable operational value.',
+      description:
+        'How to prioritize workflow automation initiatives for measurable operational value.',
     },
     relatedServices: [],
     relatedIndustries: [],
@@ -346,7 +405,11 @@ export const fallbackCaseStudies = [
     approach: toBlocks([
       'This section is structured to support editor-managed case studies in the future, including challenge, approach, outcomes, and metrics.',
     ]),
-    outcomes: ['Placeholder content only', 'Awaiting approved client example', 'Ready for Sanity-managed updates'],
+    outcomes: [
+      'Placeholder content only',
+      'Awaiting approved client example',
+      'Ready for Sanity-managed updates',
+    ],
     metrics: [
       {value: 'Asset needed', label: 'Replace with approved results'},
       {value: 'CMS-ready', label: 'Case study fields are already built'},
@@ -420,6 +483,36 @@ export const fallbackHome = {
     'RFI and RFP support',
     'Subcontracting and teaming support',
   ],
+  engineeringCapabilitiesTitle: 'Engineering capabilities for complex, connected systems',
+  engineeringCapabilitiesIntro: toBlocks([
+    'Bruck Systems Group combines hands-on architecture and delivery experience to build, modernize, integrate, and operate business-critical software.',
+  ]),
+  engineeringCapabilities: [
+    {
+      title: 'Full-stack application delivery',
+      text: 'Design and deliver web, native-client, and service-based applications from database architecture through user experience and production support.',
+    },
+    {
+      title: 'Legacy modernization',
+      text: 'Evolve established platforms, codebases, and workflows while protecting compatibility, reducing risk, and creating a practical path forward.',
+    },
+    {
+      title: 'Data platforms and performance',
+      text: 'Model, integrate, and optimize SQL Server and related data platforms for reliable operations, reporting, high-volume workflows, and secure file handling.',
+    },
+    {
+      title: 'Systems integration and automation',
+      text: 'Connect business systems, APIs, webhooks, queues, notifications, and external platforms to remove manual handoffs and improve operational visibility.',
+    },
+    {
+      title: 'Security and resilient operations',
+      text: 'Build in authorization, certificate-based trust, OAuth 2.0, JWT, secure communications, background services, and operational safeguards from the start.',
+    },
+    {
+      title: 'Technical leadership and delivery',
+      text: 'Lead architecture, developer workflows, source-control transitions, and cross-functional delivery with a focus on maintainable systems and measurable progress.',
+    },
+  ],
   whyUsTitle: 'Why Bruck Systems Group',
   whyUsCards: [
     {
@@ -455,14 +548,29 @@ export const fallbackAbout = {
     'Leadership biographies can be updated in Sanity as approved profiles become available.',
   ]),
   principles: [
-    {title: 'Clarity over noise', text: 'We prioritize structured thinking, direct communication, and practical next steps.'},
-    {title: 'Execution matters', text: 'Recommendations should be realistic, measurable, and usable by the teams responsible for delivery.'},
-    {title: 'Context-first solutions', text: 'We shape technology and operational change around the realities of each organization.'},
+    {
+      title: 'Clarity over noise',
+      text: 'We prioritize structured thinking, direct communication, and practical next steps.',
+    },
+    {
+      title: 'Execution matters',
+      text: 'Recommendations should be realistic, measurable, and usable by the teams responsible for delivery.',
+    },
+    {
+      title: 'Context-first solutions',
+      text: 'We shape technology and operational change around the realities of each organization.',
+    },
   ],
   approach: [
     {title: 'Assess', text: 'Clarify goals, constraints, risks, and current-state realities.'},
-    {title: 'Design', text: 'Translate priorities into a practical roadmap, solution concept, or decision framework.'},
-    {title: 'Deliver', text: 'Support implementation with an emphasis on coordination, quality, and measurable value.'},
+    {
+      title: 'Design',
+      text: 'Translate priorities into a practical roadmap, solution concept, or decision framework.',
+    },
+    {
+      title: 'Deliver',
+      text: 'Support implementation with an emphasis on coordination, quality, and measurable value.',
+    },
   ],
   cta: {label: 'Talk to Our Team', href: '/contact', style: 'primary'},
   seo: {
@@ -478,12 +586,30 @@ export const fallbackGovernment = {
     'Bruck Systems Group supports public-sector modernization with a disciplined approach to operations, technology planning, workflow improvement, and procurement-aligned execution support.',
   ]),
   capabilities: [
-    {title: 'Technology modernization', text: 'Assess legacy environments, prioritize opportunities, and shape practical modernization roadmaps.'},
-    {title: 'Workflow and document automation', text: 'Reduce manual effort and improve consistency across intake, review, routing, and approvals.'},
-    {title: 'Data integration', text: 'Connect systems and reporting flows to improve visibility and reduce reconciliation overhead.'},
-    {title: 'Tax administration modernization', text: 'Support revenue-related workflows, service delivery, and operational improvement initiatives.'},
-    {title: 'Custom application development', text: 'Plan and deliver secure, maintainable applications tailored to mission needs.'},
-    {title: 'RFI and RFP support', text: 'Contribute structured inputs, solution framing, and delivery perspectives for procurements.'},
+    {
+      title: 'Technology modernization',
+      text: 'Assess legacy environments, prioritize opportunities, and shape practical modernization roadmaps.',
+    },
+    {
+      title: 'Workflow and document automation',
+      text: 'Reduce manual effort and improve consistency across intake, review, routing, and approvals.',
+    },
+    {
+      title: 'Data integration',
+      text: 'Connect systems and reporting flows to improve visibility and reduce reconciliation overhead.',
+    },
+    {
+      title: 'Tax administration modernization',
+      text: 'Support revenue-related workflows, service delivery, and operational improvement initiatives.',
+    },
+    {
+      title: 'Custom application development',
+      text: 'Plan and deliver secure, maintainable applications tailored to mission needs.',
+    },
+    {
+      title: 'RFI and RFP support',
+      text: 'Contribute structured inputs, solution framing, and delivery perspectives for procurements.',
+    },
   ],
   supportAreas: [
     'Modernization planning',
@@ -516,6 +642,7 @@ export const fallbackContact = {
     'This form design is not connected to an email inbox or CRM yet. Add a real submission handler before presenting it as a live contact channel.',
   seo: {
     title: 'Contact | Bruck Systems Group',
-    description: 'Get in touch with Bruck Systems Group about services, partnerships, or government-related inquiries.',
+    description:
+      'Get in touch with Bruck Systems Group about services, partnerships, or government-related inquiries.',
   },
 }

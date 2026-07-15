@@ -30,6 +30,9 @@ export default async function HomePage() {
   const servicesVideoLinks = home.servicesVideoLinks?.length
     ? home.servicesVideoLinks
     : fallbackHome.servicesVideoLinks
+  const engineeringCapabilities = home.engineeringCapabilities?.length
+    ? home.engineeringCapabilities
+    : fallbackHome.engineeringCapabilities
 
   return (
     <div className="space-y-20 pb-8 md:space-y-28">
@@ -242,6 +245,34 @@ export default async function HomePage() {
           title="Mission-focused support for procurement and modernization."
           subtitle="Government support"
         />
+      </section>
+
+      <section>
+        <SectionIntro
+          eyebrow="Engineering delivery"
+          title={home.engineeringCapabilitiesTitle || fallbackHome.engineeringCapabilitiesTitle}
+          description={
+            <CustomPortableText
+              id={null}
+              type={null}
+              path={[]}
+              value={home.engineeringCapabilitiesIntro || fallbackHome.engineeringCapabilitiesIntro}
+            />
+          }
+        />
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {engineeringCapabilities.map((capability: any) => (
+            <article
+              key={capability.title}
+              className="border border-[color:var(--border)] bg-white p-6"
+            >
+              <h3 className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">
+                {capability.title}
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{capability.text}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section>
