@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--
+  WCAG audit HTML report TEMPLATE. This defines the REQUIRED look & function.
+  Copy this file to reports/wcag-audit-<page>.html and fill the INJECT markers.
+  Keep the <style> block verbatim (this is the agreed visual design). Keep the
+  section order. Reference evidence screenshots with relative paths (../evidence/...).
+  The report MUST be self-contained: a reader never needs WCAG or any other doc open.
+
+  Status vocabulary + badge classes: Fail=b-fail, Pass=b-pass, Needs review=b-review,
+  N/A=b-na. Levels: b-A / b-AA / b-AAA. Severity (fails only): b-serious/b-moderate/b-minor
+  and finding card class sev-serious/sev-moderate/sev-minor.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 2.2 Audit — Homepage</title>
+<style>
+  :root{
+    --bg:#0e416c; --bg2:#005285; --ink:#1c2530; --muted:#585c65; --line:#e3e6eb; --panel:#f7f9fc;
+    --fail:#b3261e; --serious:#c14a00; --moderate:#946200; --minor:#3a6ea5; --pass:#1e7a46; --na:#6b7280; --review:#7a5bd6;
+    --failbg:#fdeceb; --seriousbg:#fdefe5; --moderatebg:#fdf6e3; --minorbg:#eef4fb; --passbg:#e9f6ef; --nabg:#f1f2f4; --reviewbg:#f1ecfb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff}
+  header{background:linear-gradient(135deg,var(--bg),var(--bg2));color:#fff;padding:32px 40px}
+  header h1{margin:0 0 6px;font-size:26px;font-weight:700}
+  header .sub{opacity:.9;font-size:14px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:16px;font-size:13px}
+  .meta b{opacity:.7;font-weight:500;margin-right:4px}
+  main{max-width:1080px;margin:0 auto;padding:32px 40px 80px}
+  h2{font-size:20px;margin:40px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+  h3{font-size:16px;margin:24px 0 6px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0}
+  .card{border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center;background:var(--panel)}
+  .card .n{font-size:30px;font-weight:700;line-height:1}
+  .card .l{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.04em}
+  .card.fail .n{color:var(--fail)} .card.pass .n{color:var(--pass)} .card.review .n{color:var(--review)} .card.na .n{color:var(--na)}
+  .callout{background:var(--minorbg);border-left:4px solid var(--minor);border-radius:6px;padding:14px 18px;margin:16px 0;font-size:14px}
+  .callout.warn{background:var(--moderatebg);border-color:var(--moderate)}
+  .callout.good{background:var(--passbg);border-color:var(--pass)}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em;vertical-align:middle}
+  .b-fail{background:var(--failbg);color:var(--fail)} .b-serious{background:var(--seriousbg);color:var(--serious)}
+  .b-moderate{background:var(--moderatebg);color:var(--moderate)} .b-minor{background:var(--minorbg);color:var(--minor)}
+  .b-pass{background:var(--passbg);color:var(--pass)} .b-na{background:var(--nabg);color:var(--na)} .b-review{background:var(--reviewbg);color:var(--review)}
+  .b-A{background:#eef;color:#334}.b-AA{background:#e6efe9;color:#1e7a46}.b-AAA{background:#f3eafe;color:#7a5bd6}
+  .finding{border:1px solid var(--line);border-left-width:5px;border-radius:8px;padding:18px 20px;margin:16px 0;background:#fff}
+  .finding.sev-serious{border-left-color:var(--serious)} .finding.sev-moderate{border-left-color:var(--moderate)}
+  .finding.sev-minor{border-left-color:var(--minor)} .finding.sev-review{border-left-color:var(--review)}
+  .finding h3{margin:0 0 4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .finding h3 .cn{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted)}
+  .finding p{margin:8px 0}
+  .finding .lab{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:12px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+  ul.tight{margin:6px 0;padding-left:20px} ul.tight li{margin:3px 0}
+  .sel{display:inline-block;background:#272b33;color:#e6e6e6;border-radius:4px;padding:1px 6px;font-family:ui-monospace,monospace;font-size:12px;margin:2px 4px 2px 0}
+  table.cov{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+  table.cov th,table.cov td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cov th{background:var(--panel)}
+  table.cov td.c{font-family:ui-monospace,monospace;white-space:nowrap}
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:14px}
+  .shot{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+  .shot img{width:100%;display:block;border-bottom:1px solid var(--line)}
+  .shot .cap{padding:8px 12px;font-size:13px;color:var(--muted)}
+  details{margin:10px 0}summary{cursor:pointer;font-weight:600}
+  .resolved{columns:2;column-gap:28px;font-size:13.5px}
+  .resolved div{break-inside:avoid;margin-bottom:6px}
+  .rv{border:1px solid var(--line);border-left:5px solid var(--review);border-radius:8px;padding:14px 18px;margin:14px 0;background:#fff}
+  .rv h3{margin:0 0 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:15px}
+  .rv h3 .cn{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted)}
+  .rv .row{display:grid;grid-template-columns:130px 1fr;gap:4px 12px;font-size:13.5px;margin-top:4px}
+  .rv .row .k{font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;font-size:11px;padding-top:2px}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;background:#ece8f7;color:#5b46a8;text-transform:uppercase;letter-spacing:.03em}
+  footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:20px 40px;max-width:1080px;margin:0 auto}
+  .legend{font-size:12px;color:var(--muted);margin:8px 0}
+  @media(max-width:680px){.resolved{columns:1}} @media(max-width:640px){.rv .row{grid-template-columns:1fr}.rv .row .k{padding-top:8px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>WCAG 2.2 Accessibility Audit</h1>
+  <div class="sub">Bruck Systems Group — <strong>Homepage</strong></div>
+  <div class="meta">
+    <span><b>URL</b> http://localhost:3001/</span><span><b>Date</b> 2026-07-16</span>
+    <span><b>Target</b> Level AA</span><span><b>Method</b> Browser CDP + probes.js (collect + interactive phase)</span>
+  </div>
+</header>
+<main>
+
+  <!-- 1. SCOPE & LIMITATIONS — OPEN by stating this is a Level AA compliance report (A + AA only; AAA not in scope, not listed), then pages audited + tooling limits (width floor, shadow-DOM focus). -->
+  <div class="callout warn"><strong>This is a Level AA compliance report.</strong> It covers Level A and AA only; Level AAA is not assessed or listed. The sample is the open homepage at <code>http://localhost:3001/</code>. Keyboard focus steps and narrow-screen screenshots could not be completed because the in-app Browser did not deliver Tab focus and timed out while capturing a 320px viewport; those constraints are explicitly marked below. Cross-page and process-wide criteria require a broader sample.</div>
+
+  <!-- 2. SUMMARY CARDS — counts MUST equal the coverage table tallies. Exclude 4.1.1 (removed in 2.2). -->
+  <h2>Summary</h2>
+  <div class="cards">
+    <div class="card fail"><div class="n">6</div><div class="l">Fail</div></div>
+    <div class="card review"><div class="n">10</div><div class="l">Needs review</div></div>
+    <div class="card pass"><div class="n">19</div><div class="l">Pass</div></div>
+    <div class="card na"><div class="n">20</div><div class="l">Not applicable</div></div>
+  </div>
+  <p class="legend">Across all 55 Level A + AA criteria. Fails by severity: 2 serious, 4 moderate. (4.1.1 Parsing excluded — removed in WCAG 2.2; Level AAA is not in scope for an AA compliance report and is not listed.)</p>
+
+  <!-- 3. INTERACTIVE-PHASE PANEL — list what the interactive probes converted from "review" to a verdict. -->
+  <div class="callout good"><strong>Interactive probe phase resolved 5 initial questions.</strong>
+    <div class="resolved" style="margin-top:10px"><div>✅ <code>1.4.12</code> Text-spacing override introduced no horizontal scroll.</div><div>✅ <code>2.5.8</code> All sub-24px targets met the spacing exception.</div><div>✅ Mobile menu exposes an expanded state and labelled navigation when opened.</div><div>🔴 <code>1.4.4</code> 200% zoom created horizontal scrolling and hid header content.</div><div>🔴 <code>1.4.10</code> 305px effective viewport had 50px horizontal overflow.</div></div>
+  </div>
+
+  <!-- 4. HEADLINE — one plain-language paragraph: overall posture + the handful of gaps. -->
+  <div class="callout"><strong>Headline:</strong> The homepage has solid landmark, naming, and target-spacing foundations, but it is not AA-conformant as sampled: an image lacks a text alternative, heading semantics are incomplete, small green labels fail contrast, and both 200% resizing and narrow reflow create horizontal overflow. Keyboard focus behavior and several cross-page checks still need confirmation.</div>
+
+  <!-- 5. PRIORITY FINDINGS — one card per FAIL, ordered by severity then criterion number.
+       Card template:
+  <div class="finding sev-serious">
+    <h3><span class="cn">X.Y.Z</span> Title <span class="badge b-AA">AA</span> <span class="badge b-fail">Fail</span> <span class="badge b-serious">Serious</span></h3>
+    <p>One-line description of the violation.</p>
+    <div class="lab">Evidence</div><span class="sel">css.selector</span> (+ measured value / snapshot excerpt / screenshot ref)
+    <div class="lab">Affected users</div><p>who is impacted</p>
+    <div class="lab">Fix</div><ul class="tight"><li>concrete remediation, with a code hint</li></ul>
+  </div>
+  Only Level A/AA fails appear here (AA compliance report). -->
+  <h2>Priority findings</h2>
+  <div class="finding sev-serious"><h3><span class="cn">1.4.4</span> Resize Text <span class="badge b-AA">AA</span><span class="badge b-fail">Fail</span><span class="badge b-serious">Serious</span></h3><p>At 200% zoom, the page had a 1,279px viewport with a 2,212px document width. Navigation and hero content extended offscreen.</p><div class="lab">Evidence</div><span class="sel">header navigation</span> <span class="sel">section.relative.overflow-hidden</span> — <code>horizontalScroll: true</code>; see <code>../evidence/wcag-homepage-zoom-200.png</code>.</div>
+  <div class="finding sev-serious"><h3><span class="cn">1.4.10</span> Reflow <span class="badge b-AA">AA</span><span class="badge b-fail">Fail</span><span class="badge b-serious">Serious</span></h3><p>At the Browser's 320px setting (effective 305px viewport), document width was 355px. The mobile menu button and main content extended beyond the right edge.</p><div class="lab">Evidence</div><span class="sel">button.inline-flex.h-11</span> at x=321, right=355; <span class="sel">div.max-w-3xl</span> right=347; <code>scrollWidth: 355</code>.</div><div class="lab">Fix</div><ul class="tight"><li>Remove minimum/fixed horizontal widths and ensure the mobile layout uses a container width no wider than <code>100%</code>.</li></ul></div>
+  <div class="finding sev-moderate"><h3><span class="cn">1.1.1</span> Non-text Content <span class="badge b-A">A</span><span class="badge b-fail">Fail</span><span class="badge b-moderate">Moderate</span></h3><p>The hero background image has no <code>alt</code> attribute; Next.js also reported this in the console.</p><div class="lab">Evidence</div><span class="sel">img.absolute.inset-0</span> (<code>/images/home/hero-background.png</code>).</div><div class="lab">Fix</div><ul class="tight"><li>Use a meaningful alternative if the image conveys content, otherwise set <code>alt=&quot;&quot;</code> and keep it out of the accessible name.</li></ul></div>
+  <div class="finding sev-moderate"><h3><span class="cn">1.3.1</span> Info and Relationships <span class="badge b-A">A</span><span class="badge b-fail">Fail</span><span class="badge b-moderate">Moderate</span></h3><p>The document outline jumps from the page <code>h1</code> to service-card <code>h3</code>s; several level-2 headings have no accessible name.</p><div class="lab">Evidence</div><span class="sel">h1.max-w-5xl.text-5xl</span> → <span class="sel">h3</span>; accessibility snapshot contains multiple <code>heading [level=2]</code> entries with no name.</div><div class="lab">Fix</div><ul class="tight"><li>Introduce descriptive <code>h2</code> section headings before related <code>h3</code> cards and remove empty headings.</li></ul></div>
+  <div class="finding sev-moderate"><h3><span class="cn">1.4.3</span> Contrast (Minimum) <span class="badge b-AA">AA</span><span class="badge b-fail">Fail</span><span class="badge b-moderate">Moderate</span></h3><p>The small <q>Article</q> and <q>Perspective</q> labels use accent green on white at 2.91:1, below the 4.5:1 minimum.</p><div class="lab">Evidence</div><span class="sel">div.flex.flex-wrap.items-center.gap-3.text-xs.font-semibold.uppercase.tracking-[0.2em].text-[color:var(--accent)] &gt; span</span> — foreground <code>rgb(32,174,73)</code>, background white, 12px text.</div><div class="lab">Fix</div><ul class="tight"><li>Darken <code>--accent</code> for small text or use a darker semantic text token that reaches 4.5:1 on white.</li></ul></div>
+  <div class="finding sev-moderate"><h3><span class="cn">2.4.6</span> Headings and Labels <span class="badge b-AA">AA</span><span class="badge b-fail">Fail</span><span class="badge b-moderate">Moderate</span></h3><p>Multiple exposed level-2 headings have no accessible name, so they do not describe the following section.</p><div class="lab">Evidence</div><span class="sel">h2</span> — accessibility snapshot reported unnamed level-2 headings.</div><div class="lab">Fix</div><ul class="tight"><li>Populate each retained heading with concise visible text; replace empty structural headings with non-heading elements where no section exists.</li></ul></div>
+
+  <!-- 6. NEEDS REVIEW — one .rv card per item (Level A/AA only). SELF-CONTAINED: each needs all three rows.
+       Card template:
+  <div class="rv">
+    <h3><span class="cn">X.Y.Z</span> Title <span class="badge b-AA">AA</span> <span class="badge b-review">Needs review</span> <span class="tag">blocker</span></h3>
+    <div class="row"><div class="k">What to review</div><div>specific thing to check, plain language</div></div>
+    <div class="row"><div class="k">Why it's open</div><div>the exact blocker</div></div>
+    <div class="row"><div class="k">How to confirm</div><div>concrete steps + pass/fail condition</div></div>
+  </div>
+  blocker tags: single-page scope · session/app-level · shadow DOM limit · needs interaction follow-up · content-dependent -->
+  <h2>Needs review (10) — what to check &amp; why</h2>
+  <div class="rv"><h3><span class="cn">2.1.1 / 2.1.2</span> Keyboard and No Keyboard Trap <span class="badge b-A">A</span><span class="badge b-review">Needs review</span><span class="tag">tooling limit</span></h3><div class="row"><div class="k">What to review</div><div>Tab through every link, mobile menu item, and contact action; activate the menu with Enter and Space.</div></div><div class="row"><div class="k">Why it's open</div><div>The in-app Browser did not deliver Tab focus to the page, while raw CDP keyboard dispatch is unsupported.</div></div><div class="row"><div class="k">How to confirm</div><div>Keyboard focus must reach and operate every control, then move onward without trapping.</div></div></div>
+  <div class="rv"><h3><span class="cn">2.2.2</span> Pause, Stop, Hide <span class="badge b-A">A</span><span class="badge b-review">Needs review</span><span class="tag">content-dependent</span></h3><div class="row"><div class="k">What to review</div><div>Inspect the 19 elements with infinite CSS animations for user-visible motion lasting more than five seconds.</div></div><div class="row"><div class="k">Why it's open</div><div>The probe counted animations but did not establish whether they are visible or have a pause mechanism.</div></div><div class="row"><div class="k">How to confirm</div><div>For each visible auto-moving item, provide a pause/stop/hide control or verify it is not user-visible moving content.</div></div></div>
+  <div class="rv"><h3><span class="cn">2.4.3 / 2.4.7 / 2.4.11</span> Focus Order, Focus Visible, Focus Not Obscured <span class="badge b-A">A/AA</span><span class="badge b-review">Needs review</span><span class="tag">tooling limit</span></h3><div class="row"><div class="k">What to review</div><div>Check the complete focus sequence, indicator visibility, and whether the sticky header/overlays cover focus.</div></div><div class="row"><div class="k">Why it's open</div><div>Focus could not be advanced in the in-app Browser despite repeated Tab attempts.</div></div><div class="row"><div class="k">How to confirm</div><div>Tab from the address bar through the page: order must be logical, every stop visibly indicated, and no stop wholly hidden.</div></div></div>
+  <div class="rv"><h3><span class="cn">2.4.5</span> Multiple Ways <span class="badge b-AA">AA</span><span class="badge b-review">Needs review</span><span class="tag">single-page scope</span></h3><div class="row"><div class="k">What to review</div><div>Verify a second discovery mechanism such as site search, sitemap, or index for non-process pages.</div></div><div class="row"><div class="k">Why it's open</div><div>Only the homepage was sampled.</div></div><div class="row"><div class="k">How to confirm</div><div>Show that users can find representative pages through navigation plus an independent mechanism.</div></div></div>
+  <div class="rv"><h3><span class="cn">3.2.3 / 3.2.4 / 3.2.6</span> Consistent Navigation, Identification, and Help <span class="badge b-AA">AA/A</span><span class="badge b-review">Needs review</span><span class="tag">cross-page scope</span></h3><div class="row"><div class="k">What to review</div><div>Compare repeated navigation order, control names, and any help mechanism across at least two additional templates.</div></div><div class="row"><div class="k">Why it's open</div><div>These criteria cannot be determined from a single page.</div></div><div class="row"><div class="k">How to confirm</div><div>Repeated components must retain the same relative order and names; help must remain consistently positioned.</div></div></div>
+
+  <!-- 7. EVIDENCE — gallery of the screenshots captured (desktop, reflow, focus states, zoom, text-spacing). -->
+  <h2>Evidence</h2>
+  <div class="shots"><div class="shot"><img src="../evidence/wcag-homepage-desktop.png" alt="Desktop homepage evidence screenshot"><div class="cap">Desktop homepage capture.</div></div><div class="shot"><img src="../evidence/wcag-homepage-zoom-200.png" alt="Homepage at 200 percent zoom showing clipped horizontal content"><div class="cap">200% zoom capture: right-side navigation and hero content overflow.</div></div></div>
+
+  <!-- 8. FULL COVERAGE TABLE — every Level A + AA criterion (55; NO AAA rows) with status + one-line note. Group ranges (e.g. 1.2.1–1.2.5) where identical. -->
+  <h2>Full criterion coverage — Level A + AA (55 criteria)</h2>
+  <details open><summary>Show all Level A &amp; AA success criteria with status for this page</summary>
+    <table class="cov"><thead><tr><th>#</th><th>Criterion</th><th>Lvl</th><th>Status</th><th>Note</th></tr></thead>
+      <tbody>
+<tr><td class="c">1.1.1</td><td>Non-text Content</td><td>A</td><td><span class="badge b-fail">Fail</span></td><td>Hero image missing alt.</td></tr>
+<tr><td class="c">1.2.1–1.2.5</td><td>Time-based Media</td><td>A/AA</td><td><span class="badge b-na">N/A</span></td><td>No audio or video found.</td></tr>
+<tr><td class="c">1.3.1</td><td>Info and Relationships</td><td>A</td><td><span class="badge b-fail">Fail</span></td><td>Heading level jump and empty headings.</td></tr>
+<tr><td class="c">1.3.2</td><td>Meaningful Sequence</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>Sampled DOM order matches visual sections.</td></tr>
+<tr><td class="c">1.3.3</td><td>Sensory Characteristics</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No sensory-only instructions observed.</td></tr>
+<tr><td class="c">1.3.4</td><td>Orientation</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>Mobile layout rendered without orientation lock.</td></tr>
+<tr><td class="c">1.3.5</td><td>Identify Input Purpose</td><td>AA</td><td><span class="badge b-na">N/A</span></td><td>No personal-data fields.</td></tr>
+<tr><td class="c">1.4.1</td><td>Use of Color</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No color-only link cues found.</td></tr>
+<tr><td class="c">1.4.2</td><td>Audio Control</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No autoplaying audio.</td></tr>
+<tr><td class="c">1.4.3</td><td>Contrast (Minimum)</td><td>AA</td><td><span class="badge b-fail">Fail</span></td><td>Article/Perspective labels are 2.91:1 on white.</td></tr>
+<tr><td class="c">1.4.4</td><td>Resize Text</td><td>AA</td><td><span class="badge b-fail">Fail</span></td><td>200% zoom causes horizontal overflow.</td></tr>
+<tr><td class="c">1.4.5</td><td>Images of Text</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>No non-logo images of text observed.</td></tr>
+<tr><td class="c">1.4.10</td><td>Reflow</td><td>AA</td><td><span class="badge b-fail">Fail</span></td><td>305px viewport has 50px horizontal overflow.</td></tr>
+<tr><td class="c">1.4.11</td><td>Non-text Contrast</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>No sampled border/icon failures.</td></tr>
+<tr><td class="c">1.4.12</td><td>Text Spacing</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>Override caused no horizontal scroll.</td></tr>
+<tr><td class="c">1.4.13</td><td>Content on Hover or Focus</td><td>AA</td><td><span class="badge b-na">N/A</span></td><td>No tooltip/popover trigger observed.</td></tr>
+<tr><td class="c">2.1.1</td><td>Keyboard</td><td>A</td><td><span class="badge b-review">Needs review</span></td><td>Browser keyboard delivery failed.</td></tr>
+<tr><td class="c">2.1.2</td><td>No Keyboard Trap</td><td>A</td><td><span class="badge b-review">Needs review</span></td><td>Browser keyboard delivery failed.</td></tr>
+<tr><td class="c">2.1.4</td><td>Character Key Shortcuts</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No global shortcut UI observed.</td></tr>
+<tr><td class="c">2.2.1</td><td>Timing Adjustable</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No time limit observed.</td></tr>
+<tr><td class="c">2.2.2</td><td>Pause, Stop, Hide</td><td>A</td><td><span class="badge b-review">Needs review</span></td><td>19 infinite animations need visual verification.</td></tr>
+<tr><td class="c">2.3.1</td><td>Three Flashes or Below Threshold</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No flashing observed.</td></tr>
+<tr><td class="c">2.4.1</td><td>Bypass Blocks</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>Banner, navigation, main, and footer landmarks present.</td></tr>
+<tr><td class="c">2.4.2</td><td>Page Titled</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>Title is Bruck Systems Group.</td></tr>
+<tr><td class="c">2.4.3</td><td>Focus Order</td><td>A</td><td><span class="badge b-review">Needs review</span></td><td>Focus walk blocked by Browser input limitation.</td></tr>
+<tr><td class="c">2.4.4</td><td>Link Purpose (In Context)</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>30 sampled links have descriptive names.</td></tr>
+<tr><td class="c">2.4.5</td><td>Multiple Ways</td><td>AA</td><td><span class="badge b-review">Needs review</span></td><td>Single-page sample only.</td></tr>
+<tr><td class="c">2.4.6</td><td>Headings and Labels</td><td>AA</td><td><span class="badge b-fail">Fail</span></td><td>Multiple level-2 headings are unnamed.</td></tr>
+<tr><td class="c">2.4.7</td><td>Focus Visible</td><td>AA</td><td><span class="badge b-review">Needs review</span></td><td>Focus walk blocked by Browser input limitation.</td></tr>
+<tr><td class="c">2.4.11</td><td>Focus Not Obscured (Minimum)</td><td>AA</td><td><span class="badge b-review">Needs review</span></td><td>Focus walk blocked by Browser input limitation.</td></tr>
+<tr><td class="c">2.5.1</td><td>Pointer Gestures</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No path-based gesture observed.</td></tr>
+<tr><td class="c">2.5.2</td><td>Pointer Cancellation</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>Sampled controls use standard activation.</td></tr>
+<tr><td class="c">2.5.3</td><td>Label in Name</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>Sampled visible controls expose matching names.</td></tr>
+<tr><td class="c">2.5.4</td><td>Motion Actuation</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No device-motion feature.</td></tr>
+<tr><td class="c">2.5.7</td><td>Dragging Movements</td><td>AA</td><td><span class="badge b-na">N/A</span></td><td>No drag operation found.</td></tr>
+<tr><td class="c">2.5.8</td><td>Target Size (Minimum)</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>Small targets met spacing exception.</td></tr>
+<tr><td class="c">3.1.1</td><td>Language of Page</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td><code>lang=&quot;en&quot;</code> present.</td></tr>
+<tr><td class="c">3.1.2</td><td>Language of Parts</td><td>AA</td><td><span class="badge b-pass">Pass</span></td><td>No unmarked foreign-language passage observed.</td></tr>
+<tr><td class="c">3.2.1</td><td>On Focus</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No context change observed in sampled interaction.</td></tr>
+<tr><td class="c">3.2.2</td><td>On Input</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No input controls.</td></tr>
+<tr><td class="c">3.2.3</td><td>Consistent Navigation</td><td>AA</td><td><span class="badge b-review">Needs review</span></td><td>Requires multi-page sample.</td></tr>
+<tr><td class="c">3.2.4</td><td>Consistent Identification</td><td>AA</td><td><span class="badge b-review">Needs review</span></td><td>Requires multi-page sample.</td></tr>
+<tr><td class="c">3.2.6</td><td>Consistent Help</td><td>A</td><td><span class="badge b-review">Needs review</span></td><td>Requires multi-page sample.</td></tr>
+<tr><td class="c">3.3.1–3.3.4</td><td>Error Identification, Labels, Suggestions, Prevention</td><td>A/AA</td><td><span class="badge b-na">N/A</span></td><td>No form submission on homepage.</td></tr>
+<tr><td class="c">3.3.7</td><td>Redundant Entry</td><td>A</td><td><span class="badge b-na">N/A</span></td><td>No multi-step entry flow.</td></tr>
+<tr><td class="c">3.3.8</td><td>Accessible Authentication (Minimum)</td><td>AA</td><td><span class="badge b-na">N/A</span></td><td>No authentication flow.</td></tr>
+<tr><td class="c">4.1.2</td><td>Name, Role, Value</td><td>A</td><td><span class="badge b-pass">Pass</span></td><td>No invalid roles or broken ARIA references.</td></tr>
+<tr><td class="c">4.1.3</td><td>Status Messages</td><td>AA</td><td><span class="badge b-na">N/A</span></td><td>No dynamic status message triggered.</td></tr>
+      </tbody></table>
+    <p class="legend">Level A + AA only. 4.1.1 Parsing omitted — removed in WCAG 2.2. Level AAA is out of scope for an AA compliance audit.</p>
+  </details>
+
+</main>
+<footer>Generated by the <strong>wcag-audit</strong> skill through the in-app Browser CDP on 2026-07-16, using <code>probes.js</code>. A "Pass" reflects no violation detected on this page and does not by itself certify full WCAG conformance (assessed per-page and per-process). Machine-readable findings: <code>reports/wcag-issues.json</code>.</footer>
+</body>
+</html>
