@@ -18,7 +18,7 @@ export function BrandLogo({
       height={984}
       priority={priority}
       sizes={sizes}
-      src="/brand/bruck-systems-group-logo.png"
+      src="/brand/bruck-systems-group-logo.svg"
       width={1598}
     />
   )
