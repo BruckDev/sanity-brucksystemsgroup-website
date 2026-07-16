@@ -220,11 +220,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="surface-card grid gap-12 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
+      <section className="editorial-panel relative isolate grid gap-12 overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--charcoal)] p-6 shadow-[0_24px_60px_rgba(7,26,43,0.2)] md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
         <div>
           <SectionIntro
             eyebrow={display.governmentEyebrow}
             title={home.governmentTitle}
+            tone="dark"
             description={
               <CustomPortableText
                 id={null}
@@ -238,7 +239,7 @@ export default async function HomePage() {
             {(home.governmentCapabilities || []).map((capability: string) => (
               <div
                 key={capability}
-                className="rounded-full border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-2 text-sm font-medium text-[color:var(--fg)]"
+                className="rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-sm font-medium text-white/86"
               >
                 {capability}
               </div>
