@@ -32,6 +32,17 @@ export const settingsQuery = defineQuery(`
       }
     },
     footerNote,
+    uiText{
+      heroStatsHeading,
+      headerContactCtaLabel,
+      headerMenuToggleLabel,
+      mainNavigationLabel,
+      mobileNavigationLabel,
+      footerLinkedinLabel,
+      footerLinkedinPlaceholder,
+      footerPrivacyLabel,
+      footerAccessibilityLabel
+    },
     ogImage,
     seo
   }
@@ -42,6 +53,27 @@ export const homeQuery = defineQuery(`
     _id,
     _type,
     title,
+    display{
+      heroEyebrow,
+      heroBackgroundImageAlt,
+      servicesEyebrow,
+      serviceCardLinkLabel,
+      allServicesLinkLabel,
+      servicesAnimationAriaLabel,
+      insightsEyebrow,
+      caseStudiesEyebrow,
+      caseStudiesTitle,
+      caseStudiesDescription,
+      caseStudyPlaceholderLabel,
+      industriesEyebrow,
+      governmentEyebrow,
+      governmentCtaLabel,
+      governmentPanelTitle,
+      governmentPanelSubtitle,
+      engineeringEyebrow,
+      whyUsEyebrow,
+      finalCtaEyebrow
+    },
     overview,
     heroPrimaryCta{label, href, style},
     heroSecondaryCta{label, href, style},
@@ -66,7 +98,11 @@ export const homeQuery = defineQuery(`
       excerpt,
       articleType,
       estimatedReadTime,
-      publishedAt
+      publishedAt,
+      coverImage{
+        ...,
+        asset->
+      }
     },
     featuredCaseStudies[]->{
       _id,
@@ -127,6 +163,17 @@ export const serviceBySlugQuery = defineQuery(`
     title,
     "slug": slug.current,
     summary,
+    display{
+      heroEyebrow,
+      backCta{label, href, style},
+      clientProblemLabel,
+      whatWeProvideLabel,
+      deliverablesTitle,
+      outcomesTitle,
+      closingTitle,
+      closingText,
+      closingCta{label, href, style}
+    },
     image{
       ...,
       asset->
@@ -164,6 +211,16 @@ export const industryBySlugQuery = defineQuery(`
     title,
     "slug": slug.current,
     summary,
+    display{
+      heroEyebrow,
+      backCta{label, href, style},
+      overviewLabel,
+      prioritiesTitle,
+      relatedServicesLabel,
+      closingTitle,
+      closingText,
+      closingCta{label, href, style}
+    },
     overview,
     priorities,
     services[]->{
@@ -184,6 +241,10 @@ export const insightsQuery = defineQuery(`
     articleType,
     estimatedReadTime,
     publishedAt,
+    coverImage{
+      ...,
+      asset->
+    },
     seo
   }
 `)
@@ -194,9 +255,22 @@ export const insightBySlugQuery = defineQuery(`
     title,
     "slug": slug.current,
     excerpt,
+    display{
+      backCta{label, href, style},
+      readTimeLabel,
+      relatedServicesTitle,
+      relatedIndustriesTitle,
+      closingTitle,
+      closingText,
+      closingCta{label, href, style}
+    },
     articleType,
     estimatedReadTime,
     publishedAt,
+    coverImage{
+      ...,
+      asset->
+    },
     body,
     relatedServices[]->{
       title,
@@ -226,6 +300,17 @@ export const caseStudyBySlugQuery = defineQuery(`
     title,
     "slug": slug.current,
     excerpt,
+    display{
+      heroEyebrow,
+      backCta{label, href, style},
+      challengeLabel,
+      approachLabel,
+      outcomesTitle,
+      industryLabel,
+      relatedServicesLabel,
+      placeholderNote,
+      closingCta{label, href, style}
+    },
     challenge,
     approach,
     outcomes,
@@ -258,6 +343,18 @@ export const aboutQuery = defineQuery(`
   *[_type == "about"][0]{
     _id,
     title,
+    display{
+      heroEyebrow,
+      secondaryCta{label, href, style},
+      missionEyebrow,
+      missionTitle,
+      approachEyebrow,
+      approachTitle,
+      principlesEyebrow,
+      principlesTitle,
+      leadershipEyebrow,
+      leadershipTitle
+    },
     overview,
     mission,
     leadershipIntro,
@@ -278,6 +375,18 @@ export const governmentQuery = defineQuery(`
   *[_type == "governmentPage"][0]{
     _id,
     title,
+    display{
+      heroEyebrow,
+      secondaryCta{label, href, style},
+      capabilitiesEyebrow,
+      capabilitiesTitle,
+      supportAreasLabel,
+      vendorInformationLabel,
+      downloadCapabilityStatementLabel,
+      capabilityStatementEmptyMessage,
+      teamingTitle,
+      relatedServicesTitle
+    },
     overview,
     capabilities[]{
       title,
@@ -289,6 +398,10 @@ export const governmentQuery = defineQuery(`
       asset->
     },
     teaming,
+    relatedServices[]->{
+      title,
+      "slug": slug.current
+    },
     cta{label, href, style},
     seo
   }
@@ -298,8 +411,103 @@ export const contactPageQuery = defineQuery(`
   *[_type == "contactPage"][0]{
     _id,
     title,
+    display{
+      heroEyebrow,
+      contactInformationLabel,
+      importantNoteLabel
+    },
+    form{
+      nameLabel,
+      organizationLabel,
+      emailLabel,
+      phoneLabel,
+      serviceInterestLabel,
+      messageLabel,
+      serviceOptions,
+      defaultServiceOption,
+      submitLabel,
+      nameError,
+      emailError,
+      messageError,
+      validationSummary,
+      inactiveFallback
+    },
     overview,
     formNote,
+    seo
+  }
+`)
+
+export const servicesLandingQuery = defineQuery(`
+  *[_type == "servicesLanding"][0]{
+    _id,
+    eyebrow,
+    title,
+    overview,
+    heroPrimaryCta{label, href, style},
+    heroSecondaryCta{label, href, style},
+    sectionEyebrow,
+    sectionTitle,
+    sectionDescription,
+    deliverablesLabel,
+    outcomesLabel,
+    detailCtaLabel,
+    seo
+  }
+`)
+
+export const industriesLandingQuery = defineQuery(`
+  *[_type == "industriesLanding"][0]{
+    _id,
+    eyebrow,
+    title,
+    overview,
+    heroPrimaryCta{label, href, style},
+    heroSecondaryCta{label, href, style},
+    sectionEyebrow,
+    sectionTitle,
+    sectionDescription,
+    governmentCta{label, href, style},
+    seo
+  }
+`)
+
+export const insightsLandingQuery = defineQuery(`
+  *[_type == "insightsLanding"][0]{
+    _id,
+    eyebrow,
+    title,
+    overview,
+    heroPrimaryCta{label, href, style},
+    heroSecondaryCta{label, href, style},
+    insightsEyebrow,
+    insightsTitle,
+    caseStudiesEyebrow,
+    caseStudiesTitle,
+    caseStudiesDescription,
+    caseStudiesCta{label, href, style},
+    seo
+  }
+`)
+
+export const privacyPageQuery = defineQuery(`
+  *[_type == "privacyPage"][0]{
+    _id,
+    eyebrow,
+    title,
+    overview,
+    body,
+    seo
+  }
+`)
+
+export const accessibilityPageQuery = defineQuery(`
+  *[_type == "accessibilityPage"][0]{
+    _id,
+    eyebrow,
+    title,
+    overview,
+    body,
     seo
   }
 `)

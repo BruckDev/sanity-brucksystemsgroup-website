@@ -16,13 +16,24 @@ type SiteHeaderProps = {
   brandEyebrow?: string | null
   siteTitle?: string | null
   navigation?: LinkItem[] | null
+  uiText?: {
+    headerContactCtaLabel?: string | null
+    headerMenuToggleLabel?: string | null
+    mainNavigationLabel?: string | null
+    mobileNavigationLabel?: string | null
+  } | null
 }
 
 export function SiteHeader({
   brandEyebrow = 'Consulting and technology',
   siteTitle = 'Bruck Systems Group',
   navigation = [],
+  uiText,
 }: SiteHeaderProps) {
+  const contactCtaLabel = uiText?.headerContactCtaLabel || 'Contact Us'
+  const menuToggleLabel = uiText?.headerMenuToggleLabel || 'Toggle menu'
+  const mainNavigationLabel = uiText?.mainNavigationLabel || 'Main navigation'
+  const mobileNavigationLabel = uiText?.mobileNavigationLabel || 'Mobile navigation'
   const [open, setOpen] = useState(false)
   const [backgroundOpacity, setBackgroundOpacity] = useState(1)
 
@@ -55,7 +66,7 @@ export function SiteHeader({
         </Link>
 
         <div className="hidden items-center gap-8 lg:flex">
-          <nav className="flex items-center gap-6" aria-label="Main navigation">
+          <nav className="flex items-center gap-6" aria-label={mainNavigationLabel}>
             {(navigation || []).map((item) => {
               return (
                 <div key={`${item.label}-${item.href}`} className="group relative">
@@ -87,14 +98,19 @@ export function SiteHeader({
               )
             })}
           </nav>
-          <ButtonLink href="/contact" label="Contact Us" style="primary" className="border-white bg-white px-4 py-2.5 !text-base !text-black hover:bg-white/90" />
+          <ButtonLink
+            href="/contact"
+            label={contactCtaLabel}
+            style="primary"
+            className="border-white bg-white px-4 py-2.5 !text-base !text-black hover:bg-white/90"
+          />
         </div>
 
         <button
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center border border-white/25 bg-black text-white lg:hidden"
           aria-expanded={open}
-          aria-label="Toggle menu"
+          aria-label={menuToggleLabel}
           onClick={() => setOpen((value) => !value)}
         >
           <div className="space-y-1.5">
@@ -113,7 +129,7 @@ export function SiteHeader({
 
       {open ? (
         <div className="border-t border-white/10 bg-black px-4 py-5 lg:hidden">
-          <nav className="mx-auto max-w-7xl space-y-5" aria-label="Mobile navigation">
+          <nav className="mx-auto max-w-7xl space-y-5" aria-label={mobileNavigationLabel}>
             {(navigation || []).map((item) => (
               <div
                 key={`${item.label}-${item.href}`}
@@ -142,7 +158,12 @@ export function SiteHeader({
                 ) : null}
               </div>
             ))}
-            <ButtonLink href="/contact" label="Contact Us" style="primary" className="w-full" />
+            <ButtonLink
+              href="/contact"
+              label={contactCtaLabel}
+              style="primary"
+              className="w-full"
+            />
           </nav>
         </div>
       ) : null}

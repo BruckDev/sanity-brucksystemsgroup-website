@@ -21,6 +21,23 @@ export default defineType({
       of: [defineArrayMember({type: 'block'})],
     }),
     defineField({
+      name: 'display',
+      title: 'Display copy',
+      type: 'object',
+      fields: [
+        defineField({name: 'heroEyebrow', title: 'Hero eyebrow', type: 'string'}),
+        defineField({name: 'secondaryCta', title: 'Secondary call to action', type: 'link'}),
+        defineField({name: 'missionEyebrow', title: 'Mission eyebrow', type: 'string'}),
+        defineField({name: 'missionTitle', title: 'Mission title', type: 'string'}),
+        defineField({name: 'approachEyebrow', title: 'Approach eyebrow', type: 'string'}),
+        defineField({name: 'approachTitle', title: 'Approach title', type: 'string'}),
+        defineField({name: 'principlesEyebrow', title: 'Principles eyebrow', type: 'string'}),
+        defineField({name: 'principlesTitle', title: 'Principles title', type: 'string'}),
+        defineField({name: 'leadershipEyebrow', title: 'Leadership eyebrow', type: 'string'}),
+        defineField({name: 'leadershipTitle', title: 'Leadership title', type: 'string'}),
+      ],
+    }),
+    defineField({
       name: 'mission',
       title: 'Mission',
       type: 'array',

@@ -2,7 +2,7 @@ import {CustomPortableText} from '@/components/CustomPortableText'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
 import {SectionIntro} from '@/components/site/SectionIntro'
-import {sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
+import {getDynamicFetchOptions, sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
 import {fallbackGovernment} from '@/sanity/lib/siteFallbacks'
 import {governmentQuery} from '@/sanity/lib/siteQueries'
 import type {Metadata} from 'next'
@@ -18,27 +18,42 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GovernmentPage() {
-  const {data} = await sanityFetch({query: governmentQuery, perspective: 'published', stega: false})
+  const fetchOptions = await getDynamicFetchOptions()
+  const {data} = await sanityFetch({query: governmentQuery, ...fetchOptions})
   const page: any = data || fallbackGovernment
-  const capabilityUrl = data?.capabilityStatement?.asset?.url || null
+  const capabilityUrl = page?.capabilityStatement?.asset?.url || null
 
   return (
     <div className="space-y-16 md:space-y-20">
       <PageHero
-        eyebrow="Government"
+        eyebrow={page.display?.heroEyebrow || 'Government'}
         title={page.title}
         description={page.overview}
         primaryCta={page.cta}
-        secondaryCta={{label: 'Contact Us', href: '/contact', style: 'secondary'}}
+        secondaryCta={
+          page.display?.secondaryCta || {label: 'Contact Us', href: '/contact', style: 'secondary'}
+        }
       />
 
       <section>
-        <SectionIntro eyebrow="Capabilities" title="Structured support for public-sector modernization" />
+        <SectionIntro
+          eyebrow={page.display?.capabilitiesEyebrow || 'Capabilities'}
+          title={
+            page.display?.capabilitiesTitle || 'Structured support for public-sector modernization'
+          }
+        />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {(page.capabilities || []).map((capability: any) => (
-            <article key={capability.title} className="border border-[color:var(--border)] bg-white p-6">
-              <h2 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">{capability.title}</h2>
-              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{capability.text}</p>
+            <article
+              key={capability.title}
+              className="border border-[color:var(--border)] bg-white p-6"
+            >
+              <h2 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+                {capability.title}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
+                {capability.text}
+              </p>
             </article>
           ))}
         </div>
@@ -47,11 +62,14 @@ export default async function GovernmentPage() {
       <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
         <article className="border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-8">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            Support areas
+            {page.display?.supportAreasLabel || 'Support areas'}
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             {(page.supportAreas || []).map((item: string) => (
-              <div key={item} className="border border-[color:var(--border)] bg-white px-4 py-2 text-sm text-[color:var(--fg)]">
+              <div
+                key={item}
+                className="border border-[color:var(--border)] bg-white px-4 py-2 text-sm text-[color:var(--fg)]"
+              >
                 {item}
               </div>
             ))}
@@ -59,17 +77,29 @@ export default async function GovernmentPage() {
         </article>
         <article className="border border-[color:var(--border)] bg-white p-6 md:p-8">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            Vendor information
+            {page.display?.vendorInformationLabel || 'Vendor information'}
           </div>
           <div className="mt-6">
-            <CustomPortableText id={null} type={null} path={[]} value={page.vendorInformation || []} />
+            <CustomPortableText
+              id={null}
+              type={null}
+              path={[]}
+              value={page.vendorInformation || []}
+            />
           </div>
           <div className="mt-8">
             {capabilityUrl ? (
-              <ButtonLink href={capabilityUrl} label="Download Capability Statement" style="primary" />
+              <ButtonLink
+                href={capabilityUrl}
+                label={
+                  page.display?.downloadCapabilityStatementLabel || 'Download Capability Statement'
+                }
+                style="primary"
+              />
             ) : (
               <div className="border border-dashed border-[color:var(--border-strong)] bg-[color:var(--bg)] p-4 text-sm leading-7 text-[color:var(--muted)]">
-                Capability statement PDF placeholder. Upload the approved file in Sanity to replace this message.
+                {page.display?.capabilityStatementEmptyMessage ||
+                  'Capability statement PDF placeholder. Upload the approved file in Sanity to replace this message.'}
               </div>
             )}
           </div>
@@ -79,18 +109,22 @@ export default async function GovernmentPage() {
       <section className="grid gap-8 lg:grid-cols-2">
         <article className="border border-[color:var(--border)] bg-white p-6 md:p-8">
           <h2 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
-            Teaming and subcontracting
+            {page.display?.teamingTitle || 'Teaming and subcontracting'}
           </h2>
           <div className="mt-6">
             <CustomPortableText id={null} type={null} path={[]} value={page.teaming || []} />
           </div>
         </article>
         <article className="border border-[color:var(--border)] bg-[color:var(--charcoal)] p-6 text-white md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Relevant service areas</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            {page.display?.relatedServicesTitle || 'Relevant service areas'}
+          </h2>
           <div className="mt-6 grid gap-3 text-sm leading-7 text-white/78">
-            <Link href="/services/government-technology-and-procurement-support">Government Technology and Procurement Support</Link>
-            <Link href="/services/custom-software-solutions">Custom Software Solutions</Link>
-            <Link href="/services/data-analytics-and-automation">Data, Analytics and Automation</Link>
+            {(page.relatedServices || []).map((service: any) => (
+              <Link key={service.slug || service.title} href={`/services/${service.slug}`}>
+                {service.title}
+              </Link>
+            ))}
           </div>
         </article>
       </section>

@@ -21,6 +21,40 @@ export default defineType({
       of: [defineArrayMember({type: 'block'})],
     }),
     defineField({
+      name: 'display',
+      title: 'Display copy',
+      type: 'object',
+      fields: [
+        defineField({name: 'heroEyebrow', title: 'Hero eyebrow', type: 'string'}),
+        defineField({name: 'secondaryCta', title: 'Secondary call to action', type: 'link'}),
+        defineField({name: 'capabilitiesEyebrow', title: 'Capabilities eyebrow', type: 'string'}),
+        defineField({name: 'capabilitiesTitle', title: 'Capabilities title', type: 'string'}),
+        defineField({name: 'supportAreasLabel', title: 'Support areas label', type: 'string'}),
+        defineField({
+          name: 'vendorInformationLabel',
+          title: 'Vendor information label',
+          type: 'string',
+        }),
+        defineField({
+          name: 'downloadCapabilityStatementLabel',
+          title: 'Capability statement download label',
+          type: 'string',
+        }),
+        defineField({
+          name: 'capabilityStatementEmptyMessage',
+          title: 'Capability statement empty message',
+          type: 'text',
+          rows: 3,
+        }),
+        defineField({name: 'teamingTitle', title: 'Teaming title', type: 'string'}),
+        defineField({
+          name: 'relatedServicesTitle',
+          title: 'Related services title',
+          type: 'string',
+        }),
+      ],
+    }),
+    defineField({
       name: 'capabilities',
       title: 'Capabilities',
       type: 'array',
@@ -57,6 +91,12 @@ export default defineType({
       title: 'Teaming and subcontracting',
       type: 'array',
       of: [defineArrayMember({type: 'block'})],
+    }),
+    defineField({
+      name: 'relatedServices',
+      title: 'Related services',
+      type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})],
     }),
     defineField({
       name: 'cta',

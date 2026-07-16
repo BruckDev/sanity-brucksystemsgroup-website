@@ -1,41 +1,48 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
-import {ServiceImage} from '@/components/site/ServiceImage'
 import {SectionIntro} from '@/components/site/SectionIntro'
-import {sanityFetch} from '@/sanity/lib/live'
-import {fallbackServices, toBlocks} from '@/sanity/lib/siteFallbacks'
-import {servicesQuery} from '@/sanity/lib/siteQueries'
-import Link from 'next/link'
+import {ServiceImage} from '@/components/site/ServiceImage'
+import {getDynamicFetchOptions, sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
+import {fallbackServices, fallbackServicesLanding} from '@/sanity/lib/siteFallbacks'
+import {servicesLandingQuery, servicesQuery} from '@/sanity/lib/siteQueries'
 import type {Metadata} from 'next'
+import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Services',
-  description:
-    'Explore Bruck Systems Group services across digital transformation, custom software, analytics, advisory, and government support.',
+export async function generateMetadata(): Promise<Metadata> {
+  const {data} = await sanityFetchMetadata({query: servicesLandingQuery, perspective: 'published'})
+  const seo = (data as any)?.seo || fallbackServicesLanding.seo
+  return {
+    title: seo.title || fallbackServicesLanding.seo.title,
+    description: seo.description || fallbackServicesLanding.seo.description,
+  }
 }
 
 export default async function ServicesPage() {
-  const {data} = await sanityFetch({query: servicesQuery, perspective: 'published', stega: false})
-  const services: any[] = Array.isArray(data) && data.length ? data : fallbackServices
+  const fetchOptions = await getDynamicFetchOptions()
+  const [{data: servicesData}, {data: landingData}] = await Promise.all([
+    sanityFetch({query: servicesQuery, ...fetchOptions}),
+    sanityFetch({query: servicesLandingQuery, ...fetchOptions}),
+  ])
+  const services: any[] =
+    Array.isArray(servicesData) && servicesData.length ? servicesData : fallbackServices
+  const landing = {...fallbackServicesLanding, ...(landingData as any)}
 
   return (
     <div className="space-y-16 md:space-y-20">
       <PageHero
-        eyebrow="Services"
-        title="Consulting and technology services designed for real operational progress."
-        description={toBlocks([
-          'Bruck Systems Group helps organizations modernize responsibly, build fit-for-purpose software, improve visibility through data, and move initiatives from planning into execution.',
-        ])}
-        primaryCta={{label: 'Talk to Our Team', href: '/contact', style: 'primary'}}
-        secondaryCta={{label: 'View Government Support', href: '/government', style: 'secondary'}}
+        eyebrow={landing.eyebrow}
+        title={landing.title}
+        description={landing.overview}
+        primaryCta={landing.heroPrimaryCta}
+        secondaryCta={landing.heroSecondaryCta}
       />
 
       <section>
         <SectionIntro
-          eyebrow="Capabilities"
-          title="Five core service areas"
-          description="Each service is structured around client challenges, practical deliverables, and measurable business outcomes."
+          eyebrow={landing.sectionEyebrow}
+          title={landing.sectionTitle}
+          description={landing.sectionDescription}
         />
         <div className="mt-10 grid gap-8">
           {services.map((service: any) => (
@@ -52,7 +59,12 @@ export default async function ServicesPage() {
                 </p>
                 {Array.isArray(service.whatWeProvide) ? (
                   <div className="mt-6 max-w-3xl">
-                    <CustomPortableText id={null} type={null} path={[]} value={service.whatWeProvide} />
+                    <CustomPortableText
+                      id={null}
+                      type={null}
+                      path={[]}
+                      value={service.whatWeProvide}
+                    />
                   </div>
                 ) : null}
               </div>
@@ -60,11 +72,14 @@ export default async function ServicesPage() {
                 <ServiceImage slug={service.slug} image={service.image} alt={service.image?.alt} />
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-                    Example deliverables
+                    {landing.deliverablesLabel}
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {(service.deliverables || []).map((item: string) => (
-                      <div key={item} className="border border-[color:var(--border)] bg-[color:var(--bg)] px-3 py-2 text-sm text-[color:var(--fg)]">
+                      <div
+                        key={item}
+                        className="border border-[color:var(--border)] bg-[color:var(--bg)] px-3 py-2 text-sm text-[color:var(--fg)]"
+                      >
                         {item}
                       </div>
                     ))}
@@ -72,17 +87,24 @@ export default async function ServicesPage() {
                 </div>
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-                    Expected outcomes
+                    {landing.outcomesLabel}
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {(service.outcomes || []).map((item: string) => (
-                      <div key={item} className="border border-[color:var(--border)] bg-white px-3 py-2 text-sm text-[color:var(--muted)]">
+                      <div
+                        key={item}
+                        className="border border-[color:var(--border)] bg-white px-3 py-2 text-sm text-[color:var(--muted)]"
+                      >
                         {item}
                       </div>
                     ))}
                   </div>
                 </div>
-                <ButtonLink href={`/services/${service.slug}`} label="Read More" style="secondary" />
+                <ButtonLink
+                  href={`/services/${service.slug}`}
+                  label={landing.detailCtaLabel}
+                  style="secondary"
+                />
               </div>
             </article>
           ))}

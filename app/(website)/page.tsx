@@ -2,23 +2,54 @@ import {CustomPortableText} from '@/components/CustomPortableText'
 import {AbstractPanel} from '@/components/site/AbstractPanel'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {CircuitAnimation} from '@/components/site/CircuitAnimation'
+import {InsightImage} from '@/components/site/InsightImage'
 import {PageHero} from '@/components/site/PageHero'
 import {SectionIntro} from '@/components/site/SectionIntro'
 import {ServiceImage} from '@/components/site/ServiceImage'
-import {sanityFetch} from '@/sanity/lib/live'
+import {getDynamicFetchOptions, sanityFetch} from '@/sanity/lib/live'
 import {
   fallbackCaseStudies,
   fallbackHome,
-  fallbackIndustries,
   fallbackInsights,
   fallbackServices,
 } from '@/sanity/lib/siteFallbacks'
-import {homeQuery} from '@/sanity/lib/siteQueries'
+import {homeQuery, settingsQuery} from '@/sanity/lib/siteQueries'
 import Link from 'next/link'
 
+const defaultDisplayCopy = {
+  heroEyebrow: 'Bruck Systems Group',
+  heroBackgroundImageAlt:
+    'Abstract digital network background with glowing blue lines and hexagonal interface shapes.',
+  servicesEyebrow: 'Services overview',
+  serviceCardLinkLabel: 'View service',
+  allServicesLinkLabel: 'Explore All Services',
+  servicesAnimationAriaLabel: 'Abstract blue technology animation',
+  insightsEyebrow: 'Insights',
+  caseStudiesEyebrow: 'Case studies',
+  caseStudiesTitle: 'Editorial-ready client story structure',
+  caseStudiesDescription:
+    'The site is prepared for future approved case studies without inventing past performance.',
+  caseStudyPlaceholderLabel: 'Placeholder structure',
+  industriesEyebrow: 'Industries',
+  governmentEyebrow: 'Government',
+  governmentCtaLabel: 'View Government Capabilities',
+  governmentPanelTitle: 'Mission-focused support for procurement and modernization.',
+  governmentPanelSubtitle: 'Government support',
+  engineeringEyebrow: 'Engineering delivery',
+  whyUsEyebrow: 'Why us',
+  finalCtaEyebrow: 'Contact',
+}
+
 export default async function HomePage() {
-  const {data} = await sanityFetch({query: homeQuery, perspective: 'published', stega: false})
+  const fetchOptions = await getDynamicFetchOptions()
+  const [{data: homeData}, {data: settingsData}] = await Promise.all([
+    sanityFetch({query: homeQuery, ...fetchOptions}),
+    sanityFetch({query: settingsQuery, ...fetchOptions}),
+  ])
+  const data: any = homeData
   const home: any = data || fallbackHome
+  const display = {...defaultDisplayCopy, ...(home.display || {})}
+  const uiText = (settingsData as any)?.uiText || {}
   const services = data?.featuredServices?.length
     ? data.featuredServices
     : fallbackServices.slice(0, 3)
@@ -26,7 +57,6 @@ export default async function HomePage() {
   const caseStudies = data?.featuredCaseStudies?.length
     ? data.featuredCaseStudies
     : fallbackCaseStudies
-  const industries = data?.featuredIndustries?.length ? data.featuredIndustries : fallbackIndustries
   const servicesVideoLinks = home.servicesVideoLinks?.length
     ? home.servicesVideoLinks
     : fallbackHome.servicesVideoLinks
@@ -38,20 +68,21 @@ export default async function HomePage() {
     <div className="space-y-20 pb-8 md:space-y-28">
       <div className="relative left-1/2 w-[calc(100vw-1.5rem)] -translate-x-1/2 md:w-[calc(100vw-3rem)]">
         <PageHero
-          eyebrow="Bruck Systems Group"
+          eyebrow={display.heroEyebrow}
           title={home.title}
           description={home.overview}
-          backgroundImageAlt="Abstract digital network background with glowing blue lines and hexagonal interface shapes."
+          backgroundImageAlt={display.heroBackgroundImageAlt}
           backgroundImageSrc="/images/home/hero-background.png"
           primaryCta={home.heroPrimaryCta}
           secondaryCta={home.heroSecondaryCta}
           stats={home.heroHighlights?.length ? home.heroHighlights : fallbackHome.heroHighlights}
+          statsHeading={uiText.heroStatsHeading}
         />
       </div>
 
       <section>
         <SectionIntro
-          eyebrow="Services overview"
+          eyebrow={display.servicesEyebrow}
           title={home.servicesTitle}
           description={
             <CustomPortableText id={null} type={null} path={[]} value={home.servicesIntro || []} />
@@ -80,19 +111,19 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="mt-auto pt-6 text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)]">
-                View service
+                {display.serviceCardLinkLabel}
               </div>
             </Link>
           ))}
         </div>
         <div className="mt-8">
-          <ButtonLink href="/services" label="Explore All Services" style="secondary" />
+          <ButtonLink href="/services" label={display.allServicesLinkLabel} style="secondary" />
         </div>
       </section>
 
       <div className="relative left-1/2 w-[calc(100vw-1.5rem)] -translate-x-1/2 md:w-[calc(100vw-3rem)]">
         <section
-          aria-label="Abstract blue technology animation"
+          aria-label={display.servicesAnimationAriaLabel}
           className="relative isolate aspect-video overflow-hidden rounded-[2rem] bg-[#031429]"
         >
           <CircuitAnimation />
@@ -124,7 +155,7 @@ export default async function HomePage() {
       <section className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div>
           <SectionIntro
-            eyebrow="Insights"
+            eyebrow={display.insightsEyebrow}
             title={home.insightsTitle}
             description={
               <CustomPortableText
@@ -145,6 +176,12 @@ export default async function HomePage() {
                   <span>{insight.articleType}</span>
                   <span className="text-[color:var(--muted)]">{insight.estimatedReadTime}</span>
                 </div>
+                <InsightImage
+                  alt={insight.coverImage?.alt}
+                  className="relative mt-5 aspect-[16/9]"
+                  image={insight.coverImage}
+                  slug={insight.slug}
+                />
                 <h3 className="mt-5 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                   <Link href={`/insights/${insight.slug}`}>{insight.title}</Link>
                 </h3>
@@ -158,9 +195,9 @@ export default async function HomePage() {
 
         <div>
           <SectionIntro
-            eyebrow="Case studies"
-            title="Editorial-ready client story structure"
-            description="The site is prepared for future approved case studies without inventing past performance."
+            eyebrow={display.caseStudiesEyebrow}
+            title={display.caseStudiesTitle}
+            description={display.caseStudiesDescription}
           />
           <div className="mt-8 grid gap-6">
             {caseStudies.map((study: any) => (
@@ -169,7 +206,7 @@ export default async function HomePage() {
                 className="border border-[color:var(--border)] bg-white p-6"
               >
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
-                  Placeholder structure
+                  {display.caseStudyPlaceholderLabel}
                 </div>
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
                   <Link href={`/insights/case-studies/${study.slug}`}>{study.title}</Link>
@@ -183,40 +220,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section>
-        <SectionIntro
-          eyebrow="Industries"
-          title={home.industriesTitle}
-          description={
-            <CustomPortableText
-              id={null}
-              type={null}
-              path={[]}
-              value={home.industriesIntro || []}
-            />
-          }
-        />
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {industries.map((industry: any) => (
-            <article
-              key={industry.slug || industry.title}
-              className="border border-[color:var(--border)] bg-white p-6"
-            >
-              <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
-                <Link href={`/industries/${industry.slug}`}>{industry.title}</Link>
-              </h3>
-              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">
-                {industry.summary}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="grid gap-12 border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
         <div>
           <SectionIntro
-            eyebrow="Government"
+            eyebrow={display.governmentEyebrow}
             title={home.governmentTitle}
             description={
               <CustomPortableText
@@ -238,18 +245,18 @@ export default async function HomePage() {
             ))}
           </div>
           <div className="mt-8">
-            <ButtonLink href="/government" label="View Government Capabilities" style="primary" />
+            <ButtonLink href="/government" label={display.governmentCtaLabel} style="primary" />
           </div>
         </div>
         <AbstractPanel
-          title="Mission-focused support for procurement and modernization."
-          subtitle="Government support"
+          title={display.governmentPanelTitle}
+          subtitle={display.governmentPanelSubtitle}
         />
       </section>
 
       <section>
         <SectionIntro
-          eyebrow="Engineering delivery"
+          eyebrow={display.engineeringEyebrow}
           title={home.engineeringCapabilitiesTitle || fallbackHome.engineeringCapabilitiesTitle}
           description={
             <CustomPortableText
@@ -276,7 +283,7 @@ export default async function HomePage() {
       </section>
 
       <section>
-        <SectionIntro eyebrow="Why us" title={home.whyUsTitle} />
+        <SectionIntro eyebrow={display.whyUsEyebrow} title={home.whyUsTitle} />
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {(home.whyUsCards || []).map((card: any) => (
             <article key={card.title} className="border border-[color:var(--border)] bg-white p-6">
@@ -292,7 +299,7 @@ export default async function HomePage() {
       <section className="editorial-panel border border-[color:var(--border)] bg-[color:var(--charcoal)] px-6 py-12 text-white md:px-10 md:py-16">
         <div className="relative z-10 max-w-3xl">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            Contact
+            {display.finalCtaEyebrow}
           </div>
           <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
             {home.finalCtaTitle}

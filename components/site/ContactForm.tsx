@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 
-const serviceOptions = [
+const fallbackServiceOptions = [
   'Digital Transformation',
   'Custom Software Solutions',
   'Data, Analytics and Automation',
@@ -12,7 +12,30 @@ const serviceOptions = [
   'Government Contracting Inquiry',
 ]
 
-export function ContactForm({formNote}: {formNote?: string | null}) {
+type ContactFormCopy = {
+  nameLabel?: string | null
+  organizationLabel?: string | null
+  emailLabel?: string | null
+  phoneLabel?: string | null
+  serviceInterestLabel?: string | null
+  messageLabel?: string | null
+  serviceOptions?: string[] | null
+  defaultServiceOption?: string | null
+  submitLabel?: string | null
+  nameError?: string | null
+  emailError?: string | null
+  messageError?: string | null
+  validationSummary?: string | null
+  inactiveFallback?: string | null
+}
+
+export function ContactForm({
+  formNote,
+  copy,
+}: {
+  formNote?: string | null
+  copy?: ContactFormCopy | null
+}) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'validation' | 'inactive'>('idle')
 
@@ -22,11 +45,13 @@ export function ContactForm({formNote}: {formNote?: string | null}) {
     const email = String(formData.get('email') || '').trim()
     const message = String(formData.get('message') || '').trim()
 
-    if (!name) nextErrors.name = 'Please enter your name.'
+    if (!name) nextErrors.name = copy?.nameError || 'Please enter your name.'
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = 'Please enter a valid email address.'
+      nextErrors.email = copy?.emailError || 'Please enter a valid email address.'
     }
-    if (!message) nextErrors.message = 'Please share a short message so we can understand your inquiry.'
+    if (!message)
+      nextErrors.message =
+        copy?.messageError || 'Please share a short message so we can understand your inquiry.'
 
     return nextErrors
   }
@@ -44,33 +69,41 @@ export function ContactForm({formNote}: {formNote?: string | null}) {
       noValidate
     >
       <div className="grid gap-6 md:grid-cols-2">
-        <Field label="Name" name="name" error={errors.name} />
-        <Field label="Organization" name="organization" />
-        <Field label="Email" name="email" type="email" error={errors.email} />
-        <Field label="Phone" name="phone" type="tel" />
+        <Field label={copy?.nameLabel || 'Name'} name="name" error={errors.name} />
+        <Field label={copy?.organizationLabel || 'Organization'} name="organization" />
+        <Field label={copy?.emailLabel || 'Email'} name="email" type="email" error={errors.email} />
+        <Field label={copy?.phoneLabel || 'Phone'} name="phone" type="tel" />
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-[color:var(--fg)]" htmlFor="interest">
-          Service interest
+        <label
+          className="mb-2 block text-sm font-semibold text-[color:var(--fg)]"
+          htmlFor="interest"
+        >
+          {copy?.serviceInterestLabel || 'Service interest'}
         </label>
         <select
           id="interest"
           name="interest"
           className="w-full border border-[color:var(--border-strong)] bg-white px-4 py-3 text-sm text-[color:var(--fg)] outline-none transition focus:border-[color:var(--accent)]"
-          defaultValue="General Business Inquiry"
+          defaultValue={copy?.defaultServiceOption || 'General Business Inquiry'}
         >
-          {serviceOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
+          {(copy?.serviceOptions?.length ? copy.serviceOptions : fallbackServiceOptions).map(
+            (option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ),
+          )}
         </select>
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-[color:var(--fg)]" htmlFor="message">
-          Message
+        <label
+          className="mb-2 block text-sm font-semibold text-[color:var(--fg)]"
+          htmlFor="message"
+        >
+          {copy?.messageLabel || 'Message'}
         </label>
         <textarea
           id="message"
@@ -86,16 +119,17 @@ export function ContactForm({formNote}: {formNote?: string | null}) {
           type="submit"
           className="inline-flex w-full items-center justify-center border border-[color:var(--charcoal)] bg-[color:var(--charcoal)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)] md:w-fit"
         >
-          Review Inquiry
+          {copy?.submitLabel || 'Review Inquiry'}
         </button>
         {status === 'validation' ? (
           <div className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            Please fix the highlighted fields and try again.
+            {copy?.validationSummary || 'Please fix the highlighted fields and try again.'}
           </div>
         ) : null}
         {status === 'inactive' ? (
           <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
             {formNote ||
+              copy?.inactiveFallback ||
               'This form is not connected to a live submission handler yet. It is ready for integration with email, CRM, or server-side processing.'}
           </div>
         ) : null}

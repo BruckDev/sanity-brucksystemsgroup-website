@@ -646,3 +646,98 @@ export const fallbackContact = {
       'Get in touch with Bruck Systems Group about services, partnerships, or government-related inquiries.',
   },
 }
+
+export const fallbackServicesLanding = {
+  eyebrow: 'Services',
+  title: 'Consulting and technology services designed for real operational progress.',
+  overview: toBlocks([
+    'Bruck Systems Group helps organizations modernize responsibly, build fit-for-purpose software, improve visibility through data, and move initiatives from planning into execution.',
+  ]),
+  heroPrimaryCta: {label: 'Talk to Our Team', href: '/contact', style: 'primary'},
+  heroSecondaryCta: {label: 'View Government Support', href: '/government', style: 'secondary'},
+  sectionEyebrow: 'Capabilities',
+  sectionTitle: 'Five core service areas',
+  sectionDescription:
+    'Each service is structured around client challenges, practical deliverables, and measurable business outcomes.',
+  deliverablesLabel: 'Example deliverables',
+  outcomesLabel: 'Expected outcomes',
+  detailCtaLabel: 'Read More',
+  seo: {
+    title: 'Services | Bruck Systems Group',
+    description:
+      'Explore Bruck Systems Group services across digital transformation, custom software, analytics, advisory, and government support.',
+  },
+}
+
+export const fallbackIndustriesLanding = {
+  eyebrow: 'Industries',
+  title: 'Sector-aware support for organizations with real constraints and real stakes.',
+  overview: toBlocks([
+    'Bruck Systems Group serves public agencies, private businesses, and nonprofit organizations with a practical approach to modernization, software, operations, and delivery support.',
+  ]),
+  heroPrimaryCta: {label: 'Explore Services', href: '/services', style: 'primary'},
+  heroSecondaryCta: {label: 'Contact Us', href: '/contact', style: 'secondary'},
+  sectionEyebrow: 'Industries',
+  sectionTitle: 'Industries served',
+  sectionDescription: toBlocks([
+    'Our approach is designed for organizations where operational clarity, accountability, and measurable progress matter.',
+  ]),
+  governmentCta: {label: 'View Government Capabilities', href: '/government', style: 'secondary'},
+  seo: {
+    title: 'Industries | Bruck Systems Group',
+    description:
+      'See how Bruck Systems Group supports government, regulated, mission-driven, and growth-oriented organizations.',
+  },
+}
+
+export const fallbackInsightsLanding = {
+  eyebrow: 'Insights',
+  title: 'Editorial content for leaders navigating complex operational and technology decisions.',
+  overview: toBlocks([
+    'This area is structured for articles, reports, perspectives, and case studies managed through Sanity.',
+  ]),
+  heroPrimaryCta: {label: 'Contact Us', href: '/contact', style: 'primary'},
+  heroSecondaryCta: {label: 'Explore Services', href: '/services', style: 'secondary'},
+  insightsEyebrow: 'Articles and reports',
+  insightsTitle: 'Latest insights',
+  caseStudiesEyebrow: 'Case studies',
+  caseStudiesTitle: 'Prepared for future approved examples',
+  caseStudiesDescription:
+    'No past-performance claims are published here unless that information is provided and approved.',
+  caseStudiesCta: {label: 'Discuss an Initiative', href: '/contact', style: 'secondary'},
+  seo: {
+    title: 'Insights | Bruck Systems Group',
+    description:
+      'Editorial insights, perspectives, reports, and future case studies from Bruck Systems Group.',
+  },
+}
+
+export const fallbackPrivacyPage = {
+  eyebrow: 'Privacy',
+  title: 'Privacy information placeholder',
+  overview: toBlocks([
+    'Replace this page with organization-specific privacy language once legal and operational requirements are confirmed.',
+  ]),
+  body: toBlocks([
+    'This placeholder page exists so the site includes a clear privacy destination in the footer. Before launch, add approved privacy language covering data collection, contact forms, analytics, and any third-party services used on the website.',
+  ]),
+  seo: {
+    title: 'Privacy | Bruck Systems Group',
+    description: 'Placeholder privacy information for the Bruck Systems Group website.',
+  },
+}
+
+export const fallbackAccessibilityPage = {
+  eyebrow: 'Accessibility',
+  title: 'Accessibility statement placeholder',
+  overview: toBlocks([
+    'This page can be replaced with a formal accessibility statement when preferred language and support contact details are available.',
+  ]),
+  body: toBlocks([
+    'The website has been built with responsive layouts, visible focus states, readable contrast, and keyboard-friendly navigation. Before launch, add the organization’s preferred accessibility contact method and any formal policy text required for your audience.',
+  ]),
+  seo: {
+    title: 'Accessibility | Bruck Systems Group',
+    description: 'Accessibility commitment placeholder for the Bruck Systems Group website.',
+  },
+}

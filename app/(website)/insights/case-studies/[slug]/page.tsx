@@ -1,7 +1,7 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
 import {ButtonLink} from '@/components/site/ButtonLink'
 import {PageHero} from '@/components/site/PageHero'
-import {sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
+import {getDynamicFetchOptions, sanityFetch, sanityFetchMetadata} from '@/sanity/lib/live'
 import {fallbackCaseStudies, toBlocks} from '@/sanity/lib/siteFallbacks'
 import {caseStudyBySlugQuery} from '@/sanity/lib/siteQueries'
 import type {Metadata} from 'next'
@@ -32,11 +32,11 @@ export default async function CaseStudyDetailPage({
   params,
 }: PageProps<'/insights/case-studies/[slug]'>) {
   const {slug} = await params
+  const fetchOptions = await getDynamicFetchOptions()
   const {data} = await sanityFetch({
     query: caseStudyBySlugQuery,
     params: {slug},
-    perspective: 'published',
-    stega: false,
+    ...fetchOptions,
   })
   const caseStudy: any = data || fallbackCaseStudies.find((item) => item.slug === slug)
 
@@ -47,17 +47,23 @@ export default async function CaseStudyDetailPage({
   return (
     <div className="space-y-16 md:space-y-20">
       <PageHero
-        eyebrow="Case study"
+        eyebrow={caseStudy.display?.heroEyebrow || 'Case study'}
         title={caseStudy.title || ''}
         description={caseStudy.excerpt ? toBlocks([caseStudy.excerpt]) : []}
-        secondaryCta={{label: 'Back to Insights', href: '/insights', style: 'secondary'}}
+        secondaryCta={
+          caseStudy.display?.backCta || {
+            label: 'Back to Insights',
+            href: '/insights',
+            style: 'secondary',
+          }
+        }
         stats={caseStudy.metrics}
       />
 
       <section className="grid gap-8 lg:grid-cols-2">
         <article className="border border-[color:var(--border)] bg-white p-6 md:p-8">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            Challenge
+            {caseStudy.display?.challengeLabel || 'Challenge'}
           </div>
           <div className="mt-6">
             <CustomPortableText id={null} type={null} path={[]} value={caseStudy.challenge || []} />
@@ -65,7 +71,7 @@ export default async function CaseStudyDetailPage({
         </article>
         <article className="border border-[color:var(--border)] bg-white p-6 md:p-8">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            Approach
+            {caseStudy.display?.approachLabel || 'Approach'}
           </div>
           <div className="mt-6">
             <CustomPortableText id={null} type={null} path={[]} value={caseStudy.approach || []} />
@@ -75,10 +81,15 @@ export default async function CaseStudyDetailPage({
 
       <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
         <article className="border border-[color:var(--border)] bg-white p-6 md:p-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">Outcomes</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+            {caseStudy.display?.outcomesTitle || 'Outcomes'}
+          </h2>
           <div className="mt-6 flex flex-wrap gap-3">
             {(caseStudy.outcomes || []).map((item: string) => (
-              <div key={item} className="border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-2 text-sm text-[color:var(--fg)]">
+              <div
+                key={item}
+                className="border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-2 text-sm text-[color:var(--fg)]"
+              >
                 {item}
               </div>
             ))}
@@ -93,9 +104,12 @@ export default async function CaseStudyDetailPage({
           {caseStudy.industry ? (
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-                Industry
+                {caseStudy.display?.industryLabel || 'Industry'}
               </div>
-              <Link href={`/industries/${caseStudy.industry.slug}`} className="mt-3 inline-block text-base text-[color:var(--fg)]">
+              <Link
+                href={`/industries/${caseStudy.industry.slug}`}
+                className="mt-3 inline-block text-base text-[color:var(--fg)]"
+              >
                 {caseStudy.industry.title}
               </Link>
             </div>
@@ -103,11 +117,15 @@ export default async function CaseStudyDetailPage({
           {caseStudy.services?.length ? (
             <div className="mt-8">
               <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
-                Related services
+                {caseStudy.display?.relatedServicesLabel || 'Related services'}
               </div>
               <div className="mt-4 grid gap-2">
                 {caseStudy.services.map((service: any) => (
-                  <Link key={service.slug || service.title} href={`/services/${service.slug}`} className="text-sm text-[color:var(--muted)] hover:text-[color:var(--fg)]">
+                  <Link
+                    key={service.slug || service.title}
+                    href={`/services/${service.slug}`}
+                    className="text-sm text-[color:var(--muted)] hover:text-[color:var(--fg)]"
+                  >
                     {service.title}
                   </Link>
                 ))}
@@ -118,11 +136,18 @@ export default async function CaseStudyDetailPage({
       </section>
 
       <section className="border border-dashed border-[color:var(--border-strong)] bg-[color:var(--bg)] p-6 text-sm leading-7 text-[color:var(--muted)]">
-        This page is structured to support approved future case studies. Replace placeholder examples with client-authorized content, metrics, and assets in Sanity when available.
+        {caseStudy.display?.placeholderNote ||
+          'This page is structured to support approved future case studies. Replace placeholder examples with client-authorized content, metrics, and assets in Sanity when available.'}
       </section>
 
       <div>
-        <ButtonLink href="/contact" label="Contact Us" style="primary" />
+        <ButtonLink
+          {...(caseStudy.display?.closingCta || {
+            href: '/contact',
+            label: 'Contact Us',
+            style: 'primary',
+          })}
+        />
       </div>
     </div>
   )

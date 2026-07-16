@@ -28,6 +28,28 @@ export default defineType({
       validation: (rule) => rule.required().max(220),
     }),
     defineField({
+      name: 'display',
+      title: 'Display copy',
+      type: 'object',
+      fields: [
+        defineField({name: 'backCta', title: 'Back call to action', type: 'link'}),
+        defineField({name: 'readTimeLabel', title: 'Read time label', type: 'string'}),
+        defineField({
+          name: 'relatedServicesTitle',
+          title: 'Related services title',
+          type: 'string',
+        }),
+        defineField({
+          name: 'relatedIndustriesTitle',
+          title: 'Related industries title',
+          type: 'string',
+        }),
+        defineField({name: 'closingTitle', title: 'Closing title', type: 'string'}),
+        defineField({name: 'closingText', title: 'Closing text', type: 'text', rows: 3}),
+        defineField({name: 'closingCta', title: 'Closing call to action', type: 'link'}),
+      ],
+    }),
+    defineField({
       name: 'articleType',
       title: 'Content type',
       type: 'string',

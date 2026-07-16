@@ -9,6 +9,7 @@ type PageHeroProps = {
   primaryCta?: {label?: string; href?: string; style?: string} | null
   secondaryCta?: {label?: string; href?: string; style?: string} | null
   stats?: {value?: string | null; label?: string | null}[] | null
+  statsHeading?: string | null
   backgroundImageAlt?: string
   backgroundImageSrc?: string | null
 }
@@ -20,6 +21,7 @@ export function PageHero({
   primaryCta,
   secondaryCta,
   stats,
+  statsHeading = 'Key focus areas',
   backgroundImageAlt = '',
   backgroundImageSrc,
 }: PageHeroProps) {
@@ -97,7 +99,7 @@ export function PageHero({
               hasBackgroundImage ? 'text-white/70' : 'text-[color:var(--muted)]'
             }`}
           >
-            Key focus areas
+            {statsHeading}
           </div>
           <div className="mt-6 grid gap-6">
             {stats.map((stat) => (
