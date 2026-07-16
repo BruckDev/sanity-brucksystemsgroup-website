@@ -51,12 +51,12 @@ export function SiteHeader({
 
   return (
     <header
-      className="sticky top-0 z-40 border-b border-white/10 text-white transition-[background-color] duration-200"
-      style={{backgroundColor: `rgb(0 0 0 / ${backgroundOpacity})`}}
+      className="sticky top-0 z-40 border-b border-white/10 text-white shadow-[0_8px_24px_rgba(7,26,43,0.12)] transition-[background-color] duration-200"
+      style={{backgroundColor: `rgb(7 26 43 / ${backgroundOpacity})`}}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-4 md:px-8 lg:px-12">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl items-center justify-between gap-4 px-4 py-3 md:gap-6 md:px-8 lg:px-12">
         <Link href="/" className="shrink-0" onClick={() => setOpen(false)}>
-          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
+          <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#8de1b1]">
             {brandEyebrow}
           </div>
           <div className="mt-2">
@@ -65,7 +65,7 @@ export function SiteHeader({
           </div>
         </Link>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-7 lg:flex">
           <nav className="flex items-center gap-6" aria-label={mainNavigationLabel}>
             {(navigation || []).map((item) => {
               return (
@@ -77,8 +77,8 @@ export function SiteHeader({
                     {item.label}
                   </Link>
                   {item.children?.length ? (
-                    <div className="pointer-events-none absolute left-0 top-full hidden min-w-[20rem] translate-y-4 border border-white/10 bg-black p-5 opacity-0 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition group-hover:pointer-events-auto group-hover:block group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:block group-focus-within:translate-y-2 group-focus-within:opacity-100 xl:min-w-[24rem]">
-                      <div className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                    <div className="pointer-events-none absolute left-0 top-full hidden min-w-[20rem] translate-y-4 rounded-xl border border-white/10 bg-[#071a2b] p-5 opacity-0 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition group-hover:pointer-events-auto group-hover:block group-hover:translate-y-2 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:block group-focus-within:translate-y-2 group-focus-within:opacity-100 xl:min-w-[24rem]">
+                      <div className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#8de1b1]">
                         {item.label}
                       </div>
                       <div className="grid gap-3">
@@ -102,13 +102,13 @@ export function SiteHeader({
             href="/contact"
             label={contactCtaLabel}
             style="primary"
-            className="border-white bg-white px-4 py-2.5 !text-base !text-black hover:bg-white/90"
+            className="border-white bg-white px-4 py-2.5 !text-base !text-[#071a2b] hover:bg-[#eaf6ef]"
           />
         </div>
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center border border-white/25 bg-black text-white lg:hidden"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/25 bg-[#071a2b] text-white lg:hidden"
           aria-expanded={open}
           aria-label={menuToggleLabel}
           onClick={() => setOpen((value) => !value)}
@@ -128,7 +128,7 @@ export function SiteHeader({
       </div>
 
       {open ? (
-        <div className="border-t border-white/10 bg-black px-4 py-5 lg:hidden">
+        <div className="border-t border-white/10 bg-[#071a2b] px-4 py-5 lg:hidden">
           <nav className="mx-auto max-w-7xl space-y-5" aria-label={mobileNavigationLabel}>
             {(navigation || []).map((item) => (
               <div

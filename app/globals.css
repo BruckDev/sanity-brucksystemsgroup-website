@@ -3,36 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: Inter, Aptos, 'Segoe UI Variable', 'Helvetica Neue', Arial, sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
   --font-mono: Consolas, 'Courier New', monospace;
-  --bg: #ffffff;
+  --bg: #f5f8fb;
   --surface: #ffffff;
-  --bg-elevated: rgba(255, 255, 255, 0.84);
-  --bg-strong: #ebebe5;
-  --fg: #111111;
-  --muted: #575757;
-  --border: rgba(17, 17, 17, 0.1);
-  --border-strong: rgba(17, 17, 17, 0.18);
-  --accent: #20ae49;
-  --accent-strong: #168a3b;
+  --bg-elevated: rgba(255, 255, 255, 0.9);
+  --bg-strong: #e8eef4;
+  --fg: #102033;
+  --muted: #526174;
+  --border: rgba(16, 32, 51, 0.12);
+  --border-strong: rgba(16, 32, 51, 0.24);
+  --accent: #087b4b;
+  --accent-strong: #05683d;
   --accent-contrast: #ffffff;
-  --success: #2f8f4e;
-  --warning: #9a6b14;
-  --charcoal: #1b1b1b;
-  --ink-soft: #2d2d2d;
-  --grid-line: rgba(17, 17, 17, 0.05);
+  --success: #087b4b;
+  --warning: #8a5d0a;
+  --charcoal: #071a2b;
+  --ink-soft: #1d2d3e;
+  --grid-line: rgba(16, 32, 51, 0.04);
 }
 
 html {
-  background: #ffffff;
+  background: var(--bg);
   color: var(--fg);
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   min-height: 100vh;
-  background: transparent;
+  background: var(--bg);
   color: inherit;
   font-family: var(--font-sans), sans-serif;
   text-rendering: optimizeLegibility;
@@ -75,8 +76,8 @@ main {
   background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 92%);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent 48%);
   z-index: -1;
 }
 
@@ -90,7 +91,15 @@ main {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at bottom right, rgba(17, 17, 17, 0.08), transparent 28%);
+  background: radial-gradient(circle at bottom right, rgba(18, 125, 78, 0.18), transparent 35%);
+}
+
+.surface-card {
+  box-shadow: 0 18px 45px rgba(7, 26, 43, 0.06);
+}
+
+.surface-card:hover {
+  box-shadow: 0 24px 54px rgba(7, 26, 43, 0.12);
 }
 
 .animate-rise {

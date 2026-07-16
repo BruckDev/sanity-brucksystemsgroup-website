@@ -65,8 +65,8 @@ export default async function HomePage() {
     : fallbackHome.engineeringCapabilities
 
   return (
-    <div className="space-y-20 pb-8 md:space-y-28">
-      <div className="relative left-1/2 w-[calc(100vw-1.5rem)] -translate-x-1/2 md:w-[calc(100vw-3rem)]">
+    <div className="space-y-24 pb-8 md:space-y-32">
+      <div className="w-full">
         <PageHero
           eyebrow={display.heroEyebrow}
           title={home.title}
@@ -88,29 +88,29 @@ export default async function HomePage() {
             <CustomPortableText id={null} type={null} path={[]} value={home.servicesIntro || []} />
           }
         />
-        <div className="mt-10 grid gap-px border border-[color:var(--border)] bg-[color:var(--border)] md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service: any) => (
             <Link
               key={service.slug || service.title}
               href={`/services/${service.slug}`}
-              className="group flex min-h-full flex-col bg-white p-6 transition hover:bg-[color:var(--bg)]"
+              className="surface-card group flex min-h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white p-5 transition hover:-translate-y-1 hover:border-[color:var(--accent)]/40 md:p-6"
             >
               <ServiceImage
                 slug={service.slug}
                 image={service.image}
                 alt={service.image?.alt}
-                className="relative aspect-[16/10]"
+                className="relative aspect-[16/10] overflow-hidden rounded-xl"
                 sizes="(min-width: 1280px) 24rem, (min-width: 768px) 50vw, 100vw"
               />
               <div className="mt-6">
-                <h3 className="text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+                <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-[color:var(--fg)]">
                   {service.title}
                 </h3>
                 <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
                   {service.summary}
                 </p>
               </div>
-              <div className="mt-auto pt-6 text-sm font-semibold text-[color:var(--muted)] group-hover:text-[color:var(--fg)]">
+              <div className="mt-auto pt-6 text-sm font-semibold text-[color:var(--accent)] group-hover:text-[color:var(--accent-strong)]">
                 {display.serviceCardLinkLabel}
               </div>
             </Link>
@@ -121,15 +121,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="relative left-1/2 w-[calc(100vw-1.5rem)] -translate-x-1/2 md:w-[calc(100vw-3rem)]">
+      <div className="w-full">
         <section
           aria-label={display.servicesAnimationAriaLabel}
-          className="relative isolate aspect-video overflow-hidden rounded-[2rem] bg-[#031429]"
+          className="relative isolate aspect-video overflow-hidden rounded-2xl bg-[#031429] shadow-[0_24px_60px_rgba(7,26,43,0.16)]"
         >
           <CircuitAnimation />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,16,35,0.82)_0%,rgba(3,16,35,0.58)_46%,rgba(3,16,35,0.16)_100%)]" />
           <div className="relative z-10 flex h-full items-center justify-center px-6 py-8 text-center md:px-12 md:py-12">
-            <div className="max-w-4xl -translate-y-[12%] rounded-2xl bg-[#031429]/78 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-[2px] md:bg-[#031429]/35 md:p-10">
+            <div className="max-w-4xl rounded-2xl border border-white/12 bg-[#031429]/76 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-[2px] md:p-10">
               <h2 className="text-4xl font-semibold leading-[0.98] tracking-tight text-white md:text-6xl xl:text-7xl">
                 {home.servicesVideoTitle || fallbackHome.servicesVideoTitle}
               </h2>
@@ -141,7 +141,7 @@ export default async function HomePage() {
                   <Link
                     key={`${link.label}-${link.href}`}
                     href={link.href || '/'}
-                    className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#4cc5eb] bg-white px-6 py-3 text-sm font-semibold text-[#147ea5] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition hover:border-white hover:bg-[#eaf9ff] hover:text-[#075d80] sm:w-[13rem]"
+                    className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white px-6 py-3 text-sm font-semibold text-[#075d80] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:border-white hover:bg-[#eaf9ff] sm:w-[13rem]"
                   >
                     {link.label}
                   </Link>
@@ -170,9 +170,9 @@ export default async function HomePage() {
             {insights.map((insight: any) => (
               <article
                 key={insight.slug || insight.title}
-                className="border border-[color:var(--border)] bg-white p-6 transition hover:-translate-y-1"
+                className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6 transition hover:-translate-y-1"
               >
-                <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]">
                   <span>{insight.articleType}</span>
                   <span className="text-[color:var(--muted)]">{insight.estimatedReadTime}</span>
                 </div>
@@ -182,7 +182,7 @@ export default async function HomePage() {
                   image={insight.coverImage}
                   slug={insight.slug}
                 />
-                <h3 className="mt-5 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+                <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[color:var(--fg)]">
                   <Link href={`/insights/${insight.slug}`}>{insight.title}</Link>
                 </h3>
                 <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
@@ -203,9 +203,9 @@ export default async function HomePage() {
             {caseStudies.map((study: any) => (
               <article
                 key={study.slug || study.title}
-                className="border border-[color:var(--border)] bg-white p-6"
+                className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
               >
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                <div className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]">
                   {display.caseStudyPlaceholderLabel}
                 </div>
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
@@ -220,7 +220,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-12 border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
+      <section className="surface-card grid gap-12 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
         <div>
           <SectionIntro
             eyebrow={display.governmentEyebrow}
@@ -238,7 +238,7 @@ export default async function HomePage() {
             {(home.governmentCapabilities || []).map((capability: string) => (
               <div
                 key={capability}
-                className="border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-2 text-sm font-medium text-[color:var(--fg)]"
+                className="rounded-full border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-2 text-sm font-medium text-[color:var(--fg)]"
               >
                 {capability}
               </div>
@@ -271,9 +271,9 @@ export default async function HomePage() {
           {engineeringCapabilities.map((capability: any) => (
             <article
               key={capability.title}
-              className="border border-[color:var(--border)] bg-white p-6"
+              className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
             >
-              <h3 className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">
+              <h3 className="text-xl font-semibold leading-tight tracking-[-0.025em] text-[color:var(--fg)]">
                 {capability.title}
               </h3>
               <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{capability.text}</p>
@@ -286,8 +286,11 @@ export default async function HomePage() {
         <SectionIntro eyebrow={display.whyUsEyebrow} title={home.whyUsTitle} />
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {(home.whyUsCards || []).map((card: any) => (
-            <article key={card.title} className="border border-[color:var(--border)] bg-white p-6">
-              <h3 className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">
+            <article
+              key={card.title}
+              className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
+            >
+              <h3 className="text-xl font-semibold leading-tight tracking-[-0.025em] text-[color:var(--fg)]">
                 {card.title}
               </h3>
               <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{card.text}</p>
@@ -296,12 +299,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="editorial-panel border border-[color:var(--border)] bg-[color:var(--charcoal)] px-6 py-12 text-white md:px-10 md:py-16">
+      <section className="editorial-panel overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--charcoal)] px-6 py-12 text-white shadow-[0_24px_60px_rgba(7,26,43,0.16)] md:px-10 md:py-16">
         <div className="relative z-10 max-w-3xl">
-          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--accent)]">
+          <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#8de1b1]">
             {display.finalCtaEyebrow}
           </div>
-          <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+          <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] md:text-5xl">
             {home.finalCtaTitle}
           </h2>
           <div className="mt-6 text-lg leading-8 text-white/76">
