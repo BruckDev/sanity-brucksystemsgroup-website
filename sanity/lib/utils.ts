@@ -24,10 +24,24 @@ export function resolveHref(documentType?: string, slug?: string | null): string
   switch (documentType) {
     case 'home':
       return '/'
+    case 'about':
+      return '/about'
+    case 'governmentPage':
+      return '/government'
+    case 'contactPage':
+      return '/contact'
     case 'page':
       return slug ? `/${slug}` : undefined
     case 'project':
       return slug ? `/projects/${slug}` : undefined
+    case 'service':
+      return slug ? `/services/${slug}` : undefined
+    case 'industry':
+      return slug ? `/industries/${slug}` : undefined
+    case 'insight':
+      return slug ? `/insights/${slug}` : undefined
+    case 'caseStudy':
+      return slug ? `/insights/case-studies/${slug}` : undefined
     default:
       console.warn('Invalid document type:', documentType)
       return undefined

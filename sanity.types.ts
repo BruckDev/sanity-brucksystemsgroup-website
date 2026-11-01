@@ -17,12 +17,6 @@ import '@sanity/client'
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 
-type ArrayOf<T> = Array<
-  T & {
-    _key: string
-  }
->
-
 // Source: schema.json
 export type Timeline = {
   _type: 'timeline'
@@ -58,6 +52,433 @@ export type Milestone = {
   }
   tags?: Array<string>
   duration?: Duration
+}
+
+export type Stat = {
+  _type: 'stat'
+  value?: string
+  label?: string
+}
+
+export type Seo = {
+  _type: 'seo'
+  title?: string
+  description?: string
+}
+
+export type ContactMethod = {
+  _type: 'contactMethod'
+  label?: string
+  value?: string
+  href?: string
+}
+
+export type FooterColumn = {
+  _type: 'footerColumn'
+  title?: string
+  links?: Array<
+    {
+      _key: string
+    } & Link
+  >
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+}
+
+export type NavItem = {
+  _type: 'navItem'
+  label?: string
+  href?: string
+  description?: string
+  children?: Array<
+    {
+      _key: string
+    } & Link
+  >
+}
+
+export type Link = {
+  _type: 'link'
+  label?: string
+  href?: string
+  style?: 'primary' | 'secondary' | 'text'
+}
+
+export type Duration = {
+  _type: 'duration'
+  start?: string
+  end?: string
+}
+
+export type Leader = {
+  _id: string
+  _type: 'leader'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  role?: string
+  shortBio?: string
+  headshot?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  fullBio?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type IndustryReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'industry'
+}
+
+export type ServiceReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'service'
+}
+
+export type CaseStudy = {
+  _id: string
+  _type: 'caseStudy'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  excerpt?: string
+  display?: {
+    heroEyebrow?: string
+    backCta?: Link
+    challengeLabel?: string
+    approachLabel?: string
+    outcomesTitle?: string
+    industryLabel?: string
+    relatedServicesLabel?: string
+    placeholderNote?: string
+    closingCta?: Link
+  }
+  industry?: IndustryReference
+  services?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+  challenge?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  approach?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  outcomes?: Array<string>
+  metrics?: Array<
+    {
+      _key: string
+    } & Stat
+  >
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+}
+
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
+}
+
+export type Insight = {
+  _id: string
+  _type: 'insight'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  excerpt?: string
+  display?: {
+    backCta?: Link
+    readTimeLabel?: string
+    relatedServicesTitle?: string
+    relatedIndustriesTitle?: string
+    closingTitle?: string
+    closingText?: string
+    closingCta?: Link
+  }
+  articleType?: 'Article' | 'Report' | 'Perspective'
+  publishedAt?: string
+  estimatedReadTime?: string
+  coverImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: SanityImageAssetReference
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+  >
+  relatedServices?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+  relatedIndustries?: Array<
+    {
+      _key: string
+    } & IndustryReference
+  >
+  seo?: Seo
+}
+
+export type Industry = {
+  _id: string
+  _type: 'industry'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  summary?: string
+  display?: {
+    heroEyebrow?: string
+    backCta?: Link
+    overviewLabel?: string
+    prioritiesTitle?: string
+    relatedServicesLabel?: string
+    closingTitle?: string
+    closingText?: string
+    closingCta?: Link
+  }
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  priorities?: Array<string>
+  services?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+  cta?: Link
+  seo?: Seo
+}
+
+export type Service = {
+  _id: string
+  _type: 'service'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  summary?: string
+  display?: {
+    heroEyebrow?: string
+    backCta?: Link
+    clientProblemLabel?: string
+    whatWeProvideLabel?: string
+    deliverablesTitle?: string
+    outcomesTitle?: string
+    closingTitle?: string
+    closingText?: string
+    closingCta?: Link
+  }
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  clientProblem?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  whatWeProvide?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  deliverables?: Array<string>
+  outcomes?: Array<string>
+  featuredStats?: Array<
+    {
+      _key: string
+    } & Stat
+  >
+  cta?: Link
+  seo?: Seo
 }
 
 export type Project = {
@@ -128,34 +549,6 @@ export type Project = {
   >
 }
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
-}
-
-export type Duration = {
-  _type: 'duration'
-  start?: string
-  end?: string
-}
-
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
-}
-
 export type Page = {
   _id: string
   _type: 'page'
@@ -213,35 +606,38 @@ export type Page = {
   >
 }
 
-export type HomeReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'home'
-}
-
-export type PageReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'page'
-}
-
-export type ProjectReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'project'
-}
-
 export type Settings = {
   _id: string
   _type: 'settings'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  menuItems?: ArrayOf<HomeReference | PageReference | ProjectReference>
-  footer?: Array<{
+  siteTitle?: string
+  brandEyebrow?: string
+  headerNavigation?: Array<
+    {
+      _key: string
+    } & NavItem
+  >
+  ogImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  contactMethods?: Array<
+    {
+      _key: string
+    } & ContactMethod
+  >
+  linkedin?: string
+  footerColumns?: Array<
+    {
+      _key: string
+    } & FooterColumn
+  >
+  footerNote?: Array<{
     children?: Array<{
       marks?: Array<string>
       text?: string
@@ -259,13 +655,7 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
-  ogImage?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
+  seo?: Seo
   uiText?: {
     brandEyebrow?: string
     fallbackSiteTitle?: string
@@ -275,12 +665,223 @@ export type Settings = {
     projectClientLabel?: string
     projectSiteLabel?: string
     projectTagsLabel?: string
+    heroStatsHeading?: string
+    headerContactCtaLabel?: string
+    headerMenuToggleLabel?: string
+    mainNavigationLabel?: string
+    mobileNavigationLabel?: string
+    footerLinkedinLabel?: string
+    footerLinkedinPlaceholder?: string
+    footerPrivacyLabel?: string
+    footerAccessibilityLabel?: string
   }
 }
 
-export type Home = {
+export type AccessibilityPage = {
   _id: string
-  _type: 'home'
+  _type: 'accessibilityPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  eyebrow?: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+}
+
+export type PrivacyPage = {
+  _id: string
+  _type: 'privacyPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  eyebrow?: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+}
+
+export type InsightsLanding = {
+  _id: string
+  _type: 'insightsLanding'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  eyebrow?: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  heroPrimaryCta?: Link
+  heroSecondaryCta?: Link
+  insightsEyebrow?: string
+  insightsTitle?: string
+  caseStudiesEyebrow?: string
+  caseStudiesTitle?: string
+  caseStudiesDescription?: string
+  caseStudiesCta?: Link
+  seo?: Seo
+}
+
+export type IndustriesLanding = {
+  _id: string
+  _type: 'industriesLanding'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  eyebrow?: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  heroPrimaryCta?: Link
+  heroSecondaryCta?: Link
+  sectionEyebrow?: string
+  sectionTitle?: string
+  governmentCta?: Link
+  seo?: Seo
+}
+
+export type ServicesLanding = {
+  _id: string
+  _type: 'servicesLanding'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  eyebrow?: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  heroPrimaryCta?: Link
+  heroSecondaryCta?: Link
+  sectionEyebrow?: string
+  sectionTitle?: string
+  sectionDescription?: string
+  deliverablesLabel?: string
+  outcomesLabel?: string
+  detailCtaLabel?: string
+  seo?: Seo
+}
+
+export type ContactPage = {
+  _id: string
+  _type: 'contactPage'
   _createdAt: string
   _updatedAt: string
   _rev: string
@@ -292,8 +893,8 @@ export type Home = {
       _type: 'span'
       _key: string
     }>
-    style?: 'normal'
-    listItem?: never
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
     markDefs?: Array<{
       href?: string
       _type: 'link'
@@ -303,14 +904,441 @@ export type Home = {
     _type: 'block'
     _key: string
   }>
-  showcaseProjects?: Array<
+  display?: {
+    heroEyebrow?: string
+    contactInformationLabel?: string
+    importantNoteLabel?: string
+  }
+  form?: {
+    nameLabel?: string
+    organizationLabel?: string
+    emailLabel?: string
+    phoneLabel?: string
+    serviceInterestLabel?: string
+    messageLabel?: string
+    serviceOptions?: Array<string>
+    defaultServiceOption?: string
+    submitLabel?: string
+    nameError?: string
+    emailError?: string
+    messageError?: string
+    validationSummary?: string
+    inactiveFallback?: string
+  }
+  formNote?: string
+  seo?: Seo
+}
+
+export type SanityFileAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+}
+
+export type GovernmentPage = {
+  _id: string
+  _type: 'governmentPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  display?: {
+    heroEyebrow?: string
+    secondaryCta?: Link
+    capabilitiesEyebrow?: string
+    capabilitiesTitle?: string
+    supportAreasLabel?: string
+    vendorInformationLabel?: string
+    downloadCapabilityStatementLabel?: string
+    capabilityStatementEmptyMessage?: string
+    teamingTitle?: string
+    relatedServicesTitle?: string
+  }
+  capabilities?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
+  supportAreas?: Array<string>
+  vendorInformation?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  capabilityStatement?: {
+    asset?: SanityFileAssetReference
+    media?: unknown
+    _type: 'file'
+  }
+  teaming?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  relatedServices?: Array<
     {
       _key: string
-    } & ProjectReference
+    } & ServiceReference
   >
-  showcaseLabel?: string
-  showcaseDescription?: string
-  showcaseProjectLabel?: string
+  cta?: Link
+  seo?: Seo
+}
+
+export type About = {
+  _id: string
+  _type: 'about'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  display?: {
+    heroEyebrow?: string
+    secondaryCta?: Link
+    missionEyebrow?: string
+    missionTitle?: string
+    approachEyebrow?: string
+    approachTitle?: string
+    principlesEyebrow?: string
+    principlesTitle?: string
+    leadershipEyebrow?: string
+    leadershipTitle?: string
+  }
+  mission?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  leadershipIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  principles?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
+  approach?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
+  cta?: Link
+  seo?: Seo
+}
+
+export type InsightReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'insight'
+}
+
+export type CaseStudyReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'caseStudy'
+}
+
+export type Home = {
+  _id: string
+  _type: 'home'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  display?: {
+    heroEyebrow?: string
+    heroBackgroundImageAlt?: string
+    servicesEyebrow?: string
+    serviceCardLinkLabel?: string
+    allServicesLinkLabel?: string
+    servicesAnimationAriaLabel?: string
+    insightsEyebrow?: string
+    caseStudiesEyebrow?: string
+    caseStudiesTitle?: string
+    caseStudiesDescription?: string
+    caseStudyPlaceholderLabel?: string
+    industriesEyebrow?: string
+    governmentEyebrow?: string
+    governmentCtaLabel?: string
+    governmentPanelTitle?: string
+    governmentPanelSubtitle?: string
+    engineeringEyebrow?: string
+    whyUsEyebrow?: string
+    finalCtaEyebrow?: string
+  }
+  overview?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  heroPrimaryCta?: Link
+  heroSecondaryCta?: Link
+  heroHighlights?: Array<
+    {
+      _key: string
+    } & Stat
+  >
+  servicesTitle?: string
+  servicesIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredServices?: Array<
+    {
+      _key: string
+    } & ServiceReference
+  >
+  servicesVideoTitle?: string
+  servicesVideoText?: string
+  servicesVideoLinks?: Array<
+    {
+      _key: string
+    } & Link
+  >
+  insightsTitle?: string
+  insightsIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredInsights?: Array<
+    {
+      _key: string
+    } & InsightReference
+  >
+  featuredCaseStudies?: Array<
+    {
+      _key: string
+    } & CaseStudyReference
+  >
+  industriesTitle?: string
+  industriesIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredIndustries?: Array<
+    {
+      _key: string
+    } & IndustryReference
+  >
+  governmentTitle?: string
+  governmentIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  governmentCapabilities?: Array<string>
+  engineeringCapabilitiesTitle?: string
+  engineeringCapabilitiesIntro?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  engineeringCapabilities?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
+  whyUsTitle?: string
+  whyUsCards?: Array<{
+    title?: string
+    text?: string
+    _key: string
+  }>
+  finalCtaTitle?: string
+  finalCtaText?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  finalPrimaryCta?: Link
+  finalSecondaryCta?: Link
+  seo?: Seo
 }
 
 export type SanityImagePaletteSwatch = {
@@ -414,16 +1442,37 @@ export type AllSanitySchemaTypes =
   | Timeline
   | SanityImageAssetReference
   | Milestone
-  | Project
+  | Stat
+  | Seo
+  | ContactMethod
+  | FooterColumn
+  | NavItem
+  | Link
+  | Duration
+  | Leader
   | SanityImageCrop
   | SanityImageHotspot
-  | Duration
+  | IndustryReference
+  | ServiceReference
+  | CaseStudy
   | Slug
+  | Insight
+  | Industry
+  | Service
+  | Project
   | Page
-  | HomeReference
-  | PageReference
-  | ProjectReference
   | Settings
+  | AccessibilityPage
+  | PrivacyPage
+  | InsightsLanding
+  | IndustriesLanding
+  | ServicesLanding
+  | ContactPage
+  | SanityFileAssetReference
+  | GovernmentPage
+  | About
+  | InsightReference
+  | CaseStudyReference
   | Home
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -434,74 +1483,9 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-// Source: app/(website)/[slug]/page.tsx
-// Variable: slugPageMetadataQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {      title,      "overview": pt::text(overview),    }
-export type SlugPageMetadataQueryResult = {
-  title: string | null
-  overview: string
-} | null
-
-// Source: app/(website)/[slug]/page.tsx
-// Variable: slugPageQuery
-// Query: *[_type == "page" && slug.current == $slug][0] {      _id,      _type,      body,      overview,      title,      "slug": slug.current,    }
-export type SlugPageQueryResult = {
-  _id: string
-  _type: 'page'
-  body: Array<
-    | ({
-        _key: string
-      } & Timeline)
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          href?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: SanityImageAssetReference
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        caption?: string
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-  > | null
-  overview: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: null
-    level?: number
-    _type: 'block'
-    _key: string
-  }> | null
-  title: string | null
-  slug: string | null
-} | null
-
 // Source: app/(website)/layout.tsx
 // Variable: layoutMetadataQuery
-// Query: {    "settings": *[_type == "settings"][0]{ogImage},    "home": *[_type == "home"][0]{      title,      "overview": pt::text(overview),    }  }
+// Query: {    "settings": *[_type == "settings"][0]{      ogImage,      seo,      siteTitle    },    "home": *[_type == "home"][0]{      title,      seo,      "overview": pt::text(overview)    }  }
 export type LayoutMetadataQueryResult = {
   settings: {
     ogImage: {
@@ -511,162 +1495,67 @@ export type LayoutMetadataQueryResult = {
       crop?: SanityImageCrop
       _type: 'image'
     } | null
+    seo: Seo | null
+    siteTitle: string | null
   } | null
   home: {
     title: string | null
+    seo: Seo | null
     overview: string
   } | null
 }
 
-// Source: app/(website)/page.tsx
-// Variable: homePageQuery
-// Query: *[_type == "home"][0]{      _id,      _type,      overview,      showcaseDescription,      showcaseLabel,      showcaseProjectLabel,      showcaseProjects[]{        _key,        ...@->{          _id,          _type,          coverImage,          overview,          "slug": slug.current,          tags,          title,        }      },      title,    }
-export type HomePageQueryResult = {
+// Source: sanity/lib/siteQueries.ts
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0]{    _id,    _type,    siteTitle,    brandEyebrow,    headerNavigation[]{      label,      href,      description,      children[]{        label,        href,        style      }    },    contactMethods[]{      label,      value,      href    },    linkedin,    footerColumns[]{      title,      body,      links[]{        label,        href,        style      }    },    footerNote,    uiText{      heroStatsHeading,      headerContactCtaLabel,      headerMenuToggleLabel,      mainNavigationLabel,      mobileNavigationLabel,      footerLinkedinLabel,      footerLinkedinPlaceholder,      footerPrivacyLabel,      footerAccessibilityLabel    },    ogImage,    seo  }
+export type SettingsQueryResult = {
   _id: string
-  _type: 'home'
-  overview: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
+  _type: 'settings'
+  siteTitle: string | null
+  brandEyebrow: string | null
+  headerNavigation: Array<{
+    label: string | null
+    href: string | null
+    description: string | null
+    children: Array<{
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    }> | null
   }> | null
-  showcaseDescription: string | null
-  showcaseLabel: string | null
-  showcaseProjectLabel: string | null
-  showcaseProjects: Array<{
-    _key: string
-    _id: string
-    _type: 'project'
-    coverImage: {
-      asset?: SanityImageAssetReference
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
-    } | null
-    overview: Array<{
+  contactMethods: Array<{
+    label: string | null
+    value: string | null
+    href: string | null
+  }> | null
+  linkedin: string | null
+  footerColumns: Array<{
+    title: string | null
+    body: Array<{
       children?: Array<{
         marks?: Array<string>
         text?: string
         _type: 'span'
         _key: string
       }>
-      style?: 'normal'
-      listItem?: never
-      markDefs?: null
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
       level?: number
       _type: 'block'
       _key: string
     }> | null
-    slug: string | null
-    tags: Array<string> | null
-    title: string | null
+    links: Array<{
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    }> | null
   }> | null
-  title: string | null
-} | null
-
-// Source: app/(website)/projects/[slug]/page.tsx
-// Variable: projectSlugPageMetadataQuery
-// Query: *[_type == "project" && slug.current == $slug][0] {      coverImage,      title,      "overview": pt::text(overview),    }
-export type ProjectSlugPageMetadataQueryResult = {
-  coverImage: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  } | null
-  title: string | null
-  overview: string
-} | null
-
-// Source: app/(website)/projects/[slug]/page.tsx
-// Variable: projectSlugPageQuery
-// Query: *[_type == "project" && slug.current == $slug][0] {      _id,      _type,      client,      coverImage,      description,      duration,      overview,      site,      "slug": slug.current,      tags,      title,    }
-export type ProjectSlugPageQueryResult = {
-  _id: string
-  _type: 'project'
-  client: string | null
-  coverImage: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  } | null
-  description: Array<
-    | ({
-        _key: string
-      } & Timeline)
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          href?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: SanityImageAssetReference
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        caption?: string
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-  > | null
-  duration: Duration | null
-  overview: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: null
-    level?: number
-    _type: 'block'
-    _key: string
-  }> | null
-  site: string | null
-  slug: string | null
-  tags: Array<string> | null
-  title: string | null
-} | null
-
-// Source: sanity/lib/queries.ts
-// Variable: settingsQuery
-// Query: *[_type == "settings"][0]{    _id,    _type,    footer,    menuItems[]{      _key,      ...@->{        _type,        "slug": slug.current,        title      }    },    ogImage,    uiText{      brandEyebrow,      fallbackSiteTitle,      projectClientLabel,      projectDurationLabel,      projectSiteLabel,      projectTagsLabel,      sectionEyebrow,      untitledFallback,    },  }
-export type SettingsQueryResult = {
-  _id: string
-  _type: 'settings'
-  footer: Array<{
+  footerNote: Array<{
     children?: Array<{
       marks?: Array<string>
       text?: string
@@ -684,26 +1573,17 @@ export type SettingsQueryResult = {
     _type: 'block'
     _key: string
   }> | null
-  menuItems: Array<
-    | {
-        _key: null
-        _type: 'home'
-        slug: null
-        title: string | null
-      }
-    | {
-        _key: null
-        _type: 'page'
-        slug: string | null
-        title: string | null
-      }
-    | {
-        _key: null
-        _type: 'project'
-        slug: string | null
-        title: string | null
-      }
-  > | null
+  uiText: {
+    heroStatsHeading: string | null
+    headerContactCtaLabel: string | null
+    headerMenuToggleLabel: string | null
+    mainNavigationLabel: string | null
+    mobileNavigationLabel: string | null
+    footerLinkedinLabel: string | null
+    footerLinkedinPlaceholder: string | null
+    footerPrivacyLabel: string | null
+    footerAccessibilityLabel: string | null
+  } | null
   ogImage: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -711,34 +1591,1262 @@ export type SettingsQueryResult = {
     crop?: SanityImageCrop
     _type: 'image'
   } | null
-  uiText: {
-    brandEyebrow: string | null
-    fallbackSiteTitle: string | null
-    projectClientLabel: string | null
-    projectDurationLabel: string | null
-    projectSiteLabel: string | null
-    projectTagsLabel: string | null
-    sectionEyebrow: string | null
-    untitledFallback: string | null
-  } | null
+  seo: Seo | null
 } | null
 
-// Source: sanity/lib/queries.ts
-// Variable: slugsByTypeQuery
-// Query: *[_type == $type && defined(slug.current)]{"slug": slug.current}
-export type SlugsByTypeQueryResult = Array<{
+// Source: sanity/lib/siteQueries.ts
+// Variable: homeQuery
+// Query: *[_type == "home"][0]{    _id,    _type,    title,    display{      heroEyebrow,      heroBackgroundImageAlt,      servicesEyebrow,      serviceCardLinkLabel,      allServicesLinkLabel,      servicesAnimationAriaLabel,      insightsEyebrow,      caseStudiesEyebrow,      caseStudiesTitle,      caseStudiesDescription,      caseStudyPlaceholderLabel,      industriesEyebrow,      governmentEyebrow,      governmentCtaLabel,      governmentPanelTitle,      governmentPanelSubtitle,      engineeringEyebrow,      whyUsEyebrow,      finalCtaEyebrow    },    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    heroHighlights[]{value, label},    servicesTitle,    servicesIntro,    servicesVideoTitle,    servicesVideoText,    servicesVideoLinks[]{label, href, style},    featuredServices[]->{      _id,      title,      "slug": slug.current,      summary    },    insightsTitle,    insightsIntro,    featuredInsights[]->{      _id,      title,      "slug": slug.current,      excerpt,      articleType,      estimatedReadTime,      publishedAt    },    featuredCaseStudies[]->{      _id,      title,      "slug": slug.current,      excerpt    },    industriesTitle,    industriesIntro,    featuredIndustries[]->{      _id,      title,      "slug": slug.current,      summary    },    governmentTitle,    governmentIntro,    governmentCapabilities,    engineeringCapabilitiesTitle,    engineeringCapabilitiesIntro,    engineeringCapabilities[]{title, text},    whyUsTitle,    whyUsCards[]{      title,      text    },    finalCtaTitle,    finalCtaText,    finalPrimaryCta{label, href, style},    finalSecondaryCta{label, href, style},    seo  }
+export type HomeQueryResult = {
+  _id: string
+  _type: 'home'
+  title: string | null
+  display: {
+    heroEyebrow: string | null
+    heroBackgroundImageAlt: string | null
+    servicesEyebrow: string | null
+    serviceCardLinkLabel: string | null
+    allServicesLinkLabel: string | null
+    servicesAnimationAriaLabel: string | null
+    insightsEyebrow: string | null
+    caseStudiesEyebrow: string | null
+    caseStudiesTitle: string | null
+    caseStudiesDescription: string | null
+    caseStudyPlaceholderLabel: string | null
+    industriesEyebrow: string | null
+    governmentEyebrow: string | null
+    governmentCtaLabel: string | null
+    governmentPanelTitle: string | null
+    governmentPanelSubtitle: string | null
+    engineeringEyebrow: string | null
+    whyUsEyebrow: string | null
+    finalCtaEyebrow: string | null
+  } | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  heroPrimaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  heroSecondaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  heroHighlights: Array<{
+    value: string | null
+    label: string | null
+  }> | null
+  servicesTitle: string | null
+  servicesIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  servicesVideoTitle: string | null
+  servicesVideoText: string | null
+  servicesVideoLinks: Array<{
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  }> | null
+  featuredServices: Array<{
+    _id: string
+    title: string | null
+    slug: string | null
+    summary: string | null
+  }> | null
+  insightsTitle: string | null
+  insightsIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  featuredInsights: Array<{
+    _id: string
+    title: string | null
+    slug: string | null
+    excerpt: string | null
+    articleType: 'Article' | 'Perspective' | 'Report' | null
+    estimatedReadTime: string | null
+    publishedAt: string | null
+  }> | null
+  featuredCaseStudies: Array<{
+    _id: string
+    title: string | null
+    slug: string | null
+    excerpt: string | null
+  }> | null
+  industriesTitle: string | null
+  industriesIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  featuredIndustries: Array<{
+    _id: string
+    title: string | null
+    slug: string | null
+    summary: string | null
+  }> | null
+  governmentTitle: string | null
+  governmentIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  governmentCapabilities: Array<string> | null
+  engineeringCapabilitiesTitle: string | null
+  engineeringCapabilitiesIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  engineeringCapabilities: Array<{
+    title: string | null
+    text: string | null
+  }> | null
+  whyUsTitle: string | null
+  whyUsCards: Array<{
+    title: string | null
+    text: string | null
+  }> | null
+  finalCtaTitle: string | null
+  finalCtaText: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  finalPrimaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  finalSecondaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: servicesQuery
+// Query: *[_type == "service"] | order(title asc){    _id,    title,    "slug": slug.current,    summary,    image{      ...,      asset->    },    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
+export type ServicesQueryResult = Array<{
+  _id: string
+  title: string | null
   slug: string | null
+  summary: string | null
+  image: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  clientProblem: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  whatWeProvide: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  deliverables: Array<string> | null
+  outcomes: Array<string> | null
+  featuredStats: Array<{
+    value: string | null
+    label: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
 }>
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: serviceBySlugQuery
+// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    summary,    display{      heroEyebrow,      backCta{label, href, style},      clientProblemLabel,      whatWeProvideLabel,      deliverablesTitle,      outcomesTitle,      closingTitle,      closingText,      closingCta{label, href, style}    },    image{      ...,      asset->    },    clientProblem,    whatWeProvide,    deliverables,    outcomes,    featuredStats[]{value, label},    cta{label, href, style},    seo  }
+export type ServiceBySlugQueryResult = {
+  _id: string
+  title: string | null
+  slug: string | null
+  summary: string | null
+  display: {
+    heroEyebrow: string | null
+    backCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    clientProblemLabel: string | null
+    whatWeProvideLabel: string | null
+    deliverablesTitle: string | null
+    outcomesTitle: string | null
+    closingTitle: string | null
+    closingText: string | null
+    closingCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+  } | null
+  image: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  clientProblem: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  whatWeProvide: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  deliverables: Array<string> | null
+  outcomes: Array<string> | null
+  featuredStats: Array<{
+    value: string | null
+    label: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: industriesQuery
+// Query: *[_type == "industry"] | order(title asc){    _id,    title,    "slug": slug.current,    summary,    overview,    priorities,    services[]->{      title,      "slug": slug.current    },    cta{label, href, style},    seo  }
+export type IndustriesQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: string | null
+  summary: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  priorities: Array<string> | null
+  services: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+}>
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: industryBySlugQuery
+// Query: *[_type == "industry" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    summary,    display{      heroEyebrow,      backCta{label, href, style},      overviewLabel,      prioritiesTitle,      relatedServicesLabel,      closingTitle,      closingText,      closingCta{label, href, style}    },    overview,    priorities,    services[]->{      title,      "slug": slug.current    },    cta{label, href, style},    seo  }
+export type IndustryBySlugQueryResult = {
+  _id: string
+  title: string | null
+  slug: string | null
+  summary: string | null
+  display: {
+    heroEyebrow: string | null
+    backCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    overviewLabel: string | null
+    prioritiesTitle: string | null
+    relatedServicesLabel: string | null
+    closingTitle: string | null
+    closingText: string | null
+    closingCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+  } | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  priorities: Array<string> | null
+  services: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: insightsQuery
+// Query: *[_type == "insight"] | order(publishedAt desc){    _id,    title,    "slug": slug.current,    excerpt,    articleType,    estimatedReadTime,    publishedAt,    seo  }
+export type InsightsQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  articleType: 'Article' | 'Perspective' | 'Report' | null
+  estimatedReadTime: string | null
+  publishedAt: string | null
+  seo: Seo | null
+}>
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: insightBySlugQuery
+// Query: *[_type == "insight" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    excerpt,    display{      backCta{label, href, style},      readTimeLabel,      relatedServicesTitle,      relatedIndustriesTitle,      closingTitle,      closingText,      closingCta{label, href, style}    },    articleType,    estimatedReadTime,    publishedAt,    body,    relatedServices[]->{      title,      "slug": slug.current    },    relatedIndustries[]->{      title,      "slug": slug.current    },    seo  }
+export type InsightBySlugQueryResult = {
+  _id: string
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  display: {
+    backCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    readTimeLabel: string | null
+    relatedServicesTitle: string | null
+    relatedIndustriesTitle: string | null
+    closingTitle: string | null
+    closingText: string | null
+    closingCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+  } | null
+  articleType: 'Article' | 'Perspective' | 'Report' | null
+  estimatedReadTime: string | null
+  publishedAt: string | null
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: SanityImageAssetReference
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+  > | null
+  relatedServices: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  relatedIndustries: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: caseStudiesQuery
+// Query: *[_type == "caseStudy"] | order(title asc){    _id,    title,    "slug": slug.current,    excerpt,    seo  }
+export type CaseStudiesQueryResult = Array<{
+  _id: string
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  seo: Seo | null
+}>
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: caseStudyBySlugQuery
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    excerpt,    display{      heroEyebrow,      backCta{label, href, style},      challengeLabel,      approachLabel,      outcomesTitle,      industryLabel,      relatedServicesLabel,      placeholderNote,      closingCta{label, href, style}    },    challenge,    approach,    outcomes,    metrics[]{value, label},    body,    industry->{      title,      "slug": slug.current    },    services[]->{      title,      "slug": slug.current    },    seo  }
+export type CaseStudyBySlugQueryResult = {
+  _id: string
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  display: {
+    heroEyebrow: string | null
+    backCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    challengeLabel: string | null
+    approachLabel: string | null
+    outcomesTitle: string | null
+    industryLabel: string | null
+    relatedServicesLabel: string | null
+    placeholderNote: string | null
+    closingCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+  } | null
+  challenge: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  approach: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  outcomes: Array<string> | null
+  metrics: Array<{
+    value: string | null
+    label: string | null
+  }> | null
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  industry: {
+    title: string | null
+    slug: string | null
+  } | null
+  services: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: leadersQuery
+// Query: *[_type == "leader"] | order(name asc){    _id,    name,    role,    shortBio,    headshot,    fullBio  }
+export type LeadersQueryResult = Array<{
+  _id: string
+  name: string | null
+  role: string | null
+  shortBio: string | null
+  headshot: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  fullBio: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+}>
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: aboutQuery
+// Query: *[_type == "about"][0]{    _id,    title,    display{      heroEyebrow,      secondaryCta{label, href, style},      missionEyebrow,      missionTitle,      approachEyebrow,      approachTitle,      principlesEyebrow,      principlesTitle,      leadershipEyebrow,      leadershipTitle    },    overview,    mission,    leadershipIntro,    principles[]{      title,      text    },    approach[]{      title,      text    },    cta{label, href, style},    seo  }
+export type AboutQueryResult = {
+  _id: string
+  title: string | null
+  display: {
+    heroEyebrow: string | null
+    secondaryCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    missionEyebrow: string | null
+    missionTitle: string | null
+    approachEyebrow: string | null
+    approachTitle: string | null
+    principlesEyebrow: string | null
+    principlesTitle: string | null
+    leadershipEyebrow: string | null
+    leadershipTitle: string | null
+  } | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  mission: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  leadershipIntro: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  principles: Array<{
+    title: string | null
+    text: string | null
+  }> | null
+  approach: Array<{
+    title: string | null
+    text: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: governmentQuery
+// Query: *[_type == "governmentPage"][0]{    _id,    title,    display{      heroEyebrow,      secondaryCta{label, href, style},      capabilitiesEyebrow,      capabilitiesTitle,      supportAreasLabel,      vendorInformationLabel,      downloadCapabilityStatementLabel,      capabilityStatementEmptyMessage,      teamingTitle,      relatedServicesTitle    },    overview,    capabilities[]{      title,      text    },    supportAreas,    vendorInformation,    capabilityStatement{      asset->    },    teaming,    relatedServices[]->{      title,      "slug": slug.current    },    cta{label, href, style},    seo  }
+export type GovernmentQueryResult = {
+  _id: string
+  title: string | null
+  display: {
+    heroEyebrow: string | null
+    secondaryCta: {
+      label: string | null
+      href: string | null
+      style: 'primary' | 'secondary' | 'text' | null
+    } | null
+    capabilitiesEyebrow: string | null
+    capabilitiesTitle: string | null
+    supportAreasLabel: string | null
+    vendorInformationLabel: string | null
+    downloadCapabilityStatementLabel: string | null
+    capabilityStatementEmptyMessage: string | null
+    teamingTitle: string | null
+    relatedServicesTitle: string | null
+  } | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  capabilities: Array<{
+    title: string | null
+    text: string | null
+  }> | null
+  supportAreas: Array<string> | null
+  vendorInformation: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  capabilityStatement: {
+    asset: {
+      _id: string
+      _type: 'sanity.fileAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      source?: SanityAssetSourceData
+    } | null
+  } | null
+  teaming: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  relatedServices: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+  cta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: contactPageQuery
+// Query: *[_type == "contactPage"][0]{    _id,    title,    display{      heroEyebrow,      contactInformationLabel,      importantNoteLabel    },    form{      nameLabel,      organizationLabel,      emailLabel,      phoneLabel,      serviceInterestLabel,      messageLabel,      serviceOptions,      defaultServiceOption,      submitLabel,      nameError,      emailError,      messageError,      validationSummary,      inactiveFallback    },    overview,    formNote,    seo  }
+export type ContactPageQueryResult = {
+  _id: string
+  title: string | null
+  display: {
+    heroEyebrow: string | null
+    contactInformationLabel: string | null
+    importantNoteLabel: string | null
+  } | null
+  form: {
+    nameLabel: string | null
+    organizationLabel: string | null
+    emailLabel: string | null
+    phoneLabel: string | null
+    serviceInterestLabel: string | null
+    messageLabel: string | null
+    serviceOptions: Array<string> | null
+    defaultServiceOption: string | null
+    submitLabel: string | null
+    nameError: string | null
+    emailError: string | null
+    messageError: string | null
+    validationSummary: string | null
+    inactiveFallback: string | null
+  } | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  formNote: string | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: servicesLandingQuery
+// Query: *[_type == "servicesLanding"][0]{    _id,    eyebrow,    title,    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    sectionEyebrow,    sectionTitle,    sectionDescription,    deliverablesLabel,    outcomesLabel,    detailCtaLabel,    seo  }
+export type ServicesLandingQueryResult = {
+  _id: string
+  eyebrow: string | null
+  title: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  heroPrimaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  heroSecondaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  sectionEyebrow: string | null
+  sectionTitle: string | null
+  sectionDescription: string | null
+  deliverablesLabel: string | null
+  outcomesLabel: string | null
+  detailCtaLabel: string | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: industriesLandingQuery
+// Query: *[_type == "industriesLanding"][0]{    _id,    eyebrow,    title,    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    sectionEyebrow,    sectionTitle,    governmentCta{label, href, style},    seo  }
+export type IndustriesLandingQueryResult = {
+  _id: string
+  eyebrow: string | null
+  title: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  heroPrimaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  heroSecondaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  sectionEyebrow: string | null
+  sectionTitle: string | null
+  governmentCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: insightsLandingQuery
+// Query: *[_type == "insightsLanding"][0]{    _id,    eyebrow,    title,    overview,    heroPrimaryCta{label, href, style},    heroSecondaryCta{label, href, style},    insightsEyebrow,    insightsTitle,    caseStudiesEyebrow,    caseStudiesTitle,    caseStudiesDescription,    caseStudiesCta{label, href, style},    seo  }
+export type InsightsLandingQueryResult = {
+  _id: string
+  eyebrow: string | null
+  title: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  heroPrimaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  heroSecondaryCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  insightsEyebrow: string | null
+  insightsTitle: string | null
+  caseStudiesEyebrow: string | null
+  caseStudiesTitle: string | null
+  caseStudiesDescription: string | null
+  caseStudiesCta: {
+    label: string | null
+    href: string | null
+    style: 'primary' | 'secondary' | 'text' | null
+  } | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: privacyPageQuery
+// Query: *[_type == "privacyPage"][0]{    _id,    eyebrow,    title,    overview,    body,    seo  }
+export type PrivacyPageQueryResult = {
+  _id: string
+  eyebrow: string | null
+  title: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  seo: Seo | null
+} | null
+
+// Source: sanity/lib/siteQueries.ts
+// Variable: accessibilityPageQuery
+// Query: *[_type == "accessibilityPage"][0]{    _id,    eyebrow,    title,    overview,    body,    seo  }
+export type AccessibilityPageQueryResult = {
+  _id: string
+  eyebrow: string | null
+  title: string | null
+  overview: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+  seo: Seo | null
+} | null
 
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n    *[_type == "page" && slug.current == $slug][0] {\n      title,\n      "overview": pt::text(overview),\n    }\n  ': SlugPageMetadataQueryResult
-    '\n    *[_type == "page" && slug.current == $slug][0] {\n      _id,\n      _type,\n      body,\n      overview,\n      title,\n      "slug": slug.current,\n    }\n  ': SlugPageQueryResult
-    '{\n    "settings": *[_type == "settings"][0]{ogImage},\n    "home": *[_type == "home"][0]{\n      title,\n      "overview": pt::text(overview),\n    }\n  }': LayoutMetadataQueryResult
-    '\n    *[_type == "home"][0]{\n      _id,\n      _type,\n      overview,\n      showcaseDescription,\n      showcaseLabel,\n      showcaseProjectLabel,\n      showcaseProjects[]{\n        _key,\n        ...@->{\n          _id,\n          _type,\n          coverImage,\n          overview,\n          "slug": slug.current,\n          tags,\n          title,\n        }\n      },\n      title,\n    }\n  ': HomePageQueryResult
-    '\n    *[_type == "project" && slug.current == $slug][0] {\n      coverImage,\n      title,\n      "overview": pt::text(overview),\n    }\n  ': ProjectSlugPageMetadataQueryResult
-    '\n    *[_type == "project" && slug.current == $slug][0] {\n      _id,\n      _type,\n      client,\n      coverImage,\n      description,\n      duration,\n      overview,\n      site,\n      "slug": slug.current,\n      tags,\n      title,\n    }\n  ': ProjectSlugPageQueryResult
-    '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    footer,\n    menuItems[]{\n      _key,\n      ...@->{\n        _type,\n        "slug": slug.current,\n        title\n      }\n    },\n    ogImage,\n    uiText{\n      brandEyebrow,\n      fallbackSiteTitle,\n      projectClientLabel,\n      projectDurationLabel,\n      projectSiteLabel,\n      projectTagsLabel,\n      sectionEyebrow,\n      untitledFallback,\n    },\n  }\n': SettingsQueryResult
-    '\n  *[_type == $type && defined(slug.current)]{"slug": slug.current}\n': SlugsByTypeQueryResult
+    '{\n    "settings": *[_type == "settings"][0]{\n      ogImage,\n      seo,\n      siteTitle\n    },\n    "home": *[_type == "home"][0]{\n      title,\n      seo,\n      "overview": pt::text(overview)\n    }\n  }': LayoutMetadataQueryResult
+    '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    siteTitle,\n    brandEyebrow,\n    headerNavigation[]{\n      label,\n      href,\n      description,\n      children[]{\n        label,\n        href,\n        style\n      }\n    },\n    contactMethods[]{\n      label,\n      value,\n      href\n    },\n    linkedin,\n    footerColumns[]{\n      title,\n      body,\n      links[]{\n        label,\n        href,\n        style\n      }\n    },\n    footerNote,\n    uiText{\n      heroStatsHeading,\n      headerContactCtaLabel,\n      headerMenuToggleLabel,\n      mainNavigationLabel,\n      mobileNavigationLabel,\n      footerLinkedinLabel,\n      footerLinkedinPlaceholder,\n      footerPrivacyLabel,\n      footerAccessibilityLabel\n    },\n    ogImage,\n    seo\n  }\n': SettingsQueryResult
+    '\n  *[_type == "home"][0]{\n    _id,\n    _type,\n    title,\n    display{\n      heroEyebrow,\n      heroBackgroundImageAlt,\n      servicesEyebrow,\n      serviceCardLinkLabel,\n      allServicesLinkLabel,\n      servicesAnimationAriaLabel,\n      insightsEyebrow,\n      caseStudiesEyebrow,\n      caseStudiesTitle,\n      caseStudiesDescription,\n      caseStudyPlaceholderLabel,\n      industriesEyebrow,\n      governmentEyebrow,\n      governmentCtaLabel,\n      governmentPanelTitle,\n      governmentPanelSubtitle,\n      engineeringEyebrow,\n      whyUsEyebrow,\n      finalCtaEyebrow\n    },\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    heroHighlights[]{value, label},\n    servicesTitle,\n    servicesIntro,\n    servicesVideoTitle,\n    servicesVideoText,\n    servicesVideoLinks[]{label, href, style},\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    insightsTitle,\n    insightsIntro,\n    featuredInsights[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      articleType,\n      estimatedReadTime,\n      publishedAt\n    },\n    featuredCaseStudies[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt\n    },\n    industriesTitle,\n    industriesIntro,\n    featuredIndustries[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary\n    },\n    governmentTitle,\n    governmentIntro,\n    governmentCapabilities,\n    engineeringCapabilitiesTitle,\n    engineeringCapabilitiesIntro,\n    engineeringCapabilities[]{title, text},\n    whyUsTitle,\n    whyUsCards[]{\n      title,\n      text\n    },\n    finalCtaTitle,\n    finalCtaText,\n    finalPrimaryCta{label, href, style},\n    finalSecondaryCta{label, href, style},\n    seo\n  }\n': HomeQueryResult
+    '\n  *[_type == "service"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServicesQueryResult
+    '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    display{\n      heroEyebrow,\n      backCta{label, href, style},\n      clientProblemLabel,\n      whatWeProvideLabel,\n      deliverablesTitle,\n      outcomesTitle,\n      closingTitle,\n      closingText,\n      closingCta{label, href, style}\n    },\n    image{\n      ...,\n      asset->\n    },\n    clientProblem,\n    whatWeProvide,\n    deliverables,\n    outcomes,\n    featuredStats[]{value, label},\n    cta{label, href, style},\n    seo\n  }\n': ServiceBySlugQueryResult
+    '\n  *[_type == "industry"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    overview,\n    priorities,\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': IndustriesQueryResult
+    '\n  *[_type == "industry" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    display{\n      heroEyebrow,\n      backCta{label, href, style},\n      overviewLabel,\n      prioritiesTitle,\n      relatedServicesLabel,\n      closingTitle,\n      closingText,\n      closingCta{label, href, style}\n    },\n    overview,\n    priorities,\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': IndustryBySlugQueryResult
+    '\n  *[_type == "insight"] | order(publishedAt desc){\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    articleType,\n    estimatedReadTime,\n    publishedAt,\n    seo\n  }\n': InsightsQueryResult
+    '\n  *[_type == "insight" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    display{\n      backCta{label, href, style},\n      readTimeLabel,\n      relatedServicesTitle,\n      relatedIndustriesTitle,\n      closingTitle,\n      closingText,\n      closingCta{label, href, style}\n    },\n    articleType,\n    estimatedReadTime,\n    publishedAt,\n    body,\n    relatedServices[]->{\n      title,\n      "slug": slug.current\n    },\n    relatedIndustries[]->{\n      title,\n      "slug": slug.current\n    },\n    seo\n  }\n': InsightBySlugQueryResult
+    '\n  *[_type == "caseStudy"] | order(title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    seo\n  }\n': CaseStudiesQueryResult
+    '\n  *[_type == "caseStudy" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    display{\n      heroEyebrow,\n      backCta{label, href, style},\n      challengeLabel,\n      approachLabel,\n      outcomesTitle,\n      industryLabel,\n      relatedServicesLabel,\n      placeholderNote,\n      closingCta{label, href, style}\n    },\n    challenge,\n    approach,\n    outcomes,\n    metrics[]{value, label},\n    body,\n    industry->{\n      title,\n      "slug": slug.current\n    },\n    services[]->{\n      title,\n      "slug": slug.current\n    },\n    seo\n  }\n': CaseStudyBySlugQueryResult
+    '\n  *[_type == "leader"] | order(name asc){\n    _id,\n    name,\n    role,\n    shortBio,\n    headshot,\n    fullBio\n  }\n': LeadersQueryResult
+    '\n  *[_type == "about"][0]{\n    _id,\n    title,\n    display{\n      heroEyebrow,\n      secondaryCta{label, href, style},\n      missionEyebrow,\n      missionTitle,\n      approachEyebrow,\n      approachTitle,\n      principlesEyebrow,\n      principlesTitle,\n      leadershipEyebrow,\n      leadershipTitle\n    },\n    overview,\n    mission,\n    leadershipIntro,\n    principles[]{\n      title,\n      text\n    },\n    approach[]{\n      title,\n      text\n    },\n    cta{label, href, style},\n    seo\n  }\n': AboutQueryResult
+    '\n  *[_type == "governmentPage"][0]{\n    _id,\n    title,\n    display{\n      heroEyebrow,\n      secondaryCta{label, href, style},\n      capabilitiesEyebrow,\n      capabilitiesTitle,\n      supportAreasLabel,\n      vendorInformationLabel,\n      downloadCapabilityStatementLabel,\n      capabilityStatementEmptyMessage,\n      teamingTitle,\n      relatedServicesTitle\n    },\n    overview,\n    capabilities[]{\n      title,\n      text\n    },\n    supportAreas,\n    vendorInformation,\n    capabilityStatement{\n      asset->\n    },\n    teaming,\n    relatedServices[]->{\n      title,\n      "slug": slug.current\n    },\n    cta{label, href, style},\n    seo\n  }\n': GovernmentQueryResult
+    '\n  *[_type == "contactPage"][0]{\n    _id,\n    title,\n    display{\n      heroEyebrow,\n      contactInformationLabel,\n      importantNoteLabel\n    },\n    form{\n      nameLabel,\n      organizationLabel,\n      emailLabel,\n      phoneLabel,\n      serviceInterestLabel,\n      messageLabel,\n      serviceOptions,\n      defaultServiceOption,\n      submitLabel,\n      nameError,\n      emailError,\n      messageError,\n      validationSummary,\n      inactiveFallback\n    },\n    overview,\n    formNote,\n    seo\n  }\n': ContactPageQueryResult
+    '\n  *[_type == "servicesLanding"][0]{\n    _id,\n    eyebrow,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    sectionEyebrow,\n    sectionTitle,\n    sectionDescription,\n    deliverablesLabel,\n    outcomesLabel,\n    detailCtaLabel,\n    seo\n  }\n': ServicesLandingQueryResult
+    '\n  *[_type == "industriesLanding"][0]{\n    _id,\n    eyebrow,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    sectionEyebrow,\n    sectionTitle,\n    governmentCta{label, href, style},\n    seo\n  }\n': IndustriesLandingQueryResult
+    '\n  *[_type == "insightsLanding"][0]{\n    _id,\n    eyebrow,\n    title,\n    overview,\n    heroPrimaryCta{label, href, style},\n    heroSecondaryCta{label, href, style},\n    insightsEyebrow,\n    insightsTitle,\n    caseStudiesEyebrow,\n    caseStudiesTitle,\n    caseStudiesDescription,\n    caseStudiesCta{label, href, style},\n    seo\n  }\n': InsightsLandingQueryResult
+    '\n  *[_type == "privacyPage"][0]{\n    _id,\n    eyebrow,\n    title,\n    overview,\n    body,\n    seo\n  }\n': PrivacyPageQueryResult
+    '\n  *[_type == "accessibilityPage"][0]{\n    _id,\n    eyebrow,\n    title,\n    overview,\n    body,\n    seo\n  }\n': AccessibilityPageQueryResult
   }
 }

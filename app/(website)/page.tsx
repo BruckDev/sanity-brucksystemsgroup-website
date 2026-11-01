@@ -1,215 +1,322 @@
 import {CustomPortableText} from '@/components/CustomPortableText'
-import {Header} from '@/components/Header'
-import ImageBox from '@/components/ImageBox'
-import {OptimisticSortOrder} from '@/components/OptimisticSortOrder'
-import {studioUrl} from '@/sanity/lib/api'
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
-import {resolveHref} from '@/sanity/lib/utils'
-import {createDataAttribute, defineQuery} from 'next-sanity'
-import {draftMode} from 'next/headers'
+import {AbstractPanel} from '@/components/site/AbstractPanel'
+import {ButtonLink} from '@/components/site/ButtonLink'
+import {CircuitAnimation} from '@/components/site/CircuitAnimation'
+import {InsightImage} from '@/components/site/InsightImage'
+import {PageHero} from '@/components/site/PageHero'
+import {SectionIntro} from '@/components/site/SectionIntro'
+import {ServiceImage} from '@/components/site/ServiceImage'
+import {getDynamicFetchOptions, sanityFetch} from '@/sanity/lib/live'
+import {
+  fallbackCaseStudies,
+  fallbackHome,
+  fallbackInsights,
+  fallbackServices,
+} from '@/sanity/lib/siteFallbacks'
+import {homeQuery, settingsQuery} from '@/sanity/lib/siteQueries'
 import Link from 'next/link'
-import {Suspense} from 'react'
 
-export default async function IndexPage() {
-  const {isEnabled: isDraftMode} = await draftMode()
-  if (!isDraftMode) {
-    return <CachedHome perspective="published" stega={false} isDraftMode={false} />
-  }
-  return (
-    <Suspense>
-      <DynamicHome />
-    </Suspense>
-  )
+const defaultDisplayCopy = {
+  heroEyebrow: 'Bruck Systems Group',
+  heroBackgroundImageAlt:
+    'Abstract digital network background with glowing blue lines and hexagonal interface shapes.',
+  servicesEyebrow: 'Services overview',
+  serviceCardLinkLabel: 'View service',
+  allServicesLinkLabel: 'Explore All Services',
+  servicesAnimationAriaLabel: 'Abstract blue technology animation',
+  insightsEyebrow: 'Insights',
+  caseStudiesEyebrow: 'Case studies',
+  caseStudiesTitle: 'Editorial-ready client story structure',
+  caseStudiesDescription:
+    'The site is prepared for future approved case studies without inventing past performance.',
+  caseStudyPlaceholderLabel: 'Placeholder structure',
+  industriesEyebrow: 'Industries',
+  governmentEyebrow: 'Government',
+  governmentCtaLabel: 'View Government Capabilities',
+  governmentPanelTitle: 'Mission-focused support for procurement and modernization.',
+  governmentPanelSubtitle: 'Government support',
+  engineeringEyebrow: 'Engineering delivery',
+  whyUsEyebrow: 'Why us',
+  finalCtaEyebrow: 'Contact',
 }
 
-async function DynamicHome() {
-  const {perspective, stega} = await getDynamicFetchOptions()
-  return <CachedHome perspective={perspective} stega={stega} isDraftMode />
-}
-
-async function CachedHome({
-  perspective,
-  stega,
-  isDraftMode,
-}: DynamicFetchOptions & {isDraftMode: boolean}) {
-  'use cache'
-  const homePageQuery = defineQuery(`
-    *[_type == "home"][0]{
-      _id,
-      _type,
-      overview,
-      showcaseDescription,
-      showcaseLabel,
-      showcaseProjectLabel,
-      showcaseProjects[]{
-        _key,
-        ...@->{
-          _id,
-          _type,
-          coverImage,
-          overview,
-          "slug": slug.current,
-          tags,
-          title,
-        }
-      },
-      title,
-    }
-  `)
-  const {data} = await sanityFetch({query: homePageQuery, perspective, stega})
-
-  if (!data) {
-    return (
-      <div className="rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-8 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--muted)] shadow-sm">
-        You don&rsquo;t have a homepage yet,{' '}
-        <Link
-          href={`${studioUrl}/structure/home`}
-          className="text-[color:var(--accent)] underline decoration-[color:var(--accent)] underline-offset-4"
-        >
-          create one now
-        </Link>
-        !
-      </div>
-    )
-  }
-
-  // Default to an empty object to allow previews on non-existent documents
-  const {
-    overview = [],
-    showcaseDescription,
-    showcaseLabel,
-    showcaseProjectLabel,
-    showcaseProjects = [],
-    title = '',
-  } = data ?? {}
-
-  const showcaseLabelText = showcaseLabel?.trim() || 'Verified showcase'
-  const showcaseDescriptionText =
-    showcaseDescription?.trim() || 'Selected work from the current Sanity-managed project registry.'
-  const showcaseProjectLabelText = showcaseProjectLabel?.trim() || 'Showcase project'
-
-  const dataAttribute =
-    data?._id && data?._type
-      ? createDataAttribute({
-          baseUrl: studioUrl,
-          id: data._id,
-          type: data._type,
-        })
-      : null
-
-  const showcaseItems =
-    showcaseProjects &&
-    showcaseProjects.length > 0 &&
-    showcaseProjects.map((project, index) => {
-      const href = resolveHref(project?._type, project?.slug)
-      if (!href) {
-        return null
-      }
-      return (
-        <article
-          className="group grid gap-6 rounded-lg border border-[var(--border)] bg-[color:var(--surface)] p-4 shadow-sm transition hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-xl md:p-6 xl:grid-cols-[14rem_minmax(0,1fr)_17rem]"
-          key={project._key}
-          data-sanity={dataAttribute?.(['showcaseProjects', {_key: project._key}])}
-        >
-          <div className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-5 xl:border-b-0 xl:border-r xl:pb-0 xl:pr-6">
-            <div className="space-y-3">
-              <div
-                className="inline-flex w-fit rounded-full bg-[color:var(--bg-strong)] px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]"
-                data-sanity={dataAttribute?.('showcaseProjectLabel')}
-              >
-                {String(index + 1).padStart(2, '0')} / {showcaseProjectLabelText}
-              </div>
-              <Link
-                className="block text-2xl font-bold leading-tight transition hover:text-[color:var(--accent)] md:text-3xl"
-                href={href}
-              >
-                {project.title}
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {project.tags?.map((tag, key) => (
-                <div
-                  className="rounded-full border border-[var(--border)] bg-[color:var(--bg-strong)] px-3 py-1 text-xs font-semibold text-[color:var(--muted)]"
-                  key={key}
-                >
-                  {tag}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="order-first xl:order-none">
-            <Link className="block" href={href} aria-label={`View ${project.title}`}>
-              <ImageBox
-                image={project.coverImage}
-                alt={`Cover image from ${project.title}`}
-                classesWrapper="relative aspect-[16/9]"
-              />
-            </Link>
-          </div>
-
-          <div className="flex items-start xl:pl-2">
-            {Array.isArray(project.overview) && (
-              <div className="w-full space-y-4 border-t border-[var(--border)] pt-5 text-base leading-7 text-[color:var(--muted)] xl:border-t-0 xl:border-l xl:pl-6 xl:pt-0">
-                <CustomPortableText
-                  id={project._id}
-                  type={project._type}
-                  path={['overview']}
-                  value={project.overview}
-                />
-                <Link
-                  className="inline-flex rounded-full bg-[color:var(--accent)] px-4 py-2 text-sm font-bold text-[color:var(--accent-contrast)] shadow-sm hover:bg-[color:var(--accent-strong)]"
-                  href={href}
-                >
-                  View project
-                </Link>
-              </div>
-            )}
-          </div>
-        </article>
-      )
-    })
+export default async function HomePage() {
+  const fetchOptions = await getDynamicFetchOptions()
+  const [{data: homeData}, {data: settingsData}] = await Promise.all([
+    sanityFetch({query: homeQuery, ...fetchOptions}),
+    sanityFetch({query: settingsQuery, ...fetchOptions}),
+  ])
+  const data: any = homeData
+  const home: any = data || fallbackHome
+  const display = {...defaultDisplayCopy, ...(home.display || {})}
+  const uiText = (settingsData as any)?.uiText || {}
+  const services = data?.featuredServices?.length
+    ? data.featuredServices
+    : fallbackServices.slice(0, 3)
+  const insights = data?.featuredInsights?.length ? data.featuredInsights : fallbackInsights
+  const caseStudies = data?.featuredCaseStudies?.length
+    ? data.featuredCaseStudies
+    : fallbackCaseStudies
+  const servicesVideoLinks = home.servicesVideoLinks?.length
+    ? home.servicesVideoLinks
+    : fallbackHome.servicesVideoLinks
+  const engineeringCapabilities = home.engineeringCapabilities?.length
+    ? home.engineeringCapabilities
+    : fallbackHome.engineeringCapabilities
 
   return (
-    <div className="space-y-4 md:space-y-5">
-      {title && (
-        <Header
-          id={data?._id || null}
-          type={data?._type || null}
-          path={['overview']}
-          centered
-          title={title}
-          description={overview}
+    <div className="space-y-24 pb-8 md:space-y-32">
+      <div className="w-full">
+        <PageHero
+          eyebrow={display.heroEyebrow}
+          title={home.title}
+          description={home.overview}
+          backgroundImageAlt={display.heroBackgroundImageAlt}
+          backgroundImageSrc="/images/home/hero-background.png"
+          primaryCta={home.heroPrimaryCta}
+          secondaryCta={home.heroSecondaryCta}
+          stats={home.heroHighlights?.length ? home.heroHighlights : fallbackHome.heroHighlights}
+          statsHeading={uiText.heroStatsHeading}
         />
-      )}
-
-      <div className="space-y-3 md:space-y-4">
-        <div className="mx-auto grid max-w-5xl gap-2 md:grid-cols-[minmax(0,1fr)_18rem] md:items-end">
-          <div
-            className="text-sm font-bold uppercase tracking-[0.18em] text-[color:var(--accent)]"
-            data-sanity={dataAttribute?.('showcaseLabel')}
-          >
-            {showcaseLabelText}
-          </div>
-          <div
-            className="whitespace-pre-line text-sm leading-7 text-[color:var(--muted)] md:text-right"
-            data-sanity={dataAttribute?.('showcaseDescription')}
-          >
-            {showcaseDescriptionText}
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:gap-5">
-          {isDraftMode ? (
-            <OptimisticSortOrder id={data?._id} path={'showcaseProjects'}>
-              {showcaseItems}
-            </OptimisticSortOrder>
-          ) : (
-            showcaseItems
-          )}
-        </div>
       </div>
+
+      <section>
+        <SectionIntro
+          eyebrow={display.servicesEyebrow}
+          title={home.servicesTitle}
+          description={
+            <CustomPortableText id={null} type={null} path={[]} value={home.servicesIntro || []} />
+          }
+        />
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service: any) => (
+            <Link
+              key={service.slug || service.title}
+              href={`/services/${service.slug}`}
+              className="surface-card group flex min-h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white p-5 transition hover:-translate-y-1 hover:border-[color:var(--accent)]/40 md:p-6"
+            >
+              <ServiceImage
+                slug={service.slug}
+                image={service.image}
+                alt={service.image?.alt}
+                className="relative aspect-[16/10] overflow-hidden rounded-xl"
+                sizes="(min-width: 1280px) 24rem, (min-width: 768px) 50vw, 100vw"
+              />
+              <div className="mt-6">
+                <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-[color:var(--fg)]">
+                  {service.title}
+                </h3>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {service.summary}
+                </p>
+              </div>
+              <div className="mt-auto pt-6 text-sm font-semibold text-[color:var(--accent)] group-hover:text-[color:var(--accent-strong)]">
+                {display.serviceCardLinkLabel}
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-8">
+          <ButtonLink href="/services" label={display.allServicesLinkLabel} style="secondary" />
+        </div>
+      </section>
+
+      <div className="w-full">
+        <section
+          aria-label={display.servicesAnimationAriaLabel}
+          className="relative isolate aspect-video overflow-hidden rounded-2xl bg-[#031429] shadow-[0_24px_60px_rgba(7,26,43,0.16)]"
+        >
+          <CircuitAnimation />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(3,16,35,0.82)_0%,rgba(3,16,35,0.58)_46%,rgba(3,16,35,0.16)_100%)]" />
+          <div className="relative z-10 flex h-full items-center justify-center px-6 py-8 text-center md:px-12 md:py-12">
+            <div className="max-w-4xl rounded-2xl border border-white/12 bg-[#031429]/76 p-5 shadow-[0_16px_40px_rgba(0,0,0,0.22)] backdrop-blur-[2px] md:p-10">
+              <h2 className="text-4xl font-semibold leading-[0.98] tracking-tight text-white md:text-6xl xl:text-7xl">
+                {home.servicesVideoTitle || fallbackHome.servicesVideoTitle}
+              </h2>
+              <p className="mx-auto mt-5 max-w-3xl text-sm leading-6 text-white md:mt-7 md:text-lg md:leading-8">
+                {home.servicesVideoText || fallbackHome.servicesVideoText}
+              </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                {servicesVideoLinks.map((link: any) => (
+                  <Link
+                    key={`${link.label}-${link.href}`}
+                    href={link.href || '/'}
+                    className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white px-6 py-3 text-sm font-semibold text-[#075d80] shadow-[0_8px_20px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:border-white hover:bg-[#eaf9ff] sm:w-[13rem]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div>
+          <SectionIntro
+            eyebrow={display.insightsEyebrow}
+            title={home.insightsTitle}
+            description={
+              <CustomPortableText
+                id={null}
+                type={null}
+                path={[]}
+                value={home.insightsIntro || []}
+              />
+            }
+          />
+          <div className="mt-8 grid gap-6">
+            {insights.map((insight: any) => (
+              <article
+                key={insight.slug || insight.title}
+                className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6 transition hover:-translate-y-1"
+              >
+                <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]">
+                  <span>{insight.articleType}</span>
+                  <span className="text-[color:var(--muted)]">{insight.estimatedReadTime}</span>
+                </div>
+                <InsightImage
+                  alt={insight.coverImage?.alt}
+                  className="relative mt-5 aspect-[16/9]"
+                  image={insight.coverImage}
+                  slug={insight.slug}
+                />
+                <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[color:var(--fg)]">
+                  <Link href={`/insights/${insight.slug}`}>{insight.title}</Link>
+                </h3>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {insight.excerpt}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <SectionIntro
+            eyebrow={display.caseStudiesEyebrow}
+            title={display.caseStudiesTitle}
+            description={display.caseStudiesDescription}
+          />
+          <div className="mt-8 grid gap-6">
+            {caseStudies.map((study: any) => (
+              <article
+                key={study.slug || study.title}
+                className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
+              >
+                <div className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--accent)]">
+                  {display.caseStudyPlaceholderLabel}
+                </div>
+                <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[color:var(--fg)]">
+                  <Link href={`/insights/case-studies/${study.slug}`}>{study.title}</Link>
+                </h3>
+                <p className="mt-3 text-base leading-7 text-[color:var(--muted)]">
+                  {study.excerpt}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="editorial-panel relative isolate grid gap-12 overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--charcoal)] p-6 shadow-[0_24px_60px_rgba(7,26,43,0.2)] md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)]">
+        <div>
+          <SectionIntro
+            eyebrow={display.governmentEyebrow}
+            title={home.governmentTitle}
+            tone="dark"
+            description={
+              <CustomPortableText
+                id={null}
+                type={null}
+                path={[]}
+                value={home.governmentIntro || []}
+              />
+            }
+          />
+          <div className="mt-8 flex flex-wrap gap-3">
+            {(home.governmentCapabilities || []).map((capability: string) => (
+              <div
+                key={capability}
+                className="rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-sm font-medium text-white/86"
+              >
+                {capability}
+              </div>
+            ))}
+          </div>
+          <div className="mt-8">
+            <ButtonLink href="/government" label={display.governmentCtaLabel} style="primary" />
+          </div>
+        </div>
+        <AbstractPanel
+          title={display.governmentPanelTitle}
+          subtitle={display.governmentPanelSubtitle}
+        />
+      </section>
+
+      <section>
+        <SectionIntro
+          eyebrow={display.engineeringEyebrow}
+          title={home.engineeringCapabilitiesTitle || fallbackHome.engineeringCapabilitiesTitle}
+          description={
+            <CustomPortableText
+              id={null}
+              type={null}
+              path={[]}
+              value={home.engineeringCapabilitiesIntro || fallbackHome.engineeringCapabilitiesIntro}
+            />
+          }
+        />
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {engineeringCapabilities.map((capability: any) => (
+            <article
+              key={capability.title}
+              className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
+            >
+              <h3 className="text-xl font-semibold leading-tight tracking-[-0.025em] text-[color:var(--fg)]">
+                {capability.title}
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{capability.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <SectionIntro eyebrow={display.whyUsEyebrow} title={home.whyUsTitle} />
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {(home.whyUsCards || []).map((card: any) => (
+            <article
+              key={card.title}
+              className="surface-card rounded-2xl border border-[color:var(--border)] bg-white p-6"
+            >
+              <h3 className="text-xl font-semibold leading-tight tracking-[-0.025em] text-[color:var(--fg)]">
+                {card.title}
+              </h3>
+              <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="editorial-panel overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--charcoal)] px-6 py-12 text-white shadow-[0_24px_60px_rgba(7,26,43,0.16)] md:px-10 md:py-16">
+        <div className="relative z-10 max-w-3xl">
+          <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#8de1b1]">
+            {display.finalCtaEyebrow}
+          </div>
+          <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] md:text-5xl">
+            {home.finalCtaTitle}
+          </h2>
+          <div className="mt-6 text-lg leading-8 text-white/76">
+            <CustomPortableText id={null} type={null} path={[]} value={home.finalCtaText || []} />
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink {...home.finalPrimaryCta} />
+            <ButtonLink {...home.finalSecondaryCta} />
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

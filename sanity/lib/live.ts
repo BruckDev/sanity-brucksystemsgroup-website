@@ -1,15 +1,43 @@
 import {type QueryParams} from 'next-sanity'
 import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
+import {projectId} from './api'
 import {client} from './client'
 import {token} from './token'
 
-export const {SanityLive, sanityFetch} = defineLive({
+const {SanityLive, sanityFetch: baseSanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
   strict: true,
 })
+
+export {SanityLive}
+
+export async function sanityFetch<const QueryString extends string>({
+  query,
+  params = {},
+  perspective,
+  stega,
+}: {
+  query: QueryString
+  params?: QueryParams
+  perspective: LivePerspective
+  stega: boolean
+}) {
+  'use cache'
+
+  if (projectId === 'placeholder') {
+    return {data: null}
+  }
+
+  try {
+    return await baseSanityFetch({query, params, perspective, stega})
+  } catch (error) {
+    console.warn('Sanity fetch failed, falling back to local content:', error)
+    return {data: null}
+  }
+}
 
 export interface DynamicFetchOptions {
   perspective: LivePerspective

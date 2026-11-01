@@ -1,0 +1,171 @@
+{
+  "audit": {
+    "standard": "WCAG 2.2",
+    "targetLevel": "AA",
+    "page": "Homepage",
+    "url": "http://localhost:3001/",
+    "date": "2026-07-16",
+    "method": "In-app Browser CDP, Accessibility tree, probes.js, desktop/mobile interaction checks",
+    "scopeNotes": [
+      "Single-page homepage sample; AAA and removed criterion 4.1.1 are excluded.",
+      "In-app Browser keyboard delivery and 320px screenshot capture were unavailable; related checks remain open.",
+      "No authenticated or multi-step process was in scope."
+    ]
+  },
+  "summary": {
+    "byStatus": { "fail": 6, "needsReview": 10, "pass": 19, "notApplicable": 20 },
+    "bySeverity": { "critical": 0, "serious": 2, "moderate": 4, "minor": 0 },
+    "note": "The sampled homepage is not Level AA conformant because six Level A/AA failures were found."
+  },
+  "resolvedByInteractivePhase": {
+    "toPass": {
+      "1.4.12": "Text-spacing override did not produce horizontal scrolling.",
+      "2.5.8": "Targets below 24px met the required spacing exception.",
+      "mobile-menu": "The labelled mobile menu button opened a labelled mobile navigation region."
+    },
+    "toFail": {
+      "1.4.4": "200% zoom produced horizontal scrolling and offscreen navigation/content.",
+      "1.4.10": "Effective 305px viewport produced 355px document width."
+    }
+  },
+  "issues": [
+    {
+      "id": "wcag-1.4.4-homepage-zoom",
+      "criterion": "1.4.4",
+      "criterionTitle": "Resize Text",
+      "level": "AA",
+      "status": "Fail",
+      "severity": "Serious",
+      "understanding": "At 200% text zoom, content and functionality must remain available without horizontal scrolling.",
+      "summary": "The desktop header and hero overflow horizontally at 200% zoom.",
+      "instances": [{
+        "issue": "Viewport width was 1279px while document scrollWidth was 2212px.",
+        "selectors": ["header navigation", "section.relative.overflow-hidden", "div.relative.left-1/2:nth-of-type(1)"],
+        "evidence": "evidence/wcag-homepage-zoom-200.png; probes.js overflow() returned horizontalScroll: true."
+      }],
+      "userImpact": "People who enlarge text can lose navigation choices and key hero content.",
+      "remediation": {
+        "what": "Make navigation and hero layout respond to enlarged text without fixed/minimum widths.",
+        "codeHint": "Use wrapping or the mobile menu before horizontal pressure occurs; replace fixed/translated width patterns with max-width: 100%, min-width: 0, and responsive grid/flex rules.",
+        "acceptanceCriteria": ["At 200% zoom, document scrollWidth does not exceed viewport width except for exempt content.", "All header links and contact CTA remain available without horizontal panning."]
+      }
+    },
+    {
+      "id": "wcag-1.4.10-homepage-reflow",
+      "criterion": "1.4.10",
+      "criterionTitle": "Reflow",
+      "level": "AA",
+      "status": "Fail",
+      "severity": "Serious",
+      "understanding": "Content must reflow at 320 CSS pixels without two-dimensional scrolling.",
+      "summary": "The page overflowed 50px horizontally at the Browser's effective 305px mobile viewport.",
+      "instances": [{
+        "issue": "Document scrollWidth was 355px at a 305px viewport.",
+        "selectors": ["button.inline-flex.h-11", "div.max-w-3xl", "div.editorial-panel.relative"],
+        "evidence": "Mobile probe data: menu button right edge 355px; main content right edge 347px."
+      }],
+      "userImpact": "Mobile and high-zoom users must pan sideways to reach content and controls.",
+      "remediation": {
+        "what": "Eliminate the overflow source and ensure responsive containers are constrained to the available inline size.",
+        "codeHint": "Audit mobile x-offsets/margins and any min-width values; use width: 100%, max-width: 100%, box-sizing: border-box, and min-width: 0 on flex/grid children.",
+        "acceptanceCriteria": ["At 320px CSS width, documentElement.scrollWidth equals clientWidth for ordinary page content.", "The mobile menu control and all main content fit within the viewport."]
+      }
+    },
+    {
+      "id": "wcag-1.1.1-homepage-hero-image",
+      "criterion": "1.1.1",
+      "criterionTitle": "Non-text Content",
+      "level": "A",
+      "status": "Fail",
+      "severity": "Moderate",
+      "understanding": "Meaningful images need an equivalent text alternative; decorative images need an empty alternative.",
+      "summary": "The hero background image has no alt attribute.",
+      "instances": [{
+        "issue": "Next.js emitted an Image is missing required alt property error.",
+        "selectors": ["img.absolute.inset-0"],
+        "evidence": "Source was /images/home/hero-background.png; probes.js imagesNoName included this element; browser console logged the missing-alt error."
+      }],
+      "userImpact": "Screen-reader users may receive incomplete or noisy treatment of the hero imagery.",
+      "remediation": {
+        "what": "Supply the image's purpose or explicitly mark it decorative.",
+        "codeHint": "Add alt='meaningful description' when the image communicates content; otherwise set alt='' on the Next Image component.",
+        "acceptanceCriteria": ["The console no longer reports a missing alt property.", "The image has an accurate alternative or alt='' when decorative."]
+      }
+    },
+    {
+      "id": "wcag-1.3.1-homepage-heading-structure",
+      "criterion": "1.3.1",
+      "criterionTitle": "Info and Relationships",
+      "level": "A",
+      "status": "Fail",
+      "severity": "Moderate",
+      "understanding": "Heading and section relationships must be programmatically determinable.",
+      "summary": "The page jumps from its h1 to h3 service-card headings and exposes several empty h2 headings.",
+      "instances": [{
+        "issue": "Heading structure is incomplete and contains unnamed entries.",
+        "selectors": ["h1.max-w-5xl.text-5xl", "h2", "h3"],
+        "evidence": "probes.js recorded h1 -> h3; Accessibility.getFullAXTree and DOM snapshot included multiple heading [level=2] nodes with no accessible name."
+      }],
+      "userImpact": "Screen-reader users navigating by headings receive an unclear page outline.",
+      "remediation": {
+        "what": "Use a coherent hierarchy and remove empty structural headings.",
+        "codeHint": "Add descriptive h2 headings before related h3 groups; convert empty h2 elements to non-heading containers when there is no section heading.",
+        "acceptanceCriteria": ["No heading is empty in the accessibility tree.", "Section h3 headings have a preceding meaningful h2 parent section."]
+      }
+    },
+    {
+      "id": "wcag-1.4.3-homepage-accent-label-contrast",
+      "criterion": "1.4.3",
+      "criterionTitle": "Contrast (Minimum)",
+      "level": "AA",
+      "status": "Fail",
+      "severity": "Moderate",
+      "understanding": "Normal-size text requires at least 4.5:1 contrast against its background.",
+      "summary": "Article and Perspective labels are 2.91:1 green-on-white text.",
+      "instances": [{
+        "issue": "Small accent metadata text is below the AA contrast threshold.",
+        "selectors": ["div.flex.flex-wrap.items-center.gap-3.text-xs.font-semibold.uppercase.tracking-[0.2em].text-[color:var(--accent)] > span"],
+        "evidence": "Foreground rgb(32,174,73) on white; 12px text; calculated ratio 2.91:1."
+      }],
+      "userImpact": "People with low vision or reduced contrast sensitivity can miss article categories.",
+      "remediation": {
+        "what": "Use a darker text color for accent metadata on white.",
+        "codeHint": "Introduce a darker --accent-text token that is at least 4.5:1 against white, or apply a compliant existing text token to these labels.",
+        "acceptanceCriteria": ["Article and Perspective labels calculate to at least 4.5:1 on their rendered background."]
+      }
+    },
+    {
+      "id": "wcag-2.4.6-homepage-empty-headings",
+      "criterion": "2.4.6",
+      "criterionTitle": "Headings and Labels",
+      "level": "AA",
+      "status": "Fail",
+      "severity": "Moderate",
+      "understanding": "Headings must describe their topic or purpose.",
+      "summary": "Several level-2 headings have no accessible name.",
+      "instances": [{
+        "issue": "Empty h2 nodes appear in the accessibility tree.",
+        "selectors": ["h2"],
+        "evidence": "Accessibility snapshot lists multiple heading [level=2] entries without names."
+      }],
+      "userImpact": "Heading shortcuts announce blank entries, making page navigation confusing.",
+      "remediation": {
+        "what": "Give every retained heading a concise, visible, accessible label.",
+        "codeHint": "Populate the text content from Sanity-backed section data; remove heading tags used only for layout.",
+        "acceptanceCriteria": ["Every h2 has a non-empty descriptive accessible name.", "Heading navigation contains no blank stops."]
+      }
+    }
+  ],
+  "needsReview": [
+    { "criterion": "2.1.1", "title": "Keyboard", "level": "A", "blocked": "Browser keyboard delivery", "whatToReview": "Operate every link and the mobile menu with Tab, Enter, and Space.", "whyOpen": "The in-app Browser did not advance focus with Tab and raw CDP keyboard input is unsupported.", "howToConfirm": "All functionality must be usable with keyboard alone." },
+    { "criterion": "2.1.2", "title": "No Keyboard Trap", "level": "A", "blocked": "Browser keyboard delivery", "whatToReview": "Tab into and out of the mobile menu and all interactive regions.", "whyOpen": "A complete focus walk was unavailable.", "howToConfirm": "Focus can always move onward or exit with a standard keyboard method." },
+    { "criterion": "2.2.2", "title": "Pause, Stop, Hide", "level": "A", "blocked": "Content-dependent", "whatToReview": "Inspect the 19 detected infinite animations for visible moving content.", "whyOpen": "The probe cannot establish whether each animation is visible or user-controllable.", "howToConfirm": "Any visible movement lasting more than five seconds has a pause, stop, or hide mechanism." },
+    { "criterion": "2.4.3", "title": "Focus Order", "level": "A", "blocked": "Browser keyboard delivery", "whatToReview": "Check complete Tab order at desktop and mobile widths.", "whyOpen": "No focus sequence could be captured.", "howToConfirm": "Focus follows a meaningful visual and interaction order." },
+    { "criterion": "2.4.5", "title": "Multiple Ways", "level": "AA", "blocked": "Single-page scope", "whatToReview": "Verify a second page-discovery mechanism beyond primary navigation.", "whyOpen": "Only the homepage was sampled.", "howToConfirm": "Representative pages can be found through navigation plus search, sitemap, or another independent mechanism." },
+    { "criterion": "2.4.7", "title": "Focus Visible", "level": "AA", "blocked": "Browser keyboard delivery", "whatToReview": "Observe each keyboard focus indicator.", "whyOpen": "Tab focus could not be delivered to the page.", "howToConfirm": "Every focusable element has a clearly visible focus indicator." },
+    { "criterion": "2.4.11", "title": "Focus Not Obscured (Minimum)", "level": "AA", "blocked": "Browser keyboard delivery", "whatToReview": "Check whether sticky header or overlays fully cover focused controls.", "whyOpen": "No keyboard focus walk was available.", "howToConfirm": "No focused control is entirely hidden by author content." },
+    { "criterion": "3.2.3", "title": "Consistent Navigation", "level": "AA", "blocked": "Cross-page scope", "whatToReview": "Compare navigation order on at least three representative templates.", "whyOpen": "A single page cannot establish consistency.", "howToConfirm": "Repeated navigation appears in the same relative order." },
+    { "criterion": "3.2.4", "title": "Consistent Identification", "level": "AA", "blocked": "Cross-page scope", "whatToReview": "Compare names and icons for components with identical functions.", "whyOpen": "A single page cannot establish consistency.", "howToConfirm": "The same function has the same label and identification across templates." },
+    { "criterion": "3.2.6", "title": "Consistent Help", "level": "A", "blocked": "Cross-page scope", "whatToReview": "Compare the placement of contact, help, or other assistance mechanisms across templates.", "whyOpen": "A single page cannot establish consistency.", "howToConfirm": "Repeated help mechanisms occur in the same relative order." }
+  ]
+}
