@@ -36,6 +36,9 @@ export function SiteHeader({
   const mobileNavigationLabel = uiText?.mobileNavigationLabel || 'Mobile navigation'
   const [open, setOpen] = useState(false)
   const [backgroundOpacity, setBackgroundOpacity] = useState(1)
+  const resolvedNavigation = (navigation || []).some((item) => item.href === '/products')
+    ? navigation || []
+    : [...(navigation || []), {label: 'Products', href: '/products'}]
 
   useEffect(() => {
     const updateBackgroundOpacity = () => {
@@ -67,7 +70,7 @@ export function SiteHeader({
 
         <div className="hidden items-center gap-7 lg:flex">
           <nav className="flex items-center gap-6" aria-label={mainNavigationLabel}>
-            {(navigation || []).map((item) => {
+            {resolvedNavigation.map((item) => {
               return (
                 <div key={`${item.label}-${item.href}`} className="group relative">
                   <Link
@@ -130,7 +133,7 @@ export function SiteHeader({
       {open ? (
         <div className="border-t border-white/10 bg-[#071a2b] px-4 py-5 lg:hidden">
           <nav className="mx-auto max-w-7xl space-y-5" aria-label={mobileNavigationLabel}>
-            {(navigation || []).map((item) => (
+            {resolvedNavigation.map((item) => (
               <div
                 key={`${item.label}-${item.href}`}
                 className="border-b border-white/10 pb-4 last:border-b-0"
