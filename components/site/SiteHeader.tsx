@@ -36,9 +36,13 @@ export function SiteHeader({
   const mobileNavigationLabel = uiText?.mobileNavigationLabel || 'Mobile navigation'
   const [open, setOpen] = useState(false)
   const [backgroundOpacity, setBackgroundOpacity] = useState(1)
-  const resolvedNavigation = (navigation || []).some((item) => item.href === '/products')
-    ? navigation || []
-    : [...(navigation || []), {label: 'Products', href: '/products'}]
+  const navigationWithoutProducts = (navigation || []).filter((item) => item.href !== '/products')
+  const servicesIndex = navigationWithoutProducts.findIndex((item) => item.href === '/services')
+  const resolvedNavigation = [
+    ...navigationWithoutProducts.slice(0, servicesIndex >= 0 ? servicesIndex + 1 : 0),
+    {label: 'Products', href: '/products'},
+    ...navigationWithoutProducts.slice(servicesIndex >= 0 ? servicesIndex + 1 : 0),
+  ]
 
   useEffect(() => {
     const updateBackgroundOpacity = () => {
